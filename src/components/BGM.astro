@@ -1,0 +1,87 @@
+---
+interface Props {
+  src: string;
+}
+
+const { src } = Astro.props;
+---
+
+<audio id="bgm" src={src} preload="auto" loop></audio>
+<div id="bgm-container" class="bgm-container">
+  <button id="bgm-button" class="bgm-button" aria-label="Play background music"
+  ></button>
+</div>
+
+<style>
+  .bgm-container {
+    display: none;
+
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 1rem;
+    z-index: 10;
+  }
+
+  .bgm-button {
+    background: var(--color-primary);
+    border: none;
+    border-radius: 50%;
+    width: 3rem;
+    height: 3rem;
+    cursor: pointer;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background 0.3s ease;
+  }
+
+  .bgm-button:hover {
+    background: var(--color-primary-dark);
+  }
+
+  .bgm-button::before {
+    content: "";
+    display: block;
+    width: 0;
+    height: 0;
+    border-left: 10px solid var(--color-light);
+    border-top: 7px solid transparent;
+    border-bottom: 7px solid transparent;
+    margin-left: 2px;
+  }
+</style>
+
+<script>
+  const AUDIO_HTML = document.querySelector("#bgm") as HTMLAudioElement;
+  const BUTTON_HTML = document.querySelector(
+    "#bgm-button",
+  ) as HTMLButtonElement;
+  const CONTAINER_HTML = document.querySelector(
+    "#bgm-container",
+  ) as HTMLDivElement;
+
+  document.addEventListener("DOMContentLoaded", () => {
+    AUDIO_HTML.volume = 0.2;
+    const didPlay = AUDIO_HTML.play();
+    
+    if (didPlay !== undefined) {
+      didPlay
+        .then(() => {
+          // Automatic playback started!
+        })
+        .catch((error) => {
+          // Show a UI element to let the user manually start playback.
+          CONTAINER_HTML.style.display = "block";
+
+          BUTTON_HTML.addEventListener("click", () => {
+            AUDIO_HTML.play();
+            BUTTON_HTML.style.display = "none";
+          });
+        });
+    }
+  });
+</script>
