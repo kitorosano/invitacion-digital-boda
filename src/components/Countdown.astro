@@ -1,0 +1,179 @@
+---
+interface Props {
+  targetDate: string; // ISO 8601 format (e.g., "2025-12-31T23:59:59"
+  message: string;
+}
+const { targetDate, message } = Astro.props;
+
+const target = new Date(targetDate);
+
+const day = target.toLocaleDateString("es-ES", {
+  weekday: "long",
+});
+const date = target.toLocaleDateString("es-ES", {
+  day: "2-digit",
+});
+const month = target.toLocaleDateString("es-ES", {
+  month: "long",
+});
+---
+
+<div class="countdown-container">
+  <h2 class="countdown-title">Faltan:</h2>
+  <div class="countdown-timer-container" data-countdown={targetDate}>
+    <div class="time-segment-container">
+      <span class="time-value" id="days"></span>
+      <span class="time-label">Días</span>
+    </div>
+    <div class="time-segment-container">
+      <span class="time-value" id="hours"></span>
+      <span class="time-label">Horas</span>
+    </div>
+    <div class="time-segment-container">
+      <span class="time-value" id="minutes"></span>
+      <span class="time-label">Minutos</span>
+    </div>
+    <div class="time-segment-container">
+      <span class="time-value" id="seconds"></span>
+      <span class="time-label">Segundos</span>
+    </div>
+  </div>
+
+  <p class="countdown-message">
+    {message}
+  </p>
+  <div class="localized-date-container">
+    <p class="localized" data-localized="day">{day}</p>
+    <p class="localized" data-localized="date">{date}</p>
+    <p class="localized" data-localized="month">{month}</p>
+  </div>
+</div>
+
+<style>
+  .countdown-container {
+    width: 100%;
+
+    text-align: center;
+    color: var(--color-dark);
+    margin-top: 2rem;
+  }
+
+  .countdown-title {
+    margin: 0;
+    text-transform: uppercase;
+    font-size: 1.5rem;
+    font-weight: 400;
+  }
+
+  .countdown-timer-container {
+    display: flex;
+    justify-content: center;
+
+    margin-top: 1rem;
+    gap: 2rem;
+  }
+
+  .time-segment-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .time-value {
+    font-size: 3rem;
+    font-weight: 300;
+  }
+
+  .time-label {
+    font-size: 1rem;
+  }
+
+  .countdown-message {
+    margin: 2rem auto 0 auto;
+    font-size: 1rem;
+    letter-spacing: 0.05rem;
+
+    max-width: 60%;
+    text-wrap: balance;
+  }
+
+  .localized-date-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+
+    margin-top: 1rem;
+  }
+
+  .localized {
+    margin: 0;
+    padding: 1rem;
+
+    width: 5rem;
+
+    font-size: 1rem;
+    text-transform: uppercase;
+    font-weight: 300;
+
+    border-top: 1px solid var(--color-dark);
+    border-bottom: 1px solid var(--color-dark);
+  }
+
+  .localized[data-localized="date"] {
+    padding: 0 0.25rem;
+    width: auto;
+
+    font-size: 3rem;
+    font-weight: 400;
+
+    border: 0;
+  }
+</style>
+
+<script>
+  let interval: NodeJS.Timeout;
+
+  const COUNTDOWN_CONTAINER = document.querySelector(
+    "[data-countdown]",
+  ) as HTMLElement;
+  const DAYS_HTML = document.querySelector("#days") as HTMLElement;
+  const HOURS_HTML = document.querySelector("#hours") as HTMLElement;
+  const MINUTES_HTML = document.querySelector("#minutes") as HTMLElement;
+  const SECONDS_HTML = document.querySelector("#seconds") as HTMLElement;
+
+  const targetDate = new Date(COUNTDOWN_CONTAINER.dataset.countdown!);
+
+  const updateCountdown = () => {
+    const now = new Date();
+    const difference = targetDate.getTime() - now.getTime();
+
+    if (difference <= 0) {
+      clearInterval(interval);
+      DAYS_HTML.textContent = "00";
+      HOURS_HTML.textContent = "00";
+      MINUTES_HTML.textContent = "00";
+      SECONDS_HTML.textContent = "00";
+      return;
+    }
+
+    const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((difference / (1000 * 60 * 60)) % 24);
+    const minutes = Math.floor((difference / (1000 * 60)) % 60);
+    const seconds = Math.floor((difference / 1000) % 60);
+
+    const formattedDays = String(days).padStart(2, "0");
+    const formattedHours = String(hours).padStart(2, "0");
+    const formattedMinutes = String(minutes).padStart(2, "0");
+    const formattedSeconds = String(seconds).padStart(2, "0");
+
+    DAYS_HTML.textContent = formattedDays;
+    HOURS_HTML.textContent = formattedHours;
+    MINUTES_HTML.textContent = formattedMinutes;
+    SECONDS_HTML.textContent = formattedSeconds;
+  };
+
+  interval = setInterval(updateCountdown, 1000);
+  updateCountdown();
+</script>

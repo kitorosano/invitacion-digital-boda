@@ -18,7 +18,12 @@ export default defineConfig({
         access: "public",
       }),
       WEDDING_DATE: envField.string({
-        default: "",
+        default: new Date().toISOString(),
+        context: "server",
+        access: "public",
+      }),
+      COUNTDOWN_MESSAGE: envField.string({
+        default: "Te esperamos para celebrar nuestra boda",
         context: "server",
         access: "public",
       }),

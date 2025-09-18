@@ -6,7 +6,7 @@ Este es un proyecto de invitación digital de boda creado con [Astro](https://as
 
 - Sección principal con imagen, título, nombres de la pareja y fecha de la boda. ✅
 - Reproducción de música de fondo, automatica y en bucle si el usuario lo permite. ✅
-- Cuenta regresiva hasta la fecha de la boda.
+- Cuenta regresiva hasta la fecha de la boda. ✅
 - Agregación a Google Calendar para recordar la fecha.
 - Lugar y fecha del evento civil.
 - Lugar y fecha del evento ceremonia.

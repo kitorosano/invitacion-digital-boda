@@ -1,9 +1,15 @@
 ---
 import BGM from "../components/BGM.astro";
+import Countdown from "../components/Countdown.astro";
 import Hero from "../components/Hero.astro";
 import Layout from "../layouts/Layout.astro";
 
-import { HERO_TITLE, WEDDING_COUPLE, WEDDING_DATE } from "astro:env/server";
+import {
+  COUNTDOWN_MESSAGE,
+  HERO_TITLE,
+  WEDDING_COUPLE,
+  WEDDING_DATE,
+} from "astro:env/server";
 
 const heroProps = {
   couple: WEDDING_COUPLE,
@@ -15,9 +21,15 @@ const heroProps = {
 const bgmProps = {
   src: "/audios/bgm.wav",
 };
+
+const countdownProps = {
+  targetDate: WEDDING_DATE,
+  message: COUNTDOWN_MESSAGE,
+};
 ---
 
 <Layout>
   <BGM {...bgmProps} />
   <Hero {...heroProps} />
+  <Countdown {...countdownProps} />
 </Layout>
