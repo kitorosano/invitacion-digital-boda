@@ -1,0 +1,70 @@
+---
+interface Props {
+  name: string;
+  time: string;
+  place: string;
+  address: string;
+  mapLink: string;
+}
+
+const { name, time, place, address, mapLink } = Astro.props;
+---
+
+<div id={`event-details-${name}`} class="event-details-container">
+  <!-- ADD SMALL IMAGE -->
+
+  <h2 class="event-name">{name}</h2>
+
+  <p class="event-time-place">{time} hr - {place}</p>
+  <p class="event-address">{address}</p>
+
+  <a href={mapLink} target="_blank" rel="noopener noreferrer" class="event-link"
+    >Como llegar</a
+  >
+</div>
+
+<style>
+  .event-details-container {
+    width: 100%;
+
+    text-align: center;
+    color: var(--color-dark);
+    margin-top: 2rem;
+  }
+
+  .event-name {
+    margin: 1rem 0;
+
+    font-size: 1.5rem;
+    font-weight: 800;
+  }
+
+  .event-time-place {
+    margin: 0 auto;
+
+    max-width: 80%;
+    text-wrap: balance;
+  }
+
+  .event-address {
+    margin: 0.25rem 0 0 0;
+    font-size: 0.8rem;
+  }
+
+  .event-link {
+    display: inline-block;
+    margin-top: 1rem;
+
+    padding: 0.5rem 3rem;
+    background: var(--color-dark);
+    color: var(--color-light);
+    text-decoration: none;
+    border-radius: 2rem;
+
+    transition: background 0.3s ease;
+  }
+
+  .event-link:hover {
+    background: var(--color-secondary);
+  }
+</style>

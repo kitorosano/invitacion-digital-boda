@@ -1,11 +1,22 @@
 ---
 import BGM from "../components/BGM.astro";
 import Countdown from "../components/Countdown.astro";
+import EventDetails from "../components/EventDetails.astro";
 import Hero from "../components/Hero.astro";
 import Layout from "../layouts/Layout.astro";
 
 import {
   COUNTDOWN_MESSAGE,
+  EVENT_1_ADDRESS,
+  EVENT_1_MAP_LINK,
+  EVENT_1_NAME,
+  EVENT_1_PLACE,
+  EVENT_1_TIME,
+  EVENT_2_ADDRESS,
+  EVENT_2_MAP_LINK,
+  EVENT_2_NAME,
+  EVENT_2_PLACE,
+  EVENT_2_TIME,
   HERO_TITLE,
   WEDDING_COUPLE,
   WEDDING_DATE,
@@ -26,10 +37,29 @@ const countdownProps = {
   targetDate: WEDDING_DATE,
   message: COUNTDOWN_MESSAGE,
 };
+
+const placeDetailsProps = [
+  {
+    name: EVENT_1_NAME,
+    time: EVENT_1_TIME,
+    place: EVENT_1_PLACE,
+    address: EVENT_1_ADDRESS,
+    mapLink: EVENT_1_MAP_LINK,
+  },
+  {
+    name: EVENT_2_NAME,
+    time: EVENT_2_TIME,
+    place: EVENT_2_PLACE,
+    address: EVENT_2_ADDRESS,
+    mapLink: EVENT_2_MAP_LINK,
+  },
+];
 ---
 
 <Layout>
   <BGM {...bgmProps} />
   <Hero {...heroProps} />
   <Countdown {...countdownProps} />
+
+  {placeDetailsProps.map((event) => <EventDetails {...event} />)}
 </Layout>
