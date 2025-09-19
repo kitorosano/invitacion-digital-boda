@@ -1,7 +1,7 @@
 ---
 import BGM from "../components/BGM.astro";
 import Countdown from "../components/Countdown.astro";
-import DatePhotos from "../components/DatePhotos.astro";
+import DateWithPhotos from "../components/DateWithPhotos.astro";
 import EventDetails from "../components/EventDetails.astro";
 import Hero from "../components/Hero.astro";
 import ImageSeparator from "../components/ImageSeparator.astro";
@@ -40,7 +40,7 @@ const invitationMessageProps = {
   message: INVITATION_MESSAGE,
 };
 
-const datePhotosProps = {
+const dateWithPhotosProps = {
   date: WEDDING_DATE,
 };
 
@@ -79,7 +79,7 @@ const imageSeparatorProps = {
   <BGM {...bgmProps} />
   <Hero {...heroProps} />
   <InvitationMessage {...invitationMessageProps} />
-  <DatePhotos {...datePhotosProps} />
+  <DateWithPhotos {...dateWithPhotosProps} />
   <Countdown {...countdownProps} />
   <Schedule {...scheduleProps} />
   <ImageSeparator {...imageSeparatorProps} />

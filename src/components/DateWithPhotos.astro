@@ -12,31 +12,38 @@ const month = (dateObj.getMonth() + 1).toString().padStart(2, "0");
 const year = dateObj.getFullYear().toString().slice(-2);
 ---
 
-<div class="date-photo-overlay"></div>
 <div class="date-photo-container">
+  <div class="date-photo-overlay"></div>
+
   <div class="date-photo" data-date="day">
     <p class="date-photo-text">{day}</p>
-    <img
-      class="date-photo-img"
-      src="/images/date_photo_1.jpg"
-      alt="Foto con fecha 1"
-    />
+    <div class="date-photo-wrapper">
+      <img
+        class="date-photo-img"
+        src="/images/date_photo_1.jpg"
+        alt="Foto con fecha 1"
+      />
+    </div>
   </div>
   <div class="date-photo" data-date="month">
     <p class="date-photo-text">{month}</p>
-    <img
-      class="date-photo-img"
-      src="/images/date_photo_2.jpg"
-      alt="Foto con fecha 2"
-    />
+    <div class="date-photo-wrapper">
+      <img
+        class="date-photo-img"
+        src="/images/date_photo_2.jpg"
+        alt="Foto con fecha 2"
+      />
+    </div>
   </div>
   <div class="date-photo" data-date="year">
     <p class="date-photo-text">{year}</p>
-    <img
-      class="date-photo-img"
-      src="/images/date_photo_3.jpg"
-      alt="Foto con fecha 3"
-    />
+    <div class="date-photo-wrapper">
+      <img
+        class="date-photo-img"
+        src="/images/date_photo_3.jpg"
+        alt="Foto con fecha 3"
+      />
+    </div>
   </div>
 </div>
 
@@ -49,52 +56,6 @@ const year = dateObj.getFullYear().toString().slice(-2);
 
     margin: 1rem auto;
     gap: 0.5rem;
-  }
-
-  .date-photo {
-    width: 28%;
-    height: 100%;
-    text-align: center;
-    position: relative;
-  }
-
-  .date-photo-text {
-    margin: 0;
-    font-size: 4rem;
-    font-weight: 400;
-    color: var(--color-dark);
-  }
-
-  .date-photo-img {
-    width: 100%;
-    object-fit: cover;
-    aspect-ratio: 1 / 2;
-    border-radius: 8px;
-
-    position: relative;
-
-    filter: brightness(0.8);
-    transition: transform 0.3s ease;
-    z-index: 1;
-    cursor: pointer;
-  }
-
-  .date-photo-img.active {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) scale(1.8);
-
-    width: 40%;
-    height: auto;
-
-    max-width: 90%;
-    max-height: 90%;
-
-    border-radius: 16px;
-    box-shadow: 0 0 32px 8px rgba(0, 0, 0, 0.4);
-    filter: brightness(1);
-    z-index: 1001;
   }
 
   .date-photo-overlay {
@@ -115,6 +76,12 @@ const year = dateObj.getFullYear().toString().slice(-2);
     display: block;
   }
 
+  .date-photo {
+    width: 28%;
+    height: 100%;
+    text-align: center;
+  }
+
   .date-photo[data-date="month"] {
     margin-top: 3rem;
   }
@@ -122,23 +89,75 @@ const year = dateObj.getFullYear().toString().slice(-2);
   .date-photo[data-date="year"] {
     margin-top: 6rem;
   }
+
+  .date-photo-text {
+    margin: 0;
+    font-size: 4rem;
+    font-weight: 400;
+    color: var(--color-dark);
+  }
+
+  .date-photo-wrapper {
+    width: 100%;
+    height: 100%;
+    aspect-ratio: 1 / 2;
+  }
+
+  .date-photo-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 8px;
+    position: relative;
+
+    filter: brightness(0.8);
+    transition:
+      transform 0.3s ease,
+      filter 0.3s ease;
+
+    z-index: 10;
+    pointer-events: none;
+  }
+
+  .date-photo-img.active {
+    position: fixed;
+    transform: translate(-50%, -50%) scale(1.8);
+    top: 50%;
+    left: 50%;
+    aspect-ratio: 5 / 7;
+
+    width: 45%;
+    height: auto;
+
+    max-width: 90%;
+    max-height: 90%;
+
+    border-radius: 16px;
+    box-shadow: 0 0 32px 8px rgba(0, 0, 0, 0.4);
+    filter: brightness(1);
+    z-index: 1001;
+
+    pointer-events: none;
+  }
 </style>
 
 <script>
   document.addEventListener("DOMContentLoaded", () => {
-    const IMAGES_HTML = document.querySelectorAll(
-      ".date-photo-img",
+    const IMAGES_WRAPPERS_HTML = document.querySelectorAll(
+      ".date-photo-wrapper",
     ) as NodeListOf<HTMLImageElement>;
 
     const OVERLAY_HTML = document.querySelector(
       ".date-photo-overlay",
     ) as HTMLDivElement;
 
-    IMAGES_HTML.forEach((img) => {
-      img.addEventListener("click", (e) => {
+    IMAGES_WRAPPERS_HTML.forEach((wrapper) => {
+      wrapper.addEventListener("click", (e) => {
         e.stopPropagation();
 
-        IMAGES_HTML.forEach((i) => i.classList.remove("active"));
+        const img = wrapper.querySelector(
+          ".date-photo-img",
+        ) as HTMLImageElement;
         img.classList.add("active");
 
         OVERLAY_HTML.classList.add("active");
@@ -146,7 +165,12 @@ const year = dateObj.getFullYear().toString().slice(-2);
     });
 
     OVERLAY_HTML.addEventListener("click", () => {
-      IMAGES_HTML.forEach((i) => i.classList.remove("active"));
+      IMAGES_WRAPPERS_HTML.forEach((wrapper) => {
+        const img = wrapper.querySelector(
+          ".date-photo-img",
+        ) as HTMLImageElement;
+        img.classList.remove("active");
+      });
       OVERLAY_HTML.classList.remove("active");
     });
   });
