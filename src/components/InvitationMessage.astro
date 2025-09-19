@@ -1,0 +1,42 @@
+---
+interface Props {
+  message: string;
+}
+
+const { message } = Astro.props;
+---
+
+<div class="message-container">
+  <p class="message-text">
+    {message}
+  </p>
+  <h2 class="message-title">¡Estás invitado!</h2>
+</div>
+
+<style>
+  .message-container {
+    width: 100%;
+
+    text-align: center;
+    margin: 2rem auto;
+  }
+
+  .message-title {
+    margin: 0;
+
+    color: var(--color-dark);
+    font-family: var(--font-family-secondary);
+
+    font-size: 2rem;
+    font-weight: 500;
+  }
+
+  .message-text {
+    margin: 0 3rem;
+    color: var(--color-dark);
+    text-transform: uppercase;
+
+    line-height: 1.5;
+    font-size: 1rem;
+  }
+</style>

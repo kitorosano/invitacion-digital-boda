@@ -1,0 +1,54 @@
+---
+interface Props {
+  src: string;
+  alt: string;
+}
+
+const { src, alt } = Astro.props;
+---
+
+<div class="image-separator-container">
+  <img class="image-separator" src={src} alt={alt} />
+</div>
+
+<style>
+  .image-separator-container {
+    margin: 2rem auto;
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+
+    text-align: center;
+  }
+
+  .image-separator {
+    width: 110%;
+    height: auto;
+
+    transform: translateX(-4%);
+    filter: brightness(0.9);
+  }
+
+  .image-separator-container::before {
+    content: "";
+    position: absolute;
+    top: -1px;
+    left: 0;
+    width: 100%;
+    z-index: 1;
+
+    height: 20px;
+    background: linear-gradient(to top, transparent, var(--color-tertiary));
+  }
+  .image-separator-container::after {
+    content: "";
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 100%;
+    z-index: 1;
+
+    height: 50px;
+    background: linear-gradient(to top, var(--color-tertiary), transparent);
+  }
+</style>
