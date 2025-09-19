@@ -22,9 +22,7 @@ const { title = WEDDING_COUPLE } = Astro.props;
     <ClientRouter />
   </head>
   <body>
-    <div>
-      <slot />
-    </div>
+    <slot />
   </body>
 </html>
 
@@ -52,14 +50,10 @@ const { title = WEDDING_COUPLE } = Astro.props;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    width: 100dvw;
-    height: 100dvh;
 
-    margin-bottom: 40rem; // temporalmente para ver el final de la página
-  }
+    max-width: 100dvw;
+    min-height: 100dvh;
 
-  body > div {
-    width: 100%;
-    height: 100%;
+    margin-bottom: 10rem; // temporalmente para ver el final de la págin
   }
 </style>
