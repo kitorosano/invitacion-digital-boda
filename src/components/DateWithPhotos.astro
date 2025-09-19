@@ -139,6 +139,21 @@ const year = date.getFullYear().toString().slice(-2);
   }
 </style>
 
+<!-- CUSTOM STYLES FOR EACH SPECIFIC PHOTO -->
+<style>
+  .date-photo[data-date="day"] .date-photo-img {
+    object-position: 40% center;
+  }
+
+  .date-photo[data-date="month"] .date-photo-img {
+    object-position: 50% center;
+  }
+
+  .date-photo[data-date="year"] .date-photo-img {
+    object-position: 60% center;
+  }
+</style>
+
 <script>
   document.addEventListener("DOMContentLoaded", () => {
     const IMAGES_WRAPPERS_HTML = document.querySelectorAll(
