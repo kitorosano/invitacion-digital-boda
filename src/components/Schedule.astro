@@ -1,9 +1,40 @@
 ---
+import { dateForCalendar } from "../utils/formatDates";
+interface Props {
+  text: string;
+  startDate: Date;
+  endDate: Date;
+  details: string;
+  location: string;
+}
+const { text, startDate, endDate, details, location } = Astro.props;
 
+const encodedText = encodeURIComponent(text);
+const formattedStartDate = dateForCalendar(startDate);
+const formattedEndDate = dateForCalendar(endDate);
+const encodedDetails = encodeURIComponent(details);
+const encodedLocation = encodeURIComponent(location);
+
+const googleCalendarUrl = `https://www.google.com/calendar/render?action=TEMPLATE&text=${encodedText}&dates=${formattedStartDate}/${formattedEndDate}&details=${encodedDetails}&location=${encodedLocation}`;
 ---
 
 <div class="schedule-container">
-  <a href="#" class="schedule-link">Agendar recordatorio</a>
+  <a
+    id="link-ios"
+    href="/api/schedule"
+    download="evento-boda-kebu-vicky.ics"
+    class="schedule-link">Agendar recordatorio</a
+  >
+
+  <a
+    id="link-google"
+    href={googleCalendarUrl}
+    target="_blank"
+    rel="noopener"
+    class="schedule-link"
+  >
+    Agendar recordatorio
+  </a>
 </div>
 
 <style>
@@ -14,7 +45,7 @@
   }
 
   .schedule-link {
-    display: inline-block;
+    display: none;
 
     padding: 1rem 2rem;
     background: var(--color-dark);
@@ -32,3 +63,18 @@
     background: var(--color-primary);
   }
 </style>
+
+<script>
+  const isIOS = /iPad|iPhone|iPod/g.test(navigator.userAgent);
+
+  const ANCHOR_IOS = document.querySelector("#link-ios") as HTMLAnchorElement;
+  const ANCHOR_GOOGLE = document.querySelector(
+    "#link-google",
+  ) as HTMLAnchorElement;
+
+  if (isIOS) {
+    ANCHOR_IOS.style.display = "inline-block";
+  } else {
+    ANCHOR_GOOGLE.style.display = "inline-block";
+  }
+</script>

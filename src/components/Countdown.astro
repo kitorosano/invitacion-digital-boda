@@ -1,14 +1,15 @@
 ---
 interface Props {
-  targetDate: string; // ISO 8601 format (e.g., "2025-12-31T23:59:59"
+  targetDate: Date;
 }
 
 const { targetDate } = Astro.props;
+const formattedDate = targetDate.toISOString();
 ---
 
 <div class="countdown-container">
   <h2 class="countdown-title">Faltan:</h2>
-  <div class="countdown-timer-container" data-countdown={targetDate}>
+  <div class="countdown-timer-container" data-countdown={formattedDate}>
     <div class="time-segment-container">
       <span class="time-value" id="days"></span>
       <span class="time-label">Días</span>

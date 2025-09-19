@@ -9,7 +9,10 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/vercel": "^8.2.7",
-    "astro": "^5.13.7"
+    "@astrojs/vercel": "8.2.7",
+    "@date-fns/tz": "1.4.1",
+    "@date-fns/utc": "^2.1.1",
+    "astro": "5.13.7",
+    "date-fns": "4.1.0"
   }
 }

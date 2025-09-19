@@ -7,7 +7,7 @@ Este es un proyecto de invitación digital de boda creado con [Astro](https://as
 - Sección principal con imagen, título, nombres de la pareja y fecha de la boda. ✅
 - Reproducción de música de fondo, automatica y en bucle si el usuario lo permite. ✅
 - Cuenta regresiva hasta la fecha de la boda. ✅
-- Agregación a Google Calendar para recordar la fecha. 🚧
+- Agendar fecha al calendario para recordar la fecha (Google Calendar y IOS Calendar). ✅
 - Lugar y fecha de los eventos. ✅
 - Formulario de confirmación de asistencia (RSVP).
 - Dress code sugerido para los invitados.
@@ -15,3 +15,4 @@ Este es un proyecto de invitación digital de boda creado con [Astro](https://as
 - Galería de fotos para compartir momentos especiales.
 - Diseño responsivo para una experiencia óptima en dispositivos móviles y de escritorio.
 - Animaciones al hacer scroll para mejorar la experiencia del usuario.
+- Mejora de rendimiento con optimizaciones y carga diferida de imágenes.

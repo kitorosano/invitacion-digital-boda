@@ -1,8 +1,8 @@
 ---
 import BGM from "../components/BGM.astro";
 import Countdown from "../components/Countdown.astro";
-import DateWithPhotos from "../components/DateWithPhotos.astro";
 import EventDetails from "../components/EventDetails.astro";
+import DateWithPhotos from "../components/DateWithPhotos.astro";
 import Hero from "../components/Hero.astro";
 import ImageSeparator from "../components/ImageSeparator.astro";
 import InvitationMessage from "../components/InvitationMessage.astro";
@@ -22,9 +22,24 @@ import {
   EVENT_2_TIME,
   HERO_TITLE,
   INVITATION_MESSAGE,
+  SCHEDULE_DETAILS,
+  SCHEDULE_END_DATE,
+  SCHEDULE_LOCATION,
+  SCHEDULE_START_DATE,
+  SCHEDULE_TITLE,
+  SITE_TITLE,
   WEDDING_COUPLE,
   WEDDING_DATE,
 } from "astro:env/server";
+import { dateWithTz, timeWithTz } from "../utils/formatDates";
+
+const layoutProps = {
+  title: SITE_TITLE,
+};
+
+const bgmProps = {
+  src: "/audios/bgm.wav",
+};
 
 const heroProps = {
   couple: WEDDING_COUPLE,
@@ -32,50 +47,50 @@ const heroProps = {
   img: "/images/hero.jpg",
 };
 
-const bgmProps = {
-  src: "/audios/bgm.wav",
-};
-
 const invitationMessageProps = {
   message: INVITATION_MESSAGE,
 };
 
 const dateWithPhotosProps = {
-  date: WEDDING_DATE,
+  date: dateWithTz(WEDDING_DATE),
 };
 
 const countdownProps = {
-  targetDate: WEDDING_DATE,
+  targetDate: dateWithTz(WEDDING_DATE),
 };
 
-const placeDetailsProps = [
-  {
-    name: EVENT_1_NAME,
-    time: EVENT_1_TIME,
-    place: EVENT_1_PLACE,
-    address: EVENT_1_ADDRESS,
-    mapLink: EVENT_1_MAP_LINK,
-  },
-  {
-    name: EVENT_2_NAME,
-    time: EVENT_2_TIME,
-    place: EVENT_2_PLACE,
-    address: EVENT_2_ADDRESS,
-    mapLink: EVENT_2_MAP_LINK,
-  },
-];
-
 const scheduleProps = {
-  // Add any props needed for the Schedule component
+  text: SCHEDULE_TITLE,
+  startDate: dateWithTz(SCHEDULE_START_DATE),
+  endDate: dateWithTz(SCHEDULE_END_DATE),
+  details: SCHEDULE_DETAILS,
+  location: SCHEDULE_LOCATION,
 };
 
 const imageSeparatorProps = {
   src: "/images/separator_1.jpg",
   alt: "Separador decorativo",
 };
+
+const placeDetailsProps = [
+  {
+    name: EVENT_1_NAME,
+    time: timeWithTz(EVENT_1_TIME),
+    place: EVENT_1_PLACE,
+    address: EVENT_1_ADDRESS,
+    mapLink: EVENT_1_MAP_LINK,
+  },
+  {
+    name: EVENT_2_NAME,
+    time: timeWithTz(EVENT_2_TIME),
+    place: EVENT_2_PLACE,
+    address: EVENT_2_ADDRESS,
+    mapLink: EVENT_2_MAP_LINK,
+  },
+];
 ---
 
-<Layout>
+<Layout {...layoutProps}>
   <BGM {...bgmProps} />
   <Hero {...heroProps} />
   <InvitationMessage {...invitationMessageProps} />
@@ -83,5 +98,6 @@ const imageSeparatorProps = {
   <Countdown {...countdownProps} />
   <Schedule {...scheduleProps} />
   <ImageSeparator {...imageSeparatorProps} />
-  {placeDetailsProps.map((event) => <EventDetails {...event} />)}
+  <!-- Versiculo -->
+  {placeDetailsProps.map((event) => event.name && <EventDetails {...event} />)}
 </Layout>

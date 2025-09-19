@@ -7,14 +7,14 @@ import vercel from "@astrojs/vercel";
 export default defineConfig({
   env: {
     schema: {
-      // Hero Section
-      WEDDING_COUPLE: envField.string({
-        default: "",
+      // Global
+      SITE_TITLE: envField.string({
+        default: "Invitación de boda",
         context: "server",
         access: "public",
       }),
-      HERO_TITLE: envField.string({
-        default: "Nos casamos",
+      WEDDING_COUPLE: envField.string({
+        default: "",
         context: "server",
         access: "public",
       }),
@@ -23,8 +23,46 @@ export default defineConfig({
         context: "server",
         access: "public",
       }),
+      DATE_TIMEZONE: envField.string({
+        default: "",
+        context: "server",
+        access: "public",
+      }),
+      // Hero Section
+      HERO_TITLE: envField.string({
+        default: "Nos casamos",
+        context: "server",
+        access: "public",
+      }),
+      // Invitation Section
       INVITATION_MESSAGE: envField.string({
         default: "Nos casamos y nos encantaría que nos acompañaras",
+        context: "server",
+        access: "public",
+      }),
+      // Schedule Section
+      SCHEDULE_TITLE: envField.string({
+        default: "",
+        context: "server",
+        access: "public",
+      }),
+      SCHEDULE_START_DATE: envField.string({
+        default: new Date().toISOString(),
+        context: "server",
+        access: "public",
+      }),
+      SCHEDULE_END_DATE: envField.string({
+        default: new Date().toISOString(),
+        context: "server",
+        access: "public",
+      }),
+      SCHEDULE_DETAILS: envField.string({
+        default: "",
+        context: "server",
+        access: "public",
+      }),
+      SCHEDULE_LOCATION: envField.string({
+        default: "",
         context: "server",
         access: "public",
       }),
