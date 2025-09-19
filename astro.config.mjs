@@ -23,9 +23,8 @@ export default defineConfig({
         context: "server",
         access: "public",
       }),
-      // Countdown Section
-      COUNTDOWN_MESSAGE: envField.string({
-        default: "Te esperamos para celebrar nuestra boda",
+      INVITATION_MESSAGE: envField.string({
+        default: "Nos casamos y nos encantaría que nos acompañaras",
         context: "server",
         access: "public",
       }),

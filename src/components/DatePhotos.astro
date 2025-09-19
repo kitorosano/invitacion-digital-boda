@@ -1,0 +1,153 @@
+---
+interface Props {
+  date: string; // ISO 8601 format (e.g., "2025-12-31T23:59:59"
+}
+
+const { date } = Astro.props;
+
+const dateObj = new Date(date);
+
+const day = dateObj.getDate().toString().padStart(2, "0");
+const month = (dateObj.getMonth() + 1).toString().padStart(2, "0");
+const year = dateObj.getFullYear().toString().slice(-2);
+---
+
+<div class="date-photo-overlay"></div>
+<div class="date-photo-container">
+  <div class="date-photo" data-date="day">
+    <p class="date-photo-text">{day}</p>
+    <img
+      class="date-photo-img"
+      src="/images/date_photo_1.jpg"
+      alt="Foto con fecha 1"
+    />
+  </div>
+  <div class="date-photo" data-date="month">
+    <p class="date-photo-text">{month}</p>
+    <img
+      class="date-photo-img"
+      src="/images/date_photo_2.jpg"
+      alt="Foto con fecha 2"
+    />
+  </div>
+  <div class="date-photo" data-date="year">
+    <p class="date-photo-text">{year}</p>
+    <img
+      class="date-photo-img"
+      src="/images/date_photo_3.jpg"
+      alt="Foto con fecha 3"
+    />
+  </div>
+</div>
+
+<style>
+  .date-photo-container {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+
+    margin: 1rem auto;
+    gap: 0.5rem;
+  }
+
+  .date-photo {
+    width: 28%;
+    height: 100%;
+    text-align: center;
+    position: relative;
+  }
+
+  .date-photo-text {
+    margin: 0;
+    font-size: 4rem;
+    font-weight: 400;
+    color: var(--color-dark);
+  }
+
+  .date-photo-img {
+    width: 100%;
+    object-fit: cover;
+    aspect-ratio: 1 / 2;
+    border-radius: 8px;
+
+    position: relative;
+
+    filter: brightness(0.8);
+    transition: transform 0.3s ease;
+    z-index: 1;
+    cursor: pointer;
+  }
+
+  .date-photo-img.active {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(1.8);
+
+    width: 40%;
+    height: auto;
+
+    max-width: 90%;
+    max-height: 90%;
+
+    border-radius: 16px;
+    box-shadow: 0 0 32px 8px rgba(0, 0, 0, 0.4);
+    filter: brightness(1);
+    z-index: 1001;
+  }
+
+  .date-photo-overlay {
+    display: none;
+
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
+
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 1000;
+  }
+
+  .date-photo-overlay.active {
+    display: block;
+  }
+
+  .date-photo[data-date="month"] {
+    margin-top: 3rem;
+  }
+
+  .date-photo[data-date="year"] {
+    margin-top: 6rem;
+  }
+</style>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const IMAGES_HTML = document.querySelectorAll(
+      ".date-photo-img",
+    ) as NodeListOf<HTMLImageElement>;
+
+    const OVERLAY_HTML = document.querySelector(
+      ".date-photo-overlay",
+    ) as HTMLDivElement;
+
+    IMAGES_HTML.forEach((img) => {
+      img.addEventListener("click", (e) => {
+        e.stopPropagation();
+
+        IMAGES_HTML.forEach((i) => i.classList.remove("active"));
+        img.classList.add("active");
+
+        OVERLAY_HTML.classList.add("active");
+      });
+    });
+
+    OVERLAY_HTML.addEventListener("click", () => {
+      IMAGES_HTML.forEach((i) => i.classList.remove("active"));
+      OVERLAY_HTML.classList.remove("active");
+    });
+  });
+</script>
