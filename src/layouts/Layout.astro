@@ -4,10 +4,10 @@ import { ClientRouter } from "astro:transitions";
 import { WEDDING_COUPLE } from "astro:env/server";
 
 interface Props {
-  title?: string;
+  title: string;
 }
 
-const { title = WEDDING_COUPLE } = Astro.props;
+const { title } = Astro.props;
 ---
 
 <!doctype html>
@@ -27,9 +27,17 @@ const { title = WEDDING_COUPLE } = Astro.props;
 </html>
 
 <style is:global>
+  @font-face {
+    font-family: "Aesthetic";
+    src: url("/fonts/Aesthetic.otf") format("opentype");
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+  }
+
   :root {
     --font-family: "Candara", sans-serif;
-    --font-family-secondary: "Lemon Tuesday", cursive;
+    --font-family-secondary: "Aesthetic", cursive;
 
     --color-primary: #cbad8d;
     --color-secondary: #a48374;
@@ -54,6 +62,6 @@ const { title = WEDDING_COUPLE } = Astro.props;
     max-width: 100dvw;
     min-height: 100dvh;
 
-    margin-bottom: 10rem; // temporalmente para ver el final de la págin
+    margin-bottom: 10rem;
   }
 </style>
