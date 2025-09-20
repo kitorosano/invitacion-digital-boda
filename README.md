@@ -14,5 +14,5 @@ Este es un proyecto de invitación digital de boda creado con [Astro](https://as
 - Información de cuenta bancaria para regalos.
 - Galería de fotos para compartir momentos especiales.
 - Diseño responsivo para una experiencia óptima en dispositivos móviles y de escritorio.
-- Animaciones al hacer scroll para mejorar la experiencia del usuario.
+- Iconos y animaciones al hacer scroll para mejorar la experiencia del usuario.
 - Mejora de rendimiento con optimizaciones y carga diferida de imágenes.

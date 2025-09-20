@@ -1,0 +1,46 @@
+---
+interface Props {
+  quote: string;
+  footer: string;
+}
+
+const { quote, footer } = Astro.props;
+---
+
+<div class="quote-container">
+  <p class="quote-text">
+    {quote}
+  </p>
+  <h2 class={`quote-footer`}>{footer}</h2>
+</div>
+
+<style>
+  .quote-container {
+    width: 100%;
+    margin: 0;
+    padding: 0.5rem 0;
+
+    text-align: center;
+    background-color: var(--color-dark);
+  }
+
+  .quote-text {
+    margin: 0 auto;
+
+    color: var(--color-light);
+
+    line-height: 1.5;
+    font-size: 1rem;
+    font-style: italic;
+
+    max-width: 80%;
+    text-wrap: pretty;
+  }
+
+  .quote-footer {
+    letter-spacing: 0.05em;
+    color: var(--color-light);
+    font-size: 0.8rem;
+    font-weight: 600;
+  }
+</style>

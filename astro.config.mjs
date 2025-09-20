@@ -66,6 +66,17 @@ export default defineConfig({
         context: "server",
         access: "public",
       }),
+      // Quote Section
+      QUOTE_TEXT: envField.string({
+        default: "",
+        context: "server",
+        access: "public",
+      }),
+      QUOTE_FOOTER: envField.string({
+        default: "",
+        context: "server",
+        access: "public",
+      }),
       // Event 1 Section
       EVENT_1_NAME: envField.string({
         default: "",

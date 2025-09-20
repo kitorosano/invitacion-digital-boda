@@ -1,16 +1,17 @@
 ---
 interface Props {
   message: string;
+  footer: string;
 }
 
-const { message } = Astro.props;
+const { message, footer } = Astro.props;
 ---
 
 <div class="message-container">
   <p class="message-text">
     {message}
   </p>
-  <h2 class="message-subtitle">¡Estás invitado!</h2>
+  <h2 class={`message-subtitle`}>{footer}</h2>
 </div>
 
 <style>
@@ -19,16 +20,6 @@ const { message } = Astro.props;
     margin: 2rem auto;
 
     text-align: center;
-  }
-
-  .message-subtitle {
-    margin: 1rem 0 0 0;
-
-    color: var(--color-dark);
-    font-family: var(--font-secondary);
-
-    font-size: 2rem;
-    font-weight: 500;
   }
 
   .message-text {
@@ -41,5 +32,15 @@ const { message } = Astro.props;
 
     max-width: 70%;
     text-wrap: balance;
+  }
+
+  .message-subtitle {
+    margin: 1rem 0 0 0;
+
+    color: var(--color-dark);
+    font-family: var(--font-secondary);
+
+    font-size: 2rem;
+    font-weight: 500;
   }
 </style>
