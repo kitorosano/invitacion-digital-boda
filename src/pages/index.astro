@@ -13,6 +13,7 @@ import {
   EVENT_2_NAME,
   EVENT_2_PLACE,
   EVENT_2_TIME,
+  FOOTER_MESSAGE,
   HERO_TITLE,
   INVITATION_MESSAGE,
   QUOTE_FOOTER,
@@ -30,6 +31,7 @@ import BGM from "../components/BGM.astro";
 import Countdown from "../components/Countdown.astro";
 import DateWithPhotos from "../components/DateWithPhotos.astro";
 import EventDetails from "../components/EventDetails.astro";
+import Footer from "../components/Footer.astro";
 import Hero from "../components/Hero.astro";
 import ImageSeparator from "../components/ImageSeparator.astro";
 import MessageSeparator from "../components/MessageSeparator.astro";
@@ -99,6 +101,11 @@ const placeDetailsProps = [
     image: "/images/event_detail_2.jpg",
   },
 ];
+
+const footerProps = {
+  message: FOOTER_MESSAGE,
+  couple: WEDDING_COUPLE,
+};
 ---
 
 <Layout {...layoutProps}>
@@ -112,4 +119,6 @@ const placeDetailsProps = [
   <QuoteSeparator {...quoteSeparatorProps} />
   <EventDetails {...placeDetailsProps[0]} imagePosition="left" />
   <EventDetails {...placeDetailsProps[1]} imagePosition="right" />
+
+  <Footer {...footerProps} />
 </Layout>

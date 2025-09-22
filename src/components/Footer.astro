@@ -1,0 +1,46 @@
+---
+interface Props {
+  message: string;
+  couple: string;
+}
+
+const { message, couple } = Astro.props;
+---
+
+<div class="footer-container">
+  <p class="footer-message">
+    {message}
+  </p>
+  <p class="footer-couple">
+    {couple}
+  </p>
+</div>
+
+<style>
+  .footer-container {
+    width: 100%;
+    margin: 4rem auto;
+
+    text-align: center;
+  }
+
+  .footer-message {
+    margin: 0 auto;
+    color: var(--color-dark);
+    font-family: var(--font-secondary);
+
+    font-size: 3rem;
+    font-weight: 500; 
+  }
+
+  .footer-couple {
+    margin: 0.5rem 0 0 0;
+
+    color: var(--color-dark);
+    font-family: var(--font-secondary);
+
+    font-size: 1.5rem;
+    font-weight: 400;
+    font-style: italic;
+  }
+</style>

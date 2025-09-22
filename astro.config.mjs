@@ -129,6 +129,11 @@ export default defineConfig({
         context: "server",
         access: "public",
       }),
+      FOOTER_MESSAGE: envField.string({
+        default: "Te esperamos",
+        context: "server",
+        access: "public",
+      }),
     },
   },
 
