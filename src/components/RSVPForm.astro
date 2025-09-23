@@ -35,7 +35,7 @@ const { toastDuration = 3000 } = Astro.props;
     ></textarea>
   </div>
 
-  <button type="submit">Enviar Respuesta</button>
+  <button disabled type="submit">Enviar Respuesta</button>
 
   <div class="toast-container" data-duration={toastDuration}>
     <div class="toast-content">
@@ -196,7 +196,7 @@ const { toastDuration = 3000 } = Astro.props;
 
   .rsvp-container button:disabled {
     background-color: var(--color-light);
-    color: var(--color-dark);
+    color: var(--color-tertiary);
     cursor: progress;
   }
 
@@ -279,6 +279,9 @@ const { toastDuration = 3000 } = Astro.props;
   const $RADIO_NO = $FORM.querySelector(
     'input[id="rsvp-no"]',
   ) as HTMLInputElement;
+  const $INPUT_NAME = $FORM.querySelector(
+    'input[name="name"]',
+  ) as HTMLInputElement;
   const $INPUT_SONG = $FORM.querySelector(
     'input[name="song"]',
   ) as HTMLInputElement;
@@ -308,6 +311,18 @@ const { toastDuration = 3000 } = Astro.props;
     await handleFetch(formData);
 
     $FORM.reset();
+    $BUTTON.disabled = false;
+  });
+
+  $INPUT_NAME.addEventListener("input", () => {
+    if ($INPUT_NAME.value.trim() === "") {
+      $BUTTON.disabled = true;
+      return;
+    }
+    if ($INPUT_NAME.value.length < 3) {
+      $BUTTON.disabled = true;
+      return;
+    }
     $BUTTON.disabled = false;
   });
 
