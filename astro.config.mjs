@@ -147,6 +147,17 @@ export default defineConfig({
         context: "server",
         access: "public",
       }),
+      // Dress Code Section
+      DRESS_CODE_MESSAGE: envField.string({
+        default: "Les pedimos de favor a los invitados evitar estos colores:",
+        context: "server",
+        access: "public",
+      }),
+      DRESS_CODE_COLORS_TO_AVOID: envField.string({
+        default: "", // Colores separados por comas
+        context: "server",
+        access: "public",
+      }),
       // Footer Section
       FOOTER_MESSAGE: envField.string({
         default: "Te esperamos",

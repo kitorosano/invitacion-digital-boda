@@ -1,0 +1,95 @@
+---
+interface Props {
+  message: string;
+  colorsToAvoid: string[];
+}
+
+const { message, colorsToAvoid } = Astro.props;
+---
+
+<div class="dresscode-container">
+  <h2>Vestimenta formal</h2>
+  <p>{message}</p>
+
+  <ul class="dresscode-colors">
+    <li style={`background:${colorsToAvoid[0]}`} class="dresscode-color"></li>
+    <li style={`background:${colorsToAvoid[1]}`} class="dresscode-color"></li>
+    <li style={`background:${colorsToAvoid[2]}`} class="dresscode-color"></li>
+  </ul>
+</div>
+
+<style>
+  .dresscode-container {
+    margin: 3rem auto 0 auto;
+    padding: 0.5rem 0;
+    width: 100%;
+    text-align: center;
+  }
+
+  .dresscode-container h2 {
+    margin: 0 auto;
+
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--color-dark);
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+
+    max-width: 50%;
+    text-wrap: balance;
+  }
+
+  .dresscode-container p {
+    margin: 1rem auto 0 auto;
+
+    font-size: 1rem;
+    font-weight: 400;
+    color: var(--color-dark);
+    text-transform: uppercase;
+
+    max-width: 70%;
+    text-wrap: balance;
+    line-height: 1.5;
+    letter-spacing: 0.02em;
+  }
+
+  .dresscode-colors {
+    margin: 1.5rem auto 0 auto;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    list-style: none;
+    position: relative;
+    height: 3rem;
+    width: 6rem;
+  }
+
+  .dresscode-color {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    position: relative;
+    z-index: 1;
+    margin: 0 0.2rem;
+    box-sizing: border-box;
+
+    position: absolute;
+  }
+
+  .dresscode-color:nth-child(1) {
+    left: -0.5rem;
+    z-index: 1;
+  }
+  .dresscode-color:nth-child(2) {
+    left: 1.5rem;
+    z-index: 2;
+  }
+  .dresscode-color:nth-child(3) {
+    left: 3.5rem;
+    z-index: 3;
+  }
+</style>
+
+<script></script>
