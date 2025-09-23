@@ -5,6 +5,7 @@ import vercel from "@astrojs/vercel";
 
 // https://astro.build/config
 export default defineConfig({
+  output: "server",
   env: {
     schema: {
       // Global
@@ -129,6 +130,24 @@ export default defineConfig({
         context: "server",
         access: "public",
       }),
+      // RSVP Section
+      GOOGLE_APPS_SCRIPT_URL: envField.string({
+        default: "",
+        context: "server",
+        access: "secret",
+      }),
+      RSVP_SUCCESS_MESSAGE: envField.string({
+        default: "¡Gracias por confirmar tu reserva!",
+        context: "server",
+        access: "public",
+      }),
+      RSVP_ERROR_MESSAGE: envField.string({
+        default:
+          "Lo sentimos, ha ocurrido un error. Por favor, inténtalo de nuevo más tarde.",
+        context: "server",
+        access: "public",
+      }),
+      // Footer Section
       FOOTER_MESSAGE: envField.string({
         default: "Te esperamos",
         context: "server",

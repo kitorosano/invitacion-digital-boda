@@ -9,7 +9,7 @@ Este es un proyecto de invitación digital de boda creado con [Astro](https://as
 - Cuenta regresiva hasta la fecha de la boda. ✅
 - Agendar fecha al calendario para recordar la fecha (Google Calendar y IOS Calendar). ✅
 - Lugar y fecha de los eventos. ✅
-- Formulario de confirmación de asistencia (RSVP).
+- Formulario de confirmación de asistencia (RSVP) vinculado a Google Sheets. ✅
 - Dress code sugerido para los invitados.
 - Información de cuenta bancaria para regalos.
 - Galería de fotos para compartir momentos especiales.

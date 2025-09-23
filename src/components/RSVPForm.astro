@@ -1,0 +1,345 @@
+---
+interface Props {
+  toastDuration?: number;
+}
+
+const { toastDuration = 3000 } = Astro.props;
+---
+
+<form class="rsvp-container">
+  <h2>Confirmar Asistencia</h2>
+  <p>Por favor, confirma tu asistencia ¡Esperamos que estés alli!</p>
+
+  <div class="rsvp-options">
+    <label for="rsvp-yes">
+      <input type="radio" name="rsvp" id="rsvp-yes" value="si" required />
+      Sí, allí estaré!
+    </label>
+
+    <label for="rsvp-no"
+      ><input type="radio" name="rsvp" id="rsvp-no" value="no" required />
+      No podré asistir</label
+    >
+  </div>
+
+  <div class="rsvp-fields">
+    <input name="name" type="text" placeholder="Nombre y apellido" required />
+    <input hidden name="email" type="email" placeholder="Correo electrónico" />
+    <input
+      class="isHidding"
+      name="song"
+      type="text"
+      placeholder="¿Qué canción no puede faltar?"
+    />
+    <textarea name="message" placeholder="Dejanos un mensajito:" rows="4"
+    ></textarea>
+  </div>
+
+  <button type="submit">Enviar Respuesta</button>
+
+  <div class="toast-container" data-duration={toastDuration}>
+    <div class="toast-content">
+      <span class="toast-message">¡Gracias por confirmar tu reserva!</span>
+    </div>
+    <div class="toast-progress"></div>
+  </div>
+</form>
+
+<style>
+  .rsvp-container {
+    width: 100%;
+    margin: 4rem 0 0 0;
+    padding: 0.5rem 0;
+
+    text-align: center;
+  }
+
+  .rsvp-container h2 {
+    margin: 0 auto;
+
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--color-dark);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+
+    max-width: 70%;
+    text-wrap: balance;
+  }
+
+  .rsvp-container p {
+    margin: 1rem auto 0 auto;
+
+    font-size: 1rem;
+    font-weight: 400;
+    color: var(--color-dark);
+
+    max-width: 70%;
+    text-wrap: balance;
+    line-height: 1.5;
+    letter-spacing: 0.02em;
+  }
+
+  .rsvp-options {
+    margin: 1rem auto 0 auto;
+
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  .rsvp-options label {
+    padding: 1rem 0;
+    font-size: 1rem;
+    font-weight: 400;
+    letter-spacing: 0.02em;
+    color: var(--color-dark);
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .rsvp-options input[type="radio"] {
+    margin-right: 0.5rem;
+    accent-color: var(--color-primary);
+    cursor: pointer;
+  }
+
+  .rsvp-fields {
+    margin: 0 auto;
+    padding: 0.5rem 0;
+
+    display: flex;
+    justify-content: center;
+    gap: 0.4rem;
+    flex-wrap: wrap;
+  }
+
+  .rsvp-fields input {
+    width: 80%;
+    height: 1.2rem;
+    padding: 0.6rem 1rem;
+
+    font-size: 1rem;
+    font-weight: 400;
+    font-style: italic;
+    letter-spacing: 0.02em;
+
+    color: var(--color-dark);
+    border: none;
+    border-radius: 5px;
+
+    background: var(--color-light);
+    opacity: 1;
+    transition: all 0.4s ease;
+  }
+
+  .rsvp-fields textarea {
+    width: 80%;
+    padding: 0.6rem 1rem;
+
+    font-size: 1rem;
+    font-weight: 400;
+    font-style: italic;
+    font-family: inherit;
+    letter-spacing: 0.02em;
+
+    color: var(--color-dark);
+    border: none;
+    border-radius: 5px;
+    resize: vertical;
+
+    background: var(--color-light);
+  }
+
+  .rsvp-fields input[name="name"] {
+    font-style: normal;
+  }
+
+  .rsvp-fields input.isHidding {
+    height: 0.01rem;
+    padding: 0;
+    opacity: 0;
+  }
+
+  .rsvp-fields input::placeholder,
+  .rsvp-fields textarea::placeholder {
+    font-weight: 400;
+  }
+
+  .rsvp-fields input:focus,
+  .rsvp-fields textarea:focus {
+    outline: 1px solid var(--color-dark);
+  }
+
+  .rsvp-container button {
+    margin: 1rem auto 0 auto;
+    padding: 0.6rem 2rem;
+    width: 60%;
+
+    font-size: 0.8rem;
+    color: var(--color-light);
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    background-color: var(--color-dark);
+
+    border: none;
+    border-radius: 5px;
+
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  .rsvp-container button:hover {
+    background-color: var(--color-primary);
+  }
+
+  .rsvp-container button:disabled {
+    background-color: var(--color-light);
+    color: var(--color-dark);
+    cursor: progress;
+  }
+
+  .rsvp-message {
+    display: block;
+    margin: 1rem auto 0 auto;
+
+    font-size: 1rem;
+    color: var(--color-dark);
+    letter-spacing: 0.02em;
+  }
+</style>
+
+<style>
+  .toast-container {
+    position: fixed;
+    top: 1rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    min-width: 300px;
+    max-width: 90vw;
+    padding: 1rem 2rem;
+    border-radius: 5px;
+
+    background: var(--color-primary);
+    color: var(--color-dark);
+
+    font-size: 1rem;
+    font-weight: 400;
+    letter-spacing: 0.02em;
+    text-align: center;
+
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease;
+  }
+
+  .toast-container.show {
+    opacity: 1;
+    pointer-events: auto;
+    animation: slideDown 0.5s ease;
+  }
+
+  .toast-content {
+    z-index: 1001;
+  }
+
+  .toast-progress {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 5px;
+    width: 100%;
+    background: var(--color-dark);
+    transition: width linear;
+    z-index: 1000;
+  }
+
+  @keyframes slideDown {
+    from {
+      transform: translate(-50%, -100%);
+    }
+    to {
+      transform: translate(-50%, 0);
+    }
+  }
+</style>
+
+<script>
+  const $FORM = document.querySelector("form") as HTMLFormElement;
+  const $RADIO_YES = $FORM.querySelector(
+    'input[id="rsvp-yes"]',
+  ) as HTMLInputElement;
+  const $RADIO_NO = $FORM.querySelector(
+    'input[id="rsvp-no"]',
+  ) as HTMLInputElement;
+  const $INPUT_SONG = $FORM.querySelector(
+    'input[name="song"]',
+  ) as HTMLInputElement;
+  const $BUTTON = $FORM.querySelector("button") as HTMLButtonElement;
+
+  $RADIO_YES.addEventListener("change", () => {
+    $INPUT_SONG.classList.remove("isHidding");
+  });
+  $RADIO_NO.addEventListener("change", () => {
+    $INPUT_SONG.classList.add("isHidding");
+  });
+  const $TOAST = document.querySelector(".toast-container") as HTMLDivElement;
+  const $TOAST_MESSAGE = $TOAST.querySelector(
+    ".toast-message",
+  ) as HTMLSpanElement;
+  const $TOAST_PROGRESS = $TOAST.querySelector(
+    ".toast-progress",
+  ) as HTMLDivElement;
+  const duration = Number($TOAST.dataset.duration);
+
+  $FORM.addEventListener("submit", async (event) => {
+    event.preventDefault();
+
+    $BUTTON.disabled = true;
+
+    const formData = new FormData($FORM);
+    await handleFetch(formData);
+
+    $FORM.reset();
+    $BUTTON.disabled = false;
+  });
+
+  const handleFetch = async (formData: FormData) => {
+    try {
+      const response = await fetch("/api/rsvp", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify(Object.fromEntries(formData)),
+      });
+
+      const data = await response.json();
+      showToast(data.message);
+    } catch (error) {
+      showToast(
+        "Ha ocurrido un error. Por favor, inténtalo de nuevo más tarde.",
+      );
+    }
+  };
+
+  const showToast = (message: string) => {
+    $TOAST_MESSAGE.textContent = message;
+    $TOAST.classList.add("show");
+    $TOAST_PROGRESS.style.transitionDuration = `${duration / 1000}s`;
+    $TOAST_PROGRESS.style.width = "0%";
+
+    setTimeout(() => {
+      $TOAST.classList.remove("show");
+      $TOAST_PROGRESS.style.width = "100%";
+    }, duration);
+  };
+</script>
