@@ -48,6 +48,8 @@ export const dateForCalendar = (date: Date): string => {
  * @returns Hora en formato "H:MM AM/PM".
  */
 export const timeForEvent = (time: string): string => {
+  if (!time) return "";
+
   const [hours, minutes] = time.split(":").map(Number);
   const period = hours >= 12 ? "PM" : "AM";
   const adjustedHours = hours % 12 || 12;
