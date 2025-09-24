@@ -8,7 +8,7 @@ const formattedDate = targetDate.toISOString();
 ---
 
 <div class="countdown-container">
-  <h2 class="countdown-title">Faltan:</h2>
+  <h2>Faltan:</h2>
   <div class="countdown-timer-container" data-countdown={formattedDate}>
     <div class="time-segment-container">
       <span class="time-value" id="days"></span>
@@ -34,11 +34,11 @@ const formattedDate = targetDate.toISOString();
     width: 100%;
 
     text-align: center;
-    color: var(--color-dark);
+    color: var(--color-text-dark);
     margin-top: 2rem;
   }
 
-  .countdown-title {
+  .countdown-container > h2 {
     margin: 0;
     text-transform: uppercase;
     font-size: 1.5rem;

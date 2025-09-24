@@ -8,12 +8,8 @@ const { message, couple } = Astro.props;
 ---
 
 <div class="footer-container">
-  <p class="footer-message">
-    {message}
-  </p>
-  <p class="footer-couple">
-    {couple}
-  </p>
+  <h2>{message}</h2>
+  <p>{couple}</p>
 </div>
 
 <style>
@@ -24,19 +20,19 @@ const { message, couple } = Astro.props;
     text-align: center;
   }
 
-  .footer-message {
+  .footer-container > h2 {
     margin: 0 auto;
-    color: var(--color-dark);
+    color: var(--color-text-dark);
     font-family: var(--font-secondary);
 
     font-size: 3rem;
-    font-weight: 500; 
+    font-weight: 500;
   }
 
-  .footer-couple {
+  .footer-container > p {
     margin: 0.5rem 0 0 0;
 
-    color: var(--color-dark);
+    color: var(--color-text-dark);
     font-family: var(--font-secondary);
 
     font-size: 1.5rem;

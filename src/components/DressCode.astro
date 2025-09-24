@@ -26,12 +26,12 @@ const { message, colorsToAvoid } = Astro.props;
     text-align: center;
   }
 
-  .dresscode-container h2 {
+  .dresscode-container > h2 {
     margin: 0 auto;
 
     font-size: 1.5rem;
     font-weight: 600;
-    color: var(--color-dark);
+    color: var(--color-text-dark);
     text-align: center;
     text-transform: uppercase;
     letter-spacing: 0.05em;
@@ -40,12 +40,12 @@ const { message, colorsToAvoid } = Astro.props;
     text-wrap: balance;
   }
 
-  .dresscode-container p {
+  .dresscode-container > p {
     margin: 1rem auto 0 auto;
 
     font-size: 1rem;
     font-weight: 400;
-    color: var(--color-dark);
+    color: var(--color-text-dark);
 
     max-width: 70%;
     text-wrap: balance;
@@ -90,5 +90,3 @@ const { message, colorsToAvoid } = Astro.props;
     z-index: 3;
   }
 </style>
-
-<script></script>

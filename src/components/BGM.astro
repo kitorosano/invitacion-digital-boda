@@ -6,21 +6,19 @@ interface Props {
 const { src } = Astro.props;
 ---
 
-<div id="bgm-container" class="bgm-container">
-  <audio id="bgm" src={src} preload="auto" loop></audio>
-  <button id="bgm-button" class="bgm-button" aria-label="Play background music"
-  ></button>
+<div class="bgm-container">
+  <audio src={src} preload="auto" loop></audio>
+  <button aria-label="Play background music"></button>
 </div>
 
 <style>
   .bgm-container {
-    display: none;
     width: 100%;
     position: absolute;
     z-index: 10;
   }
 
-  .bgm-button {
+  .bgm-container button {
     width: 3rem;
     height: 3rem;
     margin-left: auto;
@@ -40,11 +38,11 @@ const { src } = Astro.props;
     justify-content: center;
   }
 
-  .bgm-button:hover {
-    background: var(--color-primary-dark);
+  .bgm-container button:hover {
+    background: var(--color-secondary);
   }
 
-  .bgm-button::before {
+  .bgm-container button::before {
     content: "";
     display: block;
     width: 0;
@@ -57,13 +55,15 @@ const { src } = Astro.props;
 </style>
 
 <script>
-  const AUDIO_HTML = document.querySelector("#bgm") as HTMLAudioElement;
-  const BUTTON_HTML = document.querySelector(
-    "#bgm-button",
-  ) as HTMLButtonElement;
   const CONTAINER_HTML = document.querySelector(
-    "#bgm-container",
+    ".bgm-container",
   ) as HTMLDivElement;
+  const AUDIO_HTML = document.querySelector(
+    ".bgm-container audio",
+  ) as HTMLAudioElement;
+  const BUTTON_HTML = document.querySelector(
+    ".bgm-container button",
+  ) as HTMLButtonElement;
 
   document.addEventListener("DOMContentLoaded", () => {
     AUDIO_HTML.volume = 0.2;

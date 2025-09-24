@@ -16,31 +16,19 @@ const year = date.getFullYear().toString().slice(-2);
   <div class="date-photo" data-date="day">
     <p class="date-photo-text">{day}</p>
     <div class="date-photo-wrapper">
-      <img
-        class="date-photo-img"
-        src="/images/date_photo_1.jpg"
-        alt="Foto con fecha 1"
-      />
+      <img src="/images/date_photo_1.jpg" alt="Foto con fecha 1" />
     </div>
   </div>
   <div class="date-photo" data-date="month">
     <p class="date-photo-text">{month}</p>
     <div class="date-photo-wrapper">
-      <img
-        class="date-photo-img"
-        src="/images/date_photo_2.jpg"
-        alt="Foto con fecha 2"
-      />
+      <img src="/images/date_photo_2.jpg" alt="Foto con fecha 2" />
     </div>
   </div>
   <div class="date-photo" data-date="year">
     <p class="date-photo-text">{year}</p>
     <div class="date-photo-wrapper">
-      <img
-        class="date-photo-img"
-        src="/images/date_photo_3.jpg"
-        alt="Foto con fecha 3"
-      />
+      <img src="/images/date_photo_3.jpg" alt="Foto con fecha 3" />
     </div>
   </div>
 </div>
@@ -92,7 +80,7 @@ const year = date.getFullYear().toString().slice(-2);
     margin: 0;
     font-size: 4rem;
     font-weight: 400;
-    color: var(--color-dark);
+    color: var(--color-text-dark);
   }
 
   .date-photo-wrapper {
@@ -101,7 +89,7 @@ const year = date.getFullYear().toString().slice(-2);
     aspect-ratio: 1 / 2;
   }
 
-  .date-photo-img {
+  .date-photo-wrapper img {
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -117,7 +105,7 @@ const year = date.getFullYear().toString().slice(-2);
     pointer-events: none;
   }
 
-  .date-photo-img.active {
+  .date-photo-wrapper img.active {
     position: fixed;
     transform: translate(-50%, -50%) scale(1.8);
     top: 50%;
@@ -141,15 +129,15 @@ const year = date.getFullYear().toString().slice(-2);
 
 <!-- CUSTOM STYLES FOR EACH SPECIFIC PHOTO -->
 <style>
-  .date-photo[data-date="day"] .date-photo-img {
+  .date-photo[data-date="day"] .date-photo-wrapper img {
     object-position: 40% center;
   }
 
-  .date-photo[data-date="month"] .date-photo-img {
+  .date-photo[data-date="month"] .date-photo-wrapper img {
     object-position: 50% center;
   }
 
-  .date-photo[data-date="year"] .date-photo-img {
+  .date-photo[data-date="year"] .date-photo-wrapper img {
     object-position: 60% center;
   }
 </style>
@@ -169,7 +157,7 @@ const year = date.getFullYear().toString().slice(-2);
         e.stopPropagation();
 
         const img = wrapper.querySelector(
-          ".date-photo-img",
+          ".date-photo-wrapper img",
         ) as HTMLImageElement;
         img.classList.add("active");
 
@@ -180,7 +168,7 @@ const year = date.getFullYear().toString().slice(-2);
     OVERLAY_HTML.addEventListener("click", () => {
       IMAGES_WRAPPERS_HTML.forEach((wrapper) => {
         const img = wrapper.querySelector(
-          ".date-photo-img",
+          ".date-photo-wrapper img",
         ) as HTMLImageElement;
         img.classList.remove("active");
       });

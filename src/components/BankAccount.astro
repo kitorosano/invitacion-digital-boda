@@ -1,4 +1,5 @@
 ---
+import CopyIcon from "./icons/Copy.astro";
 interface Props {
   message: string;
   bankDetails: {
@@ -12,20 +13,28 @@ const {
   message,
   bankDetails: { bankName, accountNumber, accountHolder },
 } = Astro.props;
+
+const formattedAccountNumber = accountNumber.replace(/[^0-9]/g, "");
 ---
 
 <div class="bankaccount-container">
   <h2>Cuenta bancaria</h2>
 
-  <p class="bankaccount-message">
-    {message}
-  </p>
+  <p>{message}</p>
 
   <div class="bankaccount-content hidden">
     <p class="bankaccount-info">
       <span>{bankName}</span>
     </p>
-    <p class="bankaccount-info">{accountNumber}</p>
+    <a
+      href="javascript: void(0)"
+      id="account-number"
+      class="bankaccount-info"
+      data-account-number={formattedAccountNumber}
+    >
+      {accountNumber}
+      <CopyIcon />
+    </a>
     <p class="bankaccount-info">{accountHolder}</p>
   </div>
 
@@ -40,12 +49,12 @@ const {
     text-align: center;
   }
 
-  .bankaccount-container h2 {
+  .bankaccount-container > h2 {
     margin: 0 auto;
 
     font-size: 1.5rem;
     font-weight: 600;
-    color: var(--color-dark);
+    color: var(--color-text-dark);
     text-align: center;
     text-transform: uppercase;
     letter-spacing: 0.05em;
@@ -54,11 +63,11 @@ const {
     text-wrap: balance;
   }
 
-  .bankaccount-message {
+  .bankaccount-container > p {
     margin: 1rem auto;
 
     font-weight: 400;
-    color: var(--color-dark);
+    color: var(--color-text-dark);
 
     max-width: 70%;
     text-wrap: pretty;
@@ -93,14 +102,25 @@ const {
     margin: 0 auto;
 
     font-weight: 400;
-    color: var(--color-dark);
+    color: var(--color-text-dark);
     text-transform: uppercase;
     letter-spacing: 0.02em;
+
+    text-decoration: none;
   }
 
   .bankaccount-info span {
     font-weight: 700;
     margin-right: 0.5rem;
+  }
+
+  #account-number {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.25rem;
+
+    cursor: pointer;
   }
 
   .bankaccount-container button {
@@ -110,7 +130,7 @@ const {
     font-size: 1rem;
     font-weight: 500;
     text-transform: uppercase;
-    color: var(--color-light);
+    color: var(--color-text-light);
 
     border: none;
     border-radius: 10px;
@@ -124,7 +144,7 @@ const {
   }
 
   .bankaccount-container button:hover {
-    background-color: var(--color-primary);
+    background-color: var(--color-secondary);
   }
 </style>
 
@@ -135,8 +155,23 @@ const {
   const $BUTTON = document.querySelector(
     ".bankaccount-container button",
   ) as HTMLButtonElement;
+  const $ACCOUNT_NUMBER = document.getElementById(
+    "account-number",
+  ) as HTMLParagraphElement;
 
   $BUTTON.addEventListener("click", () => {
     $CONTENT.classList.toggle("hidden");
+  });
+
+  $ACCOUNT_NUMBER?.addEventListener("click", async () => {
+    const accountNumber = $ACCOUNT_NUMBER.dataset.accountNumber || "";
+    if (!accountNumber) return;
+
+    try {
+      await navigator.clipboard.writeText(accountNumber);
+    } catch (error) {
+      console.error("Error al copiar al portapapeles:", error);
+      return;
+    }
   });
 </script>

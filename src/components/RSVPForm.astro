@@ -54,12 +54,12 @@ const { toastDuration = 3000 } = Astro.props;
     text-align: center;
   }
 
-  .rsvp-container h2 {
+  .rsvp-container > h2 {
     margin: 0 auto;
 
     font-size: 1.5rem;
     font-weight: 600;
-    color: var(--color-dark);
+    color: var(--color-text-dark);
     text-transform: uppercase;
     letter-spacing: 0.05em;
 
@@ -67,12 +67,12 @@ const { toastDuration = 3000 } = Astro.props;
     text-wrap: balance;
   }
 
-  .rsvp-container p {
+  .rsvp-container > p {
     margin: 1rem auto 0 auto;
 
     font-size: 1rem;
     font-weight: 400;
-    color: var(--color-dark);
+    color: var(--color-text-dark);
 
     max-width: 70%;
     text-wrap: balance;
@@ -94,14 +94,14 @@ const { toastDuration = 3000 } = Astro.props;
     font-size: 1rem;
     font-weight: 400;
     letter-spacing: 0.02em;
-    color: var(--color-dark);
+    color: var(--color-text-dark);
     cursor: pointer;
     user-select: none;
   }
 
   .rsvp-options input[type="radio"] {
     margin-right: 0.5rem;
-    accent-color: var(--color-primary);
+    accent-color: var(--color-secondary);
     cursor: pointer;
   }
 
@@ -125,7 +125,7 @@ const { toastDuration = 3000 } = Astro.props;
     font-style: italic;
     letter-spacing: 0.02em;
 
-    color: var(--color-dark);
+    color: var(--color-text-dark);
     border: none;
     border-radius: 5px;
 
@@ -144,7 +144,7 @@ const { toastDuration = 3000 } = Astro.props;
     font-family: inherit;
     letter-spacing: 0.02em;
 
-    color: var(--color-dark);
+    color: var(--color-text-dark);
     border: none;
     border-radius: 5px;
     resize: vertical;
@@ -179,7 +179,7 @@ const { toastDuration = 3000 } = Astro.props;
     width: 60%;
 
     font-size: 0.8rem;
-    color: var(--color-light);
+    color: var(--color-text-light);
     letter-spacing: 0.02em;
     text-transform: uppercase;
     background-color: var(--color-dark);
@@ -192,12 +192,12 @@ const { toastDuration = 3000 } = Astro.props;
   }
 
   .rsvp-container button:hover {
-    background-color: var(--color-primary);
+    background-color: var(--color-secondary);
   }
 
   .rsvp-container button:disabled {
     background-color: var(--color-light);
-    color: var(--color-tertiary);
+    color: var(--color-quaternary);
     cursor: progress;
   }
 
@@ -206,7 +206,7 @@ const { toastDuration = 3000 } = Astro.props;
     margin: 1rem auto 0 auto;
 
     font-size: 1rem;
-    color: var(--color-dark);
+    color: var(--color-text-dark);
     letter-spacing: 0.02em;
   }
 </style>
@@ -229,7 +229,7 @@ const { toastDuration = 3000 } = Astro.props;
     border-radius: 5px;
 
     background: var(--color-primary);
-    color: var(--color-dark);
+    color: var(--color-text-dark);
 
     font-size: 1rem;
     font-weight: 400;
@@ -355,7 +355,10 @@ const { toastDuration = 3000 } = Astro.props;
 
     setTimeout(() => {
       $TOAST.classList.remove("show");
-      $TOAST_PROGRESS.style.width = "100%";
+
+      setTimeout(() => {
+        $TOAST_PROGRESS.style.width = "100%";
+      }, 1000);
     }, duration);
   };
 </script>

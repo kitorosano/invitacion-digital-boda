@@ -8,10 +8,8 @@ const { quote, footer } = Astro.props;
 ---
 
 <div class="quote-container">
-  <p class="quote-text">
-    {quote}
-  </p>
-  <h2 class={`quote-footer`}>{footer}</h2>
+  <p>{quote}</p>
+  <h2>{footer}</h2>
 </div>
 
 <style>
@@ -23,13 +21,12 @@ const { quote, footer } = Astro.props;
     text-align: center;
     background-color: var(--color-dark);
     letter-spacing: 0.02em;
-
   }
 
-  .quote-text {
+  .quote-container > p {
     margin: 0 auto;
 
-    color: var(--color-light);
+    color: var(--color-text-light);
 
     line-height: 1.5;
     font-size: 1rem;
@@ -39,9 +36,9 @@ const { quote, footer } = Astro.props;
     text-wrap: pretty;
   }
 
-  .quote-footer {
+  .quote-container > h2 {
     letter-spacing: 0.05em;
-    color: var(--color-light);
+    color: var(--color-text-light);
     font-size: 0.8rem;
     font-weight: 600;
   }

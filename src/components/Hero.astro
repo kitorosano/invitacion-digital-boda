@@ -9,7 +9,7 @@ const { couple, title, img } = Astro.props;
 ---
 
 <div class="hero-container">
-  <img class="hero-img" src={img} alt={title} />
+  <img src={img} alt={title} />
 
   <div class="hero-content">
     <p class="hero-title">{title}</p>
@@ -25,7 +25,7 @@ const { couple, title, img } = Astro.props;
     position: relative;
   }
 
-  .hero-img {
+  .hero-container img {
     position: absolute;
     left: 50%;
     transform: translate(-50%);
@@ -46,7 +46,7 @@ const { couple, title, img } = Astro.props;
     width: 100%;
 
     height: 30px;
-    background: linear-gradient(to top, var(--color-tertiary), transparent);
+    background: linear-gradient(to top, var(--bg-color), transparent);
   }
 
   .hero-content {
@@ -71,7 +71,7 @@ const { couple, title, img } = Astro.props;
     font-size: 1.5rem;
     font-weight: 300;
     letter-spacing: 0.3rem;
-    color: var(--color-light);
+    color: var(--color-text-light);
     text-shadow: 1px 2px 2px rgba(0, 0, 0, 0.7);
   }
 
@@ -81,7 +81,7 @@ const { couple, title, img } = Astro.props;
     font-family: var(--font-secondary);
     font-size: 3rem;
     word-spacing: 0.5rem;
-    color: var(--color-light);
+    color: var(--color-text-light);
     text-shadow: 2px 4px 4px rgba(0, 0, 0, 0.7);
   }
 </style>

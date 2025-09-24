@@ -15,6 +15,7 @@ const { title } = Astro.props;
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
+    <meta name="format-detection" content="telephone=no" />
     <title>{title}</title>
 
     <ClientRouter />
@@ -40,15 +41,21 @@ const { title } = Astro.props;
     --color-primary: #cbad8d;
     --color-secondary: #a48374;
     --color-tertiary: #d1c7bd;
+    --color-quaternary: #d1c7bd;
 
     --color-light: #f1ede6;
     --color-dark: #3a2d28;
+
+    --color-text-light: #f1ede6;
+    --color-text-dark: #3a2d28;
+
+    --bg-color: var(--color-tertiary);
   }
 
   html {
     font-family: var(--font-primary);
-    background: var(--color-tertiary);
-    color: var(--color-dark);
+    background: var(--bg-color);
+    color: var(--color-text-dark);
   }
 
   body {

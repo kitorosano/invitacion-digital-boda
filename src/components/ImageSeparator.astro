@@ -8,7 +8,7 @@ const { src, alt } = Astro.props;
 ---
 
 <div class="image-separator-container">
-  <img class="image-separator" src={src} alt={alt} />
+  <img src={src} alt={alt} />
 </div>
 
 <style>
@@ -21,7 +21,7 @@ const { src, alt } = Astro.props;
     text-align: center;
   }
 
-  .image-separator {
+  .image-separator-container img {
     width: 110%;
 
     transform: translateX(-4%);
@@ -39,7 +39,7 @@ const { src, alt } = Astro.props;
     z-index: 1;
 
     height: 20px;
-    background: linear-gradient(to top, transparent, var(--color-tertiary));
+    background: linear-gradient(to top, transparent, var(--bg-color));
   }
   .image-separator-container::after {
     content: "";
@@ -50,6 +50,6 @@ const { src, alt } = Astro.props;
     z-index: 1;
 
     height: 50px;
-    background: linear-gradient(to top, var(--color-tertiary), transparent);
+    background: linear-gradient(to top, var(--bg-color), transparent);
   }
 </style>
