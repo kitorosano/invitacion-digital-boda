@@ -6,8 +6,9 @@ interface Props {
   endDate: Date;
   details: string;
   location: string;
+  filename: string;
 }
-const { text, startDate, endDate, details, location } = Astro.props;
+const { text, startDate, endDate, details, location, filename } = Astro.props;
 
 const encodedText = encodeURIComponent(text);
 const formattedStartDate = dateForCalendar(startDate);
@@ -22,7 +23,7 @@ const googleCalendarUrl = `https://www.google.com/calendar/render?action=TEMPLAT
   <a
     id="link-ios"
     href="/api/schedule"
-    download="evento-boda-kebu-vicky.ics"
+    download={`${filename}.ics`}
     class="schedule-link">Agendar recordatorio</a
   >
 

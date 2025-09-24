@@ -67,6 +67,11 @@ export default defineConfig({
         context: "server",
         access: "public",
       }),
+      SCHEDULE_DOWNLOAD_FILENAME: envField.string({
+        default: "evento-boda",
+        context: "server",
+        access: "public",
+      }),
       // Quote Section
       QUOTE_TEXT: envField.string({
         default: "",
@@ -155,6 +160,27 @@ export default defineConfig({
       }),
       DRESS_CODE_COLORS_TO_AVOID: envField.string({
         default: "", // Colores separados por comas
+        context: "server",
+        access: "public",
+      }),
+      // Bank Account Section
+      BANK_ACCOUNT_MESSAGE: envField.string({
+        default: "Lo más importante es tu presencia, pero si deseas hacernos un regalo aquí tienes nuestros datos.",
+        context: "server",
+        access: "public",
+      }),
+      BANK_NAME: envField.string({
+        default: "",
+        context: "server",
+        access: "public",
+      }),
+      ACCOUNT_NUMBER: envField.string({
+        default: "",
+        context: "server",
+        access: "public",
+      }),
+      ACCOUNT_HOLDER: envField.string({
+        default: "",
         context: "server",
         access: "public",
       }),

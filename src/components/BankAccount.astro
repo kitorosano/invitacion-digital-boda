@@ -1,0 +1,142 @@
+---
+interface Props {
+  message: string;
+  bankDetails: {
+    bankName: string;
+    accountNumber: string;
+    accountHolder: string;
+  };
+}
+
+const {
+  message,
+  bankDetails: { bankName, accountNumber, accountHolder },
+} = Astro.props;
+---
+
+<div class="bankaccount-container">
+  <h2>Cuenta bancaria</h2>
+
+  <p class="bankaccount-message">
+    {message}
+  </p>
+
+  <div class="bankaccount-content hidden">
+    <p class="bankaccount-info">
+      <span>{bankName}</span>
+    </p>
+    <p class="bankaccount-info">{accountNumber}</p>
+    <p class="bankaccount-info">{accountHolder}</p>
+  </div>
+
+  <button>Ver datos bancarios</button>
+</div>
+
+<style>
+  .bankaccount-container {
+    margin: 3rem auto 0 auto;
+    padding: 0.5rem 0;
+    width: 100%;
+    text-align: center;
+  }
+
+  .bankaccount-container h2 {
+    margin: 0 auto;
+
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--color-dark);
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+
+    max-width: 50%;
+    text-wrap: balance;
+  }
+
+  .bankaccount-message {
+    margin: 1rem auto;
+
+    font-weight: 400;
+    color: var(--color-dark);
+
+    max-width: 70%;
+    text-wrap: pretty;
+    line-height: 1.5;
+    letter-spacing: 0.02em;
+  }
+
+  .bankaccount-content {
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    width: 70%;
+    font-size: 1rem;
+    line-height: 2;
+    height: 100%;
+
+    opacity: 1;
+    transition: all 0.3s ease;
+  }
+
+  .bankaccount-content.hidden {
+    height: 0.01%;
+    opacity: 0;
+    font-size: 0;
+    pointer-events: none;
+  }
+
+  .bankaccount-info {
+    margin: 0 auto;
+
+    font-weight: 400;
+    color: var(--color-dark);
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+  }
+
+  .bankaccount-info span {
+    font-weight: 700;
+    margin-right: 0.5rem;
+  }
+
+  .bankaccount-container button {
+    margin: 1rem auto 0 auto;
+    padding: 1rem 2rem;
+
+    font-size: 1rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    color: var(--color-light);
+
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+
+    background-color: var(--color-dark);
+    transition: all 0.3s ease;
+
+    height: 100%;
+    opacity: 1;
+  }
+
+  .bankaccount-container button:hover {
+    background-color: var(--color-primary);
+  }
+</style>
+
+<script>
+  const $CONTENT = document.querySelector(
+    ".bankaccount-content",
+  ) as HTMLDivElement;
+  const $BUTTON = document.querySelector(
+    ".bankaccount-container button",
+  ) as HTMLButtonElement;
+
+  $BUTTON.addEventListener("click", () => {
+    $CONTENT.classList.toggle("hidden");
+  });
+</script>

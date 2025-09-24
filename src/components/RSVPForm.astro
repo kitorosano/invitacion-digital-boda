@@ -26,7 +26,7 @@ const { toastDuration = 3000 } = Astro.props;
     <input name="name" type="text" placeholder="Nombre y apellido" required />
     <input hidden name="email" type="email" placeholder="Correo electrónico" />
     <input
-      class="isHidding"
+      class="hidden"
       name="song"
       type="text"
       placeholder="¿Qué canción no puede faltar?"
@@ -48,7 +48,7 @@ const { toastDuration = 3000 } = Astro.props;
 <style>
   .rsvp-container {
     width: 100%;
-    margin: 4rem 0 0 0;
+    margin: 3rem 0 0 0;
     padding: 0.5rem 0;
 
     text-align: center;
@@ -156,10 +156,11 @@ const { toastDuration = 3000 } = Astro.props;
     font-style: normal;
   }
 
-  .rsvp-fields input.isHidding {
+  .rsvp-fields input.hidden {
     height: 0.01rem;
     padding: 0;
     opacity: 0;
+    pointer-events: none;
   }
 
   .rsvp-fields input::placeholder,
@@ -286,13 +287,6 @@ const { toastDuration = 3000 } = Astro.props;
     'input[name="song"]',
   ) as HTMLInputElement;
   const $BUTTON = $FORM.querySelector("button") as HTMLButtonElement;
-
-  $RADIO_YES.addEventListener("change", () => {
-    $INPUT_SONG.classList.remove("isHidding");
-  });
-  $RADIO_NO.addEventListener("change", () => {
-    $INPUT_SONG.classList.add("isHidding");
-  });
   const $TOAST = document.querySelector(".toast-container") as HTMLDivElement;
   const $TOAST_MESSAGE = $TOAST.querySelector(
     ".toast-message",
@@ -301,6 +295,13 @@ const { toastDuration = 3000 } = Astro.props;
     ".toast-progress",
   ) as HTMLDivElement;
   const duration = Number($TOAST.dataset.duration);
+
+  $RADIO_YES.addEventListener("change", () => {
+    $INPUT_SONG.classList.remove("hidden");
+  });
+  $RADIO_NO.addEventListener("change", () => {
+    $INPUT_SONG.classList.add("hidden");
+  });
 
   $FORM.addEventListener("submit", async (event) => {
     event.preventDefault();

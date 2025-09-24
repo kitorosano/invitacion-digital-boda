@@ -2,6 +2,7 @@
 import type { APIRoute } from "astro";
 import {
   SCHEDULE_DETAILS,
+  SCHEDULE_DOWNLOAD_FILENAME,
   SCHEDULE_END_DATE,
   SCHEDULE_LOCATION,
   SCHEDULE_START_DATE,
@@ -32,7 +33,7 @@ export const GET: APIRoute = async () => {
   return new Response(ics, {
     headers: {
       "Content-Type": "text/calendar",
-      "Content-Disposition": 'attachment; filename="evento-kebu-vicky.ics"',
+      "Content-Disposition": `attachment; filename="${SCHEDULE_DOWNLOAD_FILENAME}.ics"`,
     },
   });
 };
