@@ -19,26 +19,20 @@ const {
   image,
   imagePosition = "left",
 } = Astro.props;
-
-const imageLeft = imagePosition === "left";
 ---
 
 <div class="event-details-container">
-  <section
-    class={`event-details-section ${imageLeft ? "order-right" : "order-left"}`}
-  >
+  <picture hidden={imagePosition === "left"}>
     <img src={image} alt={name} />
-  </section>
+  </picture>
 
-  <section
-    class={`event-details-section ${imageLeft ? "order-left" : "order-right"}`}
-  >
+  <section>
     <h2>{name}</h2>
 
-    <div class={`event-info-section`}>
-      <p class="event-info">{place}</p>
-      <p class="event-time">{time}</p>
-      <p class="event-info">{address}</p>
+    <div class={`event-details-info`}>
+      <p class="event-info-text">{place}</p>
+      <p class="event-info-time">{time}</p>
+      <p class="event-info-text">{address}</p>
     </div>
 
     <a href={mapLink} target="_blank" rel="noopener noreferrer">
@@ -46,47 +40,54 @@ const imageLeft = imagePosition === "left";
       Ver Ubicación</a
     >
   </section>
+
+  <picture hidden={imagePosition === "right"}>
+    <img src={image} alt={name} />
+  </picture>
 </div>
 
+<!-- MOBILE STYLES -->
 <style>
   .event-details-container {
     width: 100%;
-    margin: 2rem 0 0 0;
+    margin: 2rem auto 3rem auto;
 
     display: flex;
     flex-direction: row;
+    justify-content: center;
+    gap: 1rem;
   }
 
-  .event-details-section {
-    width: 100%;
-
-    position: relative;
-    display: flex;
-    flex-direction: column;
-
-    color: var(--color-text-dark);
-
-    letter-spacing: 0.02em;
+  picture {
+    width: 30%;
+    height: 100%;
+    aspect-ratio: 1/2;
   }
 
-  .event-details-section.order-left {
-    order: 1;
-  }
-
-  .event-details-section.order-right {
-    order: 2;
-  }
-
-  .event-details-section img {
+  picture img {
     width: 100%;
     height: 100%;
 
     object-fit: cover;
     object-position: center;
     pointer-events: none;
+
+    border-top-left-radius: 50px;
+    border-top-right-radius: 50px;
+
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   }
 
-  .event-details-section h2 {
+  section {
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+
+    color: var(--color-text-dark);
+    letter-spacing: 0.02em;
+  }
+
+  section h2 {
     margin: 0;
 
     font-family: var(--font-secondary);
@@ -96,25 +97,17 @@ const imageLeft = imagePosition === "left";
     text-align: center;
   }
 
-  .event-info-section {
+  .event-details-info {
     height: 100%;
+    margin: 0;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    gap: 1rem;
+    align-items: center;
+    text-align: center;
   }
 
-  .event-details-section.order-left .event-info-section {
-    padding-left: 1.5rem;
-    text-align: left;
-  }
-
-  .event-details-section.order-right .event-info-section {
-    padding-right: 1.5rem;
-    text-align: right;
-  }
-
-  .event-info {
+  .event-info-text {
     margin: 0;
 
     max-width: 80%;
@@ -122,25 +115,17 @@ const imageLeft = imagePosition === "left";
     text-wrap: balance;
   }
 
-  .event-details-section.order-left .event-info {
-    margin-right: auto;
-  }
-  .event-details-section.order-right .event-info {
-    margin-left: auto;
-  }
+  .event-info-time {
+    margin: 0.5rem 0;
 
-  .event-time {
-    margin: 0;
-
-    font-size: 1.5rem;
-    font-weight: 400;
+    font-weight: 600;
   }
 
-  .event-details-section a {
+  section a {
     justify-content: center;
 
-    padding: 0.8rem;
-    background: var(--color-dark);
+    padding: 0.75rem 1rem;
+    border-radius: 10px;
 
     color: var(--color-text-light);
     font-size: 0.8rem;
@@ -148,10 +133,11 @@ const imageLeft = imagePosition === "left";
     display: inline-flex;
 
     transition: background 0.3s ease;
+    background: var(--color-dark);
     z-index: 2;
   }
 
-  .event-details-section a:hover {
+  section a:hover {
     background: var(--color-secondary);
   }
 </style>

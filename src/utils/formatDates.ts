@@ -45,13 +45,21 @@ export const dateForCalendar = (date: Date): string => {
 /**
  * Agrega AM o PM a una hora en formato "HH:MM"
  * @param time - Hora en formato "HH:MM".
+ * @param format24 - Si es true, devuelve la hora en formato 24 horas. Por defecto es false.
  * @returns Hora en formato "H:MM AM/PM".
  */
-export const timeForEvent = (time: string): string => {
+export const timeForEvent = (time: string, format24 = false): string => {
   if (!time) return "";
 
   const [hours, minutes] = time.split(":").map(Number);
   const period = hours >= 12 ? "PM" : "AM";
   const adjustedHours = hours % 12 || 12;
+
+  if (format24) {
+    return `${hours.toString().padStart(2, "0")}:${minutes
+      .toString()
+      .padStart(2, "0")} hs.`;
+  }
+
   return `${adjustedHours}:${minutes.toString().padStart(2, "0")} ${period}`;
 };
