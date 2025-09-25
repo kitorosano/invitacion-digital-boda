@@ -1,4 +1,6 @@
 ---
+import Analytics from "@vercel/analytics/astro";
+import SpeedInsights from "@vercel/speed-insights/astro";
 import { ClientRouter } from "astro:transitions";
 
 interface Props {
@@ -18,13 +20,14 @@ const { title } = Astro.props;
     <meta name="format-detection" content="telephone=no" />
     <title>{title}</title>
 
+    <SpeedInsights />
+    <Analytics />
     <ClientRouter />
   </head>
   <body>
     <slot />
   </body>
 </html>
-
 <style is:global>
   @font-face {
     font-family: "Aesthetic";
