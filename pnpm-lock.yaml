@@ -9,26 +9,11 @@ importers:
   .:
     dependencies:
       '@astrojs/vercel':
-        specifier: 8.2.7
-        version: 8.2.7(astro@5.13.7)
-      '@date-fns/tz':
-        specifier: 1.4.1
-        version: 1.4.1
-      '@date-fns/utc':
-        specifier: ^2.1.1
-        version: 2.1.1
-      '@vercel/analytics':
-        specifier: ^1.5.0
-        version: 1.5.0
-      '@vercel/speed-insights':
-        specifier: ^1.2.0
-        version: 1.2.0
+        specifier: ^8.2.7
+        version: 8.2.7(astro@5.13.8)
       astro:
-        specifier: 5.13.7
-        version: 5.13.7(typescript@5.9.2)
-      date-fns:
-        specifier: 4.1.0
-        version: 4.1.0
+        specifier: ^5.13.7
+        version: 5.13.8(typescript@5.9.2)
 
 packages:
 
@@ -90,7 +75,7 @@ packages:
       - supports-color
     dev: false
 
-  /@astrojs/vercel@8.2.7(astro@5.13.7):
+  /@astrojs/vercel@8.2.7(astro@5.13.8):
     resolution: {integrity: sha512-QeozkGU/0qch8MZlKJDKt+Dp8IUKA/E4MxnecVz1J0eVaXB6ao/HYcW7Tcr8LpWYU77Twhc60SgHIjrE3j2nYg==}
     peerDependencies:
       astro: ^5.0.0
@@ -100,7 +85,7 @@ packages:
       '@vercel/functions': 2.2.13
       '@vercel/nft': 0.29.4
       '@vercel/routing-utils': 5.1.1
-      astro: 5.13.7(typescript@5.9.2)
+      astro: 5.13.8(typescript@5.9.2)
       esbuild: 0.25.10
       tinyglobby: 0.2.15
     transitivePeerDependencies:
@@ -151,14 +136,6 @@ packages:
       fontkit: 2.0.4
     transitivePeerDependencies:
       - encoding
-    dev: false
-
-  /@date-fns/tz@1.4.1:
-    resolution: {integrity: sha512-P5LUNhtbj6YfI3iJjw5EL9eUAG6OitD0W3fWQcpQjDRc/QIsL0tRNuO1PcDvPccWL1fSTXXdE1ds+l95DV/OFA==}
-    dev: false
-
-  /@date-fns/utc@2.1.1:
-    resolution: {integrity: sha512-SlJDfG6RPeEX8wEVv6ZB3kak4MmbtyiI2qX/5zuKdordbrhB/iaJ58GVMZgJ6P1sJaM1gMgENFYYeg1JWrCFrA==}
     dev: false
 
   /@emnapi/runtime@1.5.0:
@@ -1035,31 +1012,6 @@ packages:
       ajv: 6.12.6
     dev: false
 
-  /@vercel/speed-insights@1.2.0:
-    resolution: {integrity: sha512-y9GVzrUJ2xmgtQlzFP2KhVRoCglwfRQgjyfY607aU0hh0Un6d0OUyrJkjuAlsV18qR4zfoFPs/BiIj9YDS6Wzw==}
-    requiresBuild: true
-    peerDependencies:
-      '@sveltejs/kit': ^1 || ^2
-      next: '>= 13'
-      react: ^18 || ^19 || ^19.0.0-rc
-      svelte: '>= 4'
-      vue: ^3
-      vue-router: ^4
-    peerDependenciesMeta:
-      '@sveltejs/kit':
-        optional: true
-      next:
-        optional: true
-      react:
-        optional: true
-      svelte:
-        optional: true
-      vue:
-        optional: true
-      vue-router:
-        optional: true
-    dev: false
-
   /abbrev@3.0.1:
     resolution: {integrity: sha512-AO2ac6pjRB3SJmGJo+v5/aK6Omggp6fsLrs6wN9bd35ulu4cCwaAU9+7ZhXjeqHVkaHThLuzH0nZr0YpCDhygg==}
     engines: {node: ^18.17.0 || >=20.5.0}
@@ -1144,8 +1096,8 @@ packages:
     resolution: {integrity: sha512-I1jXZMjAgCMmxT4qxXfPXa6SthSoE8h6gkSI9BGGNv8mP8G/v0blc+qFnZu6K42vTOiuME596QaLO0TP3Lk0xg==}
     dev: false
 
-  /astro@5.13.7(typescript@5.9.2):
-    resolution: {integrity: sha512-Of2tST7ErbE4y1dVb4aWDXaQSIRBAfraJ4jDqaA3PzPRJOn6Ina36+tQ+8BezjYqiWwRRJdOEE07PRAJXnsddw==}
+  /astro@5.13.8(typescript@5.9.2):
+    resolution: {integrity: sha512-SNURCAlfL4Z2ylF3NMmNk/s3RnSDSolXALXtH0gsN8hFZ7oppnF0sXVQLAGAxnzADemfRp3/9G58EALZ36qUdA==}
     engines: {node: 18.20.8 || ^20.3.0 || >=22.0.0, npm: '>=9.6.5', pnpm: '>=7.1.0'}
     hasBin: true
     dependencies:
@@ -1437,10 +1389,6 @@ packages:
     resolution: {integrity: sha512-/Tb/JcjK111nNScGob5MNtsntNM1aCNUDipB/TkwZFhyDrrE47SOx/18wF2bbjgc3ZzCSKW1T5nt5EbFoAz/Vg==}
     engines: {node: '>=4'}
     hasBin: true
-    dev: false
-
-  /date-fns@4.1.0:
-    resolution: {integrity: sha512-Ukq0owbQXxa/U3EGtsdVBkR1w7KOQ5gIBqdH2hkvknzZPYvBxb/aa6E8L7tmjFtkwZBu3UXBbjIgPo/Ez4xaNg==}
     dev: false
 
   /debug@4.4.3:
