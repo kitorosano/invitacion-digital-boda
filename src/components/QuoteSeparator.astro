@@ -29,7 +29,7 @@ const { quote, footer } = Astro.props;
     color: var(--color-text-light);
 
     line-height: 1.5;
-    font-size: 1rem;
+    font-size: var(--text-size-md);
     font-style: italic;
 
     max-width: 80%;
@@ -39,7 +39,16 @@ const { quote, footer } = Astro.props;
   .quote-container > h2 {
     letter-spacing: 0.05em;
     color: var(--color-text-light);
-    font-size: 0.8rem;
+    font-size: var(--text-size-sm);
     font-weight: 600;
+  }
+
+  @media (min-width: 768px) {
+  }
+
+  @media (min-width: 1024px) {
+    .quote-container {
+      padding: 1rem 0;
+    }
   }
 </style>

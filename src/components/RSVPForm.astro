@@ -57,7 +57,7 @@ const { toastDuration = 3000 } = Astro.props;
   .rsvp-container > h2 {
     margin: 0 auto;
 
-    font-size: 1.5rem;
+    font-size: var(--text-size-lg);
     font-weight: 600;
     color: var(--color-text-dark);
     text-transform: uppercase;
@@ -70,7 +70,7 @@ const { toastDuration = 3000 } = Astro.props;
   .rsvp-container > p {
     margin: 1rem auto 0 auto;
 
-    font-size: 1rem;
+    font-size: var(--text-size-md);
     font-weight: 400;
     color: var(--color-text-dark);
 
@@ -91,7 +91,7 @@ const { toastDuration = 3000 } = Astro.props;
 
   .rsvp-options label {
     padding: 1rem 0;
-    font-size: 1rem;
+    font-size: var(--text-size-md);
     font-weight: 400;
     letter-spacing: 0.02em;
     color: var(--color-text-dark);
@@ -117,12 +117,12 @@ const { toastDuration = 3000 } = Astro.props;
 
   .rsvp-fields input {
     width: 80%;
-    height: 1.2rem;
     padding: 0.6rem 1rem;
 
-    font-size: 1rem;
+    font-size: var(--text-size-md);
     font-weight: 400;
     font-style: italic;
+    font-family: var(--font-primary);
     letter-spacing: 0.02em;
 
     color: var(--color-text-dark);
@@ -138,10 +138,10 @@ const { toastDuration = 3000 } = Astro.props;
     width: 80%;
     padding: 0.6rem 1rem;
 
-    font-size: 1rem;
+    font-size: var(--text-size-md);
     font-weight: 400;
     font-style: italic;
-    font-family: inherit;
+    font-family: var(--font-primary);
     letter-spacing: 0.02em;
 
     color: var(--color-text-dark);
@@ -165,7 +165,7 @@ const { toastDuration = 3000 } = Astro.props;
 
   .rsvp-fields input::placeholder,
   .rsvp-fields textarea::placeholder {
-    font-weight: 400;
+    font-weight: 300;
   }
 
   .rsvp-fields input:focus,
@@ -176,9 +176,8 @@ const { toastDuration = 3000 } = Astro.props;
   .rsvp-container button {
     margin: 1rem auto 0 auto;
     padding: 0.6rem 2rem;
-    width: 60%;
 
-    font-size: 0.8rem;
+    font-size: var(--text-size-sm);
     color: var(--color-text-light);
     letter-spacing: 0.02em;
     text-transform: uppercase;
@@ -201,17 +200,6 @@ const { toastDuration = 3000 } = Astro.props;
     cursor: progress;
   }
 
-  .rsvp-message {
-    display: block;
-    margin: 1rem auto 0 auto;
-
-    font-size: 1rem;
-    color: var(--color-text-dark);
-    letter-spacing: 0.02em;
-  }
-</style>
-
-<style>
   .toast-container {
     position: fixed;
     top: 1rem;
@@ -223,18 +211,13 @@ const { toastDuration = 3000 } = Astro.props;
     justify-content: center;
     align-items: center;
 
-    min-width: 300px;
-    max-width: 90vw;
-    padding: 1rem 2rem;
+    width: 90%;
+    height: auto;
     border-radius: 5px;
+    overflow: hidden;
 
     background: var(--color-primary);
     color: var(--color-text-dark);
-
-    font-size: 1rem;
-    font-weight: 400;
-    letter-spacing: 0.02em;
-    text-align: center;
 
     opacity: 0;
     pointer-events: none;
@@ -248,7 +231,15 @@ const { toastDuration = 3000 } = Astro.props;
   }
 
   .toast-content {
+    padding: 1rem 2rem;
     z-index: 1001;
+  }
+
+  .toast-message {
+    font-size: 1rem;
+    font-weight: 400;
+    letter-spacing: 0.02rem;
+    text-align: center;
   }
 
   .toast-progress {
@@ -268,6 +259,45 @@ const { toastDuration = 3000 } = Astro.props;
     }
     to {
       transform: translate(-50%, 0);
+    }
+  }
+
+  @media (min-width: 768px) {
+  }
+
+  @media (min-width: 1024px) {
+    .rsvp-fields input,
+    .rsvp-fields textarea {
+      width: 60%;
+      padding: 0.8rem 1.2rem;
+    }
+
+    .rsvp-container button {
+      padding: 0.8rem 2.5rem;
+    }
+
+    .toast-container {
+      width: auto;
+      left: auto;
+      right: 2rem;
+      transform: translateX(0);
+    }
+
+    .toast-content {
+      padding: 1.5rem 2rem;
+    }
+
+    .toast-message {
+      font-size: 1.2rem;
+    }
+
+    @keyframes slideDown {
+      from {
+        transform: translate(0, -100%);
+      }
+      to {
+        transform: translate(0, 0);
+      }
     }
   }
 </style>

@@ -11,10 +11,10 @@ const { message, colorsToAvoid } = Astro.props;
   <h2>Vestimenta formal</h2>
   <p>{message}</p>
 
-  <ul class="dresscode-colors">
-    <li style={`background:${colorsToAvoid[0]}`} class="dresscode-color"></li>
-    <li style={`background:${colorsToAvoid[1]}`} class="dresscode-color"></li>
-    <li style={`background:${colorsToAvoid[2]}`} class="dresscode-color"></li>
+  <ul>
+    <li style={`background:${colorsToAvoid[0]}`}></li>
+    <li style={`background:${colorsToAvoid[1]}`}></li>
+    <li style={`background:${colorsToAvoid[2]}`}></li>
   </ul>
 </div>
 
@@ -29,7 +29,7 @@ const { message, colorsToAvoid } = Astro.props;
   .dresscode-container > h2 {
     margin: 0 auto;
 
-    font-size: 1.5rem;
+    font-size: var(--text-size-lg);
     font-weight: 600;
     color: var(--color-text-dark);
     text-align: center;
@@ -43,7 +43,7 @@ const { message, colorsToAvoid } = Astro.props;
   .dresscode-container > p {
     margin: 1rem auto 0 auto;
 
-    font-size: 1rem;
+    font-size: var(--text-size-md);
     font-weight: 400;
     color: var(--color-text-dark);
 
@@ -53,40 +53,60 @@ const { message, colorsToAvoid } = Astro.props;
     letter-spacing: 0.02em;
   }
 
-  .dresscode-colors {
+  .dresscode-container > ul {
     margin: 1.5rem auto 0 auto;
     padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    list-style: none;
+
+    display: inline-block;
     position: relative;
+
+    width: 1px;
     height: 3rem;
-    width: 6rem;
+    list-style: none;
   }
 
-  .dresscode-color {
+  .dresscode-container > ul li {
     width: 3rem;
     height: 3rem;
     border-radius: 50%;
-    position: relative;
     z-index: 1;
-    margin: 0 0.2rem;
-    box-sizing: border-box;
 
     position: absolute;
   }
 
-  .dresscode-color:nth-child(1) {
-    left: -0.5rem;
+  .dresscode-container > ul li:nth-child(1) {
+    left: -3.5rem;
     z-index: 1;
   }
-  .dresscode-color:nth-child(2) {
-    left: 1.5rem;
+  .dresscode-container > ul li:nth-child(2) {
+    left: -1.5rem;
     z-index: 2;
   }
-  .dresscode-color:nth-child(3) {
-    left: 3.5rem;
+  .dresscode-container > ul li:nth-child(3) {
+    left: 0.5rem;
     z-index: 3;
+  }
+
+  @media (min-width: 768px) {
+  }
+
+  @media (min-width: 1024px) {
+    .dresscode-container > ul li {
+      width: 5rem;
+      height: 5rem;
+    }
+
+    .dresscode-container > ul li:nth-child(1) {
+      left: -6rem;
+      z-index: 1;
+    }
+    .dresscode-container > ul li:nth-child(2) {
+      left: -2.5rem;
+      z-index: 2;
+    }
+    .dresscode-container > ul li:nth-child(3) {
+      left: 1rem;
+      z-index: 3;
+    }
   }
 </style>

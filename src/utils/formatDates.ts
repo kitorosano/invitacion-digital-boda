@@ -58,7 +58,7 @@ export const timeForEvent = (time: string, format24 = false): string => {
   if (format24) {
     return `${hours.toString().padStart(2, "0")}:${minutes
       .toString()
-      .padStart(2, "0")} hs.`;
+      .padStart(2, "0")} hrs.`;
   }
 
   return `${adjustedHours}:${minutes.toString().padStart(2, "0")} ${period}`;

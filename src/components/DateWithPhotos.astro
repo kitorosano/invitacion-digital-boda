@@ -34,6 +34,7 @@ const year = date.getFullYear().toString().slice(-2);
 </div>
 
 <style>
+  /* MOBILE STYLES */
   .date-photo-container {
     width: 100%;
     display: flex;
@@ -78,7 +79,7 @@ const year = date.getFullYear().toString().slice(-2);
 
   .date-photo-text {
     margin: 0;
-    font-size: 4rem;
+    font-size: var(--text-size-3xl);
     font-weight: 400;
     color: var(--color-text-dark);
   }
@@ -125,10 +126,7 @@ const year = date.getFullYear().toString().slice(-2);
 
     pointer-events: none;
   }
-</style>
 
-<!-- CUSTOM STYLES FOR EACH SPECIFIC PHOTO -->
-<style>
   .date-photo[data-date="day"] .date-photo-wrapper img {
     object-position: 40% center;
   }

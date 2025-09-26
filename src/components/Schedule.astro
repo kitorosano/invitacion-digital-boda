@@ -53,6 +53,7 @@ const googleCalendarUrl = `https://www.google.com/calendar/render?action=TEMPLAT
     color: var(--color-text-light);
 
     text-decoration: none;
+    font-size: var(--text-size-md);
     font-weight: 500;
     text-transform: uppercase;
 
@@ -62,6 +63,16 @@ const googleCalendarUrl = `https://www.google.com/calendar/render?action=TEMPLAT
 
   .schedule-link:hover {
     background: var(--color-secondary);
+  }
+
+  @media (min-width: 768px) {
+  }
+
+  
+  @media (min-width: 1024px) {
+    .schedule-link {
+      padding: 1rem 3rem;
+    }
   }
 </style>
 

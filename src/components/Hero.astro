@@ -69,7 +69,7 @@ const { couple, title, img } = Astro.props;
     margin: 0;
 
     text-transform: uppercase;
-    font-size: 1.5rem;
+    font-size: var(--text-size-lg);
     font-weight: 300;
     letter-spacing: 0.3rem;
     color: var(--color-text-light);
@@ -80,7 +80,7 @@ const { couple, title, img } = Astro.props;
     margin: 0;
 
     font-family: var(--font-secondary);
-    font-size: 3rem;
+    font-size: var(--text-size-2xl);
     word-spacing: 0.5rem;
     color: var(--color-text-light);
     text-shadow: 2px 4px 4px rgba(0, 0, 0, 0.7);
@@ -98,14 +98,6 @@ const { couple, title, img } = Astro.props;
       width: 100%;
       height: 100%;
       object-position: 50% 40%;
-    }
-
-    .hero-title {
-      font-size: 2rem;
-      letter-spacing: 0.4rem;
-    }
-    .hero-couple {
-      font-size: 4rem;
     }
   }
 </style>
