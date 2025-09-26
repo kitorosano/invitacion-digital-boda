@@ -1,4 +1,5 @@
 // @ts-check
+import favicons from "astro-favicons";
 import { defineConfig, envField } from "astro/config";
 
 import vercel from "@astrojs/vercel";
@@ -6,6 +7,8 @@ import vercel from "@astrojs/vercel";
 // https://astro.build/config
 export default defineConfig({
   output: "server",
+  adapter: vercel(),
+  integrations: [favicons()],
   env: {
     schema: {
       // Global
@@ -152,6 +155,11 @@ export default defineConfig({
         context: "server",
         access: "public",
       }),
+      RSVP_IS_AVAILABLE: envField.boolean({
+        default: true,
+        context: "server",
+        access: "public",
+      }),
       // Dress Code Section
       DRESS_CODE_MESSAGE: envField.string({
         default: "Les pedimos de favor a los invitados evitar estos colores:",
@@ -165,7 +173,8 @@ export default defineConfig({
       }),
       // Bank Account Section
       BANK_ACCOUNT_MESSAGE: envField.string({
-        default: "Lo más importante es tu presencia, pero si deseas hacernos un regalo aquí tienes nuestros datos.",
+        default:
+          "Lo más importante es tu presencia, pero si deseas hacernos un regalo aquí tienes nuestros datos.",
         context: "server",
         access: "public",
       }),
@@ -192,6 +201,4 @@ export default defineConfig({
       }),
     },
   },
-
-  adapter: vercel(),
 });
