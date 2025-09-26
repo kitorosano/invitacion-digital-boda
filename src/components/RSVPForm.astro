@@ -1,49 +1,70 @@
 ---
 interface Props {
+  isAvailable?: boolean;
   toastDuration?: number;
 }
 
-const { toastDuration = 3000 } = Astro.props;
+const { isAvailable, toastDuration = 3000 } = Astro.props;
 ---
 
-<form class="rsvp-container">
-  <h2>Confirmar Asistencia</h2>
-  <p>Por favor, confirma tu asistencia ¡Esperamos que estés alli!</p>
+{
+  isAvailable ? (
+    <form class="rsvp-container">
+      <h2>Confirmar Asistencia</h2>
+      <p>Por favor, confirma tu asistencia ¡Esperamos que estés alli!</p>
 
-  <div class="rsvp-options">
-    <label for="rsvp-yes">
-      <input type="radio" name="rsvp" id="rsvp-yes" value="si" required />
-      Sí, allí estaré!
-    </label>
+      <div class="rsvp-options">
+        <label for="rsvp-yes">
+          <input type="radio" name="rsvp" id="rsvp-yes" value="si" required />
+          Sí, allí estaré!
+        </label>
 
-    <label for="rsvp-no"
-      ><input type="radio" name="rsvp" id="rsvp-no" value="no" required />
-      No podré asistir</label
-    >
-  </div>
+        <label for="rsvp-no">
+          <input type="radio" name="rsvp" id="rsvp-no" value="no" required />
+          No podré asistir
+        </label>
+      </div>
 
-  <div class="rsvp-fields">
-    <input name="name" type="text" placeholder="Nombre y apellido" required />
-    <input hidden name="email" type="email" placeholder="Correo electrónico" />
-    <input
-      class="hidden"
-      name="song"
-      type="text"
-      placeholder="¿Qué canción no puede faltar?"
-    />
-    <textarea name="message" placeholder="Dejanos un mensajito:" rows="4"
-    ></textarea>
-  </div>
+      <div class="rsvp-fields">
+        <input
+          name="name"
+          type="text"
+          placeholder="Nombre y apellido"
+          required
+        />
+        <input
+          hidden
+          name="email"
+          type="email"
+          placeholder="Correo electrónico"
+        />
+        <input
+          class="hidden"
+          name="song"
+          type="text"
+          placeholder="¿Qué canción no puede faltar?"
+        />
+        <textarea name="message" placeholder="Dejanos un mensajito:" rows="4" />
+      </div>
 
-  <button disabled type="submit">Enviar Respuesta</button>
+      <button disabled type="submit">
+        Enviar Respuesta
+      </button>
 
-  <div class="toast-container" data-duration={toastDuration}>
-    <div class="toast-content">
-      <span class="toast-message">¡Gracias por confirmar tu reserva!</span>
+      <div class="toast-container" data-duration={toastDuration}>
+        <div class="toast-content">
+          <span class="toast-message">¡Gracias por confirmar tu reserva!</span>
+        </div>
+        <div class="toast-progress" />
+      </div>
+    </form>
+  ) : (
+    <div class="rsvp-container">
+      <h2>Confirmar Asistencia</h2>
+      <p>El formulario de confirmación de asistencia está cerrado.</p>
     </div>
-    <div class="toast-progress"></div>
-  </div>
-</form>
+  )
+}
 
 <style>
   .rsvp-container {

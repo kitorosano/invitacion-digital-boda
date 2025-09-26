@@ -20,6 +20,7 @@ import {
   INVITATION_MESSAGE,
   QUOTE_FOOTER,
   QUOTE_TEXT,
+  RSVP_IS_AVAILABLE,
   SCHEDULE_DETAILS,
   SCHEDULE_DOWNLOAD_FILENAME,
   SCHEDULE_END_DATE,
@@ -97,7 +98,9 @@ export const placeDetailsProps = [
   },
 ];
 
-export const rsvpProps = {};
+export const rsvpProps = {
+  isAvailable: RSVP_IS_AVAILABLE,
+};
 
 export const dressCodeProps = {
   message: DRESS_CODE_MESSAGE,
