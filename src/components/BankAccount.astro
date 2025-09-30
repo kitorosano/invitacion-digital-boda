@@ -4,6 +4,7 @@ interface Props {
   message: string;
   bankDetails: {
     bankName: string;
+    accountType: string;
     accountNumber: string;
     accountHolder: string;
   };
@@ -11,7 +12,7 @@ interface Props {
 
 const {
   message,
-  bankDetails: { bankName, accountNumber, accountHolder },
+  bankDetails: { bankName, accountType, accountNumber, accountHolder },
 } = Astro.props;
 
 const formattedAccountNumber = accountNumber.replace(/[^0-9]/g, "");
@@ -32,7 +33,7 @@ const formattedAccountNumber = accountNumber.replace(/[^0-9]/g, "");
       class="bankaccount-info"
       data-account-number={formattedAccountNumber}
     >
-      {accountNumber}
+      <span>{accountType}</span>{accountNumber}
       <CopyIcon />
     </a>
     <p class="bankaccount-info">{accountHolder}</p>
@@ -130,6 +131,11 @@ const formattedAccountNumber = accountNumber.replace(/[^0-9]/g, "");
 
   #account-number:hover {
     transform: scale(1.05);
+  }
+
+  a.bankaccount-info span {
+    font-weight: 600;
+    letter-spacing: 0rem;
   }
 
   .bankaccount-container button {

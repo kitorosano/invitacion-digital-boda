@@ -183,12 +183,17 @@ export default defineConfig({
         context: "server",
         access: "public",
       }),
-      ACCOUNT_NUMBER: envField.string({
+      BANK_ACCOUNT_TYPE: envField.string({
+        default: "C.A.",
+        context: "server",
+        access: "public",
+      }),
+      BANK_ACCOUNT_NUMBER: envField.string({
         default: "",
         context: "server",
         access: "public",
       }),
-      ACCOUNT_HOLDER: envField.string({
+      BANK_ACCOUNT_HOLDER: envField.string({
         default: "",
         context: "server",
         access: "public",

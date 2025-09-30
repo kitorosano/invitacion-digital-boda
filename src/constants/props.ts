@@ -1,7 +1,8 @@
 import {
-  ACCOUNT_HOLDER,
-  ACCOUNT_NUMBER,
+  BANK_ACCOUNT_HOLDER,
   BANK_ACCOUNT_MESSAGE,
+  BANK_ACCOUNT_NUMBER,
+  BANK_ACCOUNT_TYPE,
   BANK_NAME,
   DRESS_CODE_COLORS_TO_AVOID,
   DRESS_CODE_MESSAGE,
@@ -111,8 +112,9 @@ export const bankAccountProps = {
   message: BANK_ACCOUNT_MESSAGE,
   bankDetails: {
     bankName: BANK_NAME,
-    accountNumber: ACCOUNT_NUMBER,
-    accountHolder: ACCOUNT_HOLDER,
+    accountType: BANK_ACCOUNT_TYPE,
+    accountNumber: BANK_ACCOUNT_NUMBER,
+    accountHolder: BANK_ACCOUNT_HOLDER,
   },
 };
 
