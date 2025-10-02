@@ -4,6 +4,8 @@ import {
   BANK_ACCOUNT_NUMBER,
   BANK_ACCOUNT_TYPE,
   BANK_NAME,
+  BGM_IS_ENABLED,
+  BGM_VOLUME,
   DRESS_CODE_COLORS_TO_AVOID,
   DRESS_CODE_MESSAGE,
   EVENT_1_ADDRESS,
@@ -47,6 +49,8 @@ export const layoutProps = {
 
 export const bgmProps = {
   src: "/audios/bgm.wav",
+  isEnabled: BGM_IS_ENABLED,
+  volume: BGM_VOLUME,
 };
 
 export const heroProps = {

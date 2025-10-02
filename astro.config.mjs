@@ -42,6 +42,17 @@ export default defineConfig({
         context: "server",
         access: "public",
       }),
+      // BGM
+      BGM_IS_ENABLED: envField.boolean({
+        default: false,
+        context: "server",
+        access: "public",
+      }),
+      BGM_VOLUME: envField.number({
+        default: 0.3,
+        context: "server",
+        access: "public",
+      }),
       // Hero Section
       HERO_TITLE: envField.string({
         default: "Nos casamos",
