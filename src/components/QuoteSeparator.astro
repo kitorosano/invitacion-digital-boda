@@ -24,12 +24,12 @@ const { quote, footer } = Astro.props;
   }
 
   .quote-container > p {
-    margin: 0 auto;
+    margin: 1rem auto;
 
     color: var(--color-text-light);
 
     line-height: 1.5;
-    font-size: var(--text-size-md);
+    font-size: 1.2rem;
     font-style: italic;
 
     max-width: 80%;
@@ -37,6 +37,8 @@ const { quote, footer } = Astro.props;
   }
 
   .quote-container > h2 {
+    margin: 1rem auto;
+    
     letter-spacing: 0.05em;
     color: var(--color-text-light);
     font-size: var(--text-size-sm);
@@ -49,6 +51,11 @@ const { quote, footer } = Astro.props;
   @media (min-width: 1024px) {
     .quote-container {
       padding: 1rem 0;
+    }
+
+    .quote-container > p {
+      font-size: 2.5rem;
+      max-width: 78%;
     }
   }
 </style>

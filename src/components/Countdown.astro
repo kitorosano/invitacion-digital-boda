@@ -5,10 +5,11 @@ interface Props {
 
 const { targetDate } = Astro.props;
 const formattedDate = targetDate.toISOString();
+// TODO: Fix refetch of images 
 ---
 
 <div class="countdown-container">
-  <h2>Faltan:</h2>
+  <h2>Estamos a solo</h2>
   <div class="countdown-timer-container" data-countdown={formattedDate}>
     <div class="time-segment-container">
       <span class="time-value" id="days"></span>
@@ -32,25 +33,35 @@ const formattedDate = targetDate.toISOString();
 <style>
   .countdown-container {
     width: 100%;
+    margin: 2rem 0 0 0;
 
-    text-align: center;
     color: var(--color-text-dark);
-    margin-top: 2rem;
+    position: relative;
   }
 
   .countdown-container > h2 {
-    margin: 0;
-    text-transform: uppercase;
-    font-size: var(--text-size-lg);
+    margin: 0 auto;
+
+    font-family: var(--font-secondary);
+    font-size: var(--text-size-2xl);
     font-weight: 300;
+    color: var(--color-text-dark);
+    text-align: center;
   }
 
   .countdown-timer-container {
+    margin: 0 1rem;
+
     display: flex;
     justify-content: center;
+    align-items: center;
 
-    margin-top: 1rem;
+    padding: 1.5rem 0 1rem 0;
+
     gap: 2rem;
+
+    border-radius: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
   }
 
   .time-segment-container {
@@ -67,6 +78,24 @@ const formattedDate = targetDate.toISOString();
 
   .time-label {
     font-size: var(--text-size-md);
+  }
+
+  @media (min-width: 768px) {
+  }
+
+  @media (min-width: 1024px) {
+    .countdown-timer-container {
+      gap: 2rem;
+
+      padding: 0;
+      box-shadow: none;
+    }
+
+    .time-segment-container {
+      padding: 1rem 2rem;
+      border-radius: 20px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    }
   }
 </style>
 

@@ -14,21 +14,21 @@ const year = date.getFullYear().toString().slice(-2);
   <div class="date-photo-overlay"></div>
 
   <div class="date-photo" data-date="day">
-    <p class="date-photo-text">{day}</p>
+    <p>{day}</p>
     <div class="date-photo-wrapper">
-      <img src="/images/date_photo_1.jpg" alt="Foto con fecha 1" />
+      <img src="/images/webp/date_photo_1.webp" alt="Foto con fecha 1" />
     </div>
   </div>
   <div class="date-photo" data-date="month">
-    <p class="date-photo-text">{month}</p>
+    <p>{month}</p>
     <div class="date-photo-wrapper">
-      <img src="/images/date_photo_2.jpg" alt="Foto con fecha 2" />
+      <img src="/images/webp/date_photo_2.webp" alt="Foto con fecha 2" />
     </div>
   </div>
   <div class="date-photo" data-date="year">
-    <p class="date-photo-text">{year}</p>
+    <p>{year}</p>
     <div class="date-photo-wrapper">
-      <img src="/images/date_photo_3.jpg" alt="Foto con fecha 3" />
+      <img src="/images/webp/date_photo_3.webp" alt="Foto con fecha 3" />
     </div>
   </div>
 </div>
@@ -67,6 +67,7 @@ const year = date.getFullYear().toString().slice(-2);
     width: 28%;
     height: 100%;
     text-align: center;
+    position: relative;
   }
 
   .date-photo[data-date="month"] {
@@ -77,7 +78,7 @@ const year = date.getFullYear().toString().slice(-2);
     margin-top: 6rem;
   }
 
-  .date-photo-text {
+  .date-photo p {
     margin: 0;
     font-size: var(--text-size-3xl);
     font-weight: 400;
@@ -137,6 +138,72 @@ const year = date.getFullYear().toString().slice(-2);
 
   .date-photo[data-date="year"] .date-photo-wrapper img {
     object-position: 60% center;
+  }
+
+  @media (min-width: 768px) {
+  }
+
+  @media (min-width: 1024px) {
+    .date-photo-container {
+      margin: 2rem auto;
+      width: 70%;
+      gap: 3rem;
+    }
+
+    .date-photo-wrapper {
+      width: 100%;
+      height: 100%;
+      aspect-ratio: 2/3;
+    }
+
+    .date-photo {
+      width: 60%;
+      cursor: pointer;
+    }
+
+    .date-photo p {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+
+      font-family: var(--font-secondary);
+      color: var(--color-text-light);
+      letter-spacing: 0.1rem;
+      font-size: var(--text-size-3xl);
+
+      transition: opacity 0.5s ease;
+      opacity: 0;
+    }
+
+    .date-photo:hover .date-photo-wrapper img {
+      filter: brightness(0.5);
+      transform: scale(1.05);
+    }
+
+    .date-photo:hover p {
+      opacity: 1;
+
+      pointer-events: none;
+      z-index: 11;
+    }
+
+    .date-photo-wrapper img.active {
+      position: fixed;
+      transform: translate(-50%, -50%) scale(1);
+      top: 50%;
+      left: 50%;
+
+      width: 45%;
+      height: auto;
+
+      border-radius: 16px;
+      box-shadow: 0 0 32px 8px rgba(0, 0, 0, 0.4);
+      filter: brightness(1);
+      z-index: 1001;
+
+      pointer-events: none;
+    }
   }
 </style>
 

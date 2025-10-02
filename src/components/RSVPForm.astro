@@ -5,13 +5,16 @@ interface Props {
 }
 
 const { isAvailable, toastDuration = 3000 } = Astro.props;
+// TODO: fecha limite por props
 ---
 
 {
   isAvailable ? (
     <form class="rsvp-container">
       <h2>Confirmar Asistencia</h2>
-      <p>Por favor, confirma tu asistencia ¡Esperamos que estés alli!</p>
+      <p>
+        Por favor, confirma tu asistencia hasta el <span>15 de Octubre</span>. ¡Esperamos que puedas estar!
+      </p>
 
       <div class="rsvp-options">
         <label for="rsvp-yes">
@@ -44,7 +47,7 @@ const { isAvailable, toastDuration = 3000 } = Astro.props;
           type="text"
           placeholder="¿Qué canción no puede faltar?"
         />
-        <textarea name="message" placeholder="Dejanos un mensajito:" rows="4" />
+        <textarea name="message" placeholder="Déjanos un mensajito:" rows="4" />
       </div>
 
       <button disabled type="submit">
@@ -83,9 +86,6 @@ const { isAvailable, toastDuration = 3000 } = Astro.props;
     color: var(--color-text-dark);
     text-transform: uppercase;
     letter-spacing: 0.05em;
-
-    max-width: 70%;
-    text-wrap: balance;
   }
 
   .rsvp-container > p {
@@ -99,6 +99,10 @@ const { isAvailable, toastDuration = 3000 } = Astro.props;
     text-wrap: balance;
     line-height: 1.5;
     letter-spacing: 0.02em;
+  }
+
+  .rsvp-container > p span {
+    font-weight: 600;
   }
 
   .rsvp-options {
@@ -122,7 +126,7 @@ const { isAvailable, toastDuration = 3000 } = Astro.props;
 
   .rsvp-options input[type="radio"] {
     margin-right: 0.5rem;
-    accent-color: var(--color-secondary);
+    accent-color: var(--color-dark);
     cursor: pointer;
   }
 
@@ -151,7 +155,7 @@ const { isAvailable, toastDuration = 3000 } = Astro.props;
     border: none;
     border-radius: 5px;
 
-    background: var(--color-light);
+    background: #fafafa;
     opacity: 1;
     transition: all 0.4s ease;
   }
@@ -169,9 +173,9 @@ const { isAvailable, toastDuration = 3000 } = Astro.props;
     color: var(--color-text-dark);
     border: none;
     border-radius: 5px;
-    resize: vertical;
+    resize: none;
 
-    background: var(--color-light);
+    background: #fafafa;
   }
 
   .rsvp-fields input[name="name"] {
@@ -213,12 +217,12 @@ const { isAvailable, toastDuration = 3000 } = Astro.props;
   }
 
   .rsvp-container button:hover {
-    background-color: var(--color-secondary);
+    background-color: var(--color-dark-hover);
   }
 
   .rsvp-container button:disabled {
-    background-color: var(--color-light);
-    color: var(--color-quaternary);
+    background-color: #fafafa;
+    color: var(--color-text-gray);
     cursor: progress;
   }
 
@@ -325,6 +329,7 @@ const { isAvailable, toastDuration = 3000 } = Astro.props;
 </style>
 
 <script>
+  // TODO: Refactor when not available
   const $FORM = document.querySelector("form") as HTMLFormElement;
   const $RADIO_YES = $FORM.querySelector(
     'input[id="rsvp-yes"]',

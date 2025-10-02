@@ -3,13 +3,40 @@ interface Props {
   message: string;
   colorsToAvoid: string[];
 }
-
 const { message, colorsToAvoid } = Astro.props;
+const img = "/images/dress_code.svg";
 ---
 
 <div class="dresscode-container">
   <h2>Vestimenta formal</h2>
   <p>{message}</p>
+
+  <div class="dresscode-restrictions">
+    <section class="restrictions-men">
+      <ul>
+        <h3>Hombre</h3>
+        <li>Traje clásico o camisa lisa</li>
+        <li>Corbata o moño</li>
+        <li>Zapatos</li>
+      </ul>
+    </section>
+
+    <picture>
+      <img src={img} alt="Dress Code" />
+    </picture>
+
+    <section class="restrictions-women">
+      <ul>
+        <h3>Mujer</h3>
+        <li>Vestido largo o midi, enterizo, traje</li>
+        <li>Zapatos o sandalias</li>
+      </ul>
+    </section>
+  </div>
+
+  <p>
+    Te pedimos amablemente que <span>no utilices</span> estos colores en tu vestimenta.
+  </p>
 
   <ul>
     <li style={`background:${colorsToAvoid[0]}`}></li>
@@ -35,22 +62,121 @@ const { message, colorsToAvoid } = Astro.props;
     text-align: center;
     text-transform: uppercase;
     letter-spacing: 0.05em;
-
-    max-width: 50%;
-    text-wrap: balance;
   }
 
-  .dresscode-container > p {
+  .dresscode-container p {
     margin: 1rem auto 0 auto;
 
     font-size: var(--text-size-md);
     font-weight: 400;
     color: var(--color-text-dark);
 
-    max-width: 70%;
-    text-wrap: balance;
+    max-width: 80%;
+    text-wrap: pretty;
     line-height: 1.5;
     letter-spacing: 0.02em;
+  }
+
+  .dresscode-container p span {
+    font-weight: 600;
+  }
+
+  .dresscode-restrictions {
+    width: 100%;
+    height: 100%;
+
+    --image-height: 270px;
+    min-height: var(--image-height);
+
+    margin: 1rem auto 0 auto;
+    padding: 0 auto;
+
+    display: flex;
+    position: relative;
+  }
+
+  .restrictions-men,
+  .restrictions-women {
+    width: 100%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .restrictions-men > ul,
+  .restrictions-women > ul {
+    width: 50%;
+    padding: 0;
+
+    list-style: none;
+    text-align: left;
+  }
+  .restrictions-men > ul {
+    margin: 0rem auto 0 1rem;
+  }
+
+  .restrictions-women > ul {
+    margin: 0rem 1rem 0 auto;
+  }
+
+  .restrictions-men > ul h3,
+  .restrictions-women > ul h3 {
+    margin: 1rem auto;
+
+    font-family: var(--font-secondary);
+    font-size: var(--text-size-lg);
+    font-weight: 500;
+    font-style: italic;
+    color: var(--color-text-dark);
+    text-align: center;
+    letter-spacing: 0.05rem;
+
+    max-width: 100%;
+    text-wrap: balance;
+  }
+
+  .restrictions-men > ul li,
+  .restrictions-women > ul li {
+    margin: 1rem 0;
+
+    font-size: var(--text-size-sm);
+    font-weight: 500;
+    color: var(--color-text-dark);
+
+    text-wrap: balance;
+    letter-spacing: 0.02rem;
+  }
+
+  .restrictions-men > ul li {
+    text-align: center;
+  }
+  .restrictions-women > ul li {
+    text-align: center;
+  }
+
+  .dresscode-restrictions > picture {
+    margin: 0 auto;
+
+    width: 100%;
+    height: var(--image-height);
+    display: block;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+  }
+
+  .dresscode-restrictions > picture img {
+    position: absolute;
+    top: 0;
+    left: 0%;
+
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
+    pointer-events: none;
+
+    filter: brightness(0.9);
   }
 
   .dresscode-container > ul {
@@ -66,8 +192,8 @@ const { message, colorsToAvoid } = Astro.props;
   }
 
   .dresscode-container > ul li {
-    width: 3rem;
-    height: 3rem;
+    width: 4rem;
+    height: 4rem;
     border-radius: 50%;
     z-index: 1;
 
@@ -75,15 +201,15 @@ const { message, colorsToAvoid } = Astro.props;
   }
 
   .dresscode-container > ul li:nth-child(1) {
-    left: -3.5rem;
+    left: -5rem;
     z-index: 1;
   }
   .dresscode-container > ul li:nth-child(2) {
-    left: -1.5rem;
+    left: -2rem;
     z-index: 2;
   }
   .dresscode-container > ul li:nth-child(3) {
-    left: 0.5rem;
+    left: 1rem;
     z-index: 3;
   }
 
@@ -91,6 +217,13 @@ const { message, colorsToAvoid } = Astro.props;
   }
 
   @media (min-width: 1024px) {
+    .dresscode-container {
+      margin: 4rem auto;
+    }
+
+    .dresscode-container > picture {
+      height: 300px;
+    }
     .dresscode-container > ul li {
       width: 5rem;
       height: 5rem;
