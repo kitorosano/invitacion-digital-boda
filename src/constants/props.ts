@@ -28,11 +28,18 @@ import {
   SCHEDULE_LOCATION,
   SCHEDULE_START_DATE,
   SCHEDULE_TITLE,
+  SITE_ENTRYPOINT_CEREMONY,
+  SITE_ENTRYPOINT_CIVIL,
   SITE_TITLE,
   WEDDING_COUPLE,
   WEDDING_DATE,
 } from "astro:env/server";
 import { dateWithTz, timeForEvent, timeWithTz } from "../utils/formatDates";
+
+export const entrypoints = {
+  CEREMONY: SITE_ENTRYPOINT_CEREMONY,
+  CIVIL: SITE_ENTRYPOINT_CIVIL,
+};
 
 export const layoutProps = {
   title: SITE_TITLE,

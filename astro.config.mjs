@@ -17,6 +17,16 @@ export default defineConfig({
         context: "server",
         access: "public",
       }),
+      SITE_ENTRYPOINT_CEREMONY: envField.string({
+        default: "",
+        context: "server",
+        access: "public",
+      }),
+      SITE_ENTRYPOINT_CIVIL: envField.string({
+        default: "civil",
+        context: "server",
+        access: "public",
+      }),
       WEDDING_COUPLE: envField.string({
         default: "",
         context: "server",

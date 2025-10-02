@@ -1,0 +1,53 @@
+---
+import BankAccount from "../components/BankAccount.astro";
+import BGM from "../components/BGM.astro";
+import Countdown from "../components/Countdown.astro";
+import DateWithPhotos from "../components/DateWithPhotos.astro";
+import EventDetails from "../components/EventDetails.astro";
+import Footer from "../components/Footer.astro";
+import Hero from "../components/Hero.astro";
+import LargeImageSeparator from "../components/LargeImageSeparator.astro";
+import MessageSeparator from "../components/MessageSeparator.astro";
+import PhotoCollage from "../components/PhotoCollage.astro";
+import QuoteSeparator from "../components/QuoteSeparator.astro";
+import Schedule from "../components/Schedule.astro";
+import SmallImageSeparator from "../components/SmallImageSeparator.astro";
+import {
+  bankAccountProps,
+  bgmProps,
+  countdownProps,
+  dateWithPhotosProps,
+  entrypoints,
+  footerProps,
+  heroProps,
+  imageSeparatorProps,
+  layoutProps,
+  messageSeparatorProps,
+  photoCollageProps,
+  placeDetailsProps,
+  quoteSeparatorProps,
+  scheduleProps,
+} from "../constants/props";
+import Layout from "../layouts/Layout.astro";
+
+export const getStaticPaths = () => {
+  return [{ params: { civil: entrypoints.CIVIL } }];
+};
+---
+
+<Layout {...layoutProps}>
+  <BGM {...bgmProps} />
+  <Hero {...heroProps} />
+  <MessageSeparator {...messageSeparatorProps} />
+  <DateWithPhotos {...dateWithPhotosProps} />
+  <Countdown {...countdownProps} />
+  <Schedule {...scheduleProps} />
+  <SmallImageSeparator {...imageSeparatorProps[0]} />
+  <QuoteSeparator {...quoteSeparatorProps} />
+  <EventDetails {...placeDetailsProps[0]} imagePosition="left" />
+  <SmallImageSeparator {...imageSeparatorProps[1]} />
+  <BankAccount {...bankAccountProps} />
+  <PhotoCollage {...photoCollageProps} />
+  <Footer {...footerProps} />
+  <LargeImageSeparator {...imageSeparatorProps[2]} />
+</Layout>
