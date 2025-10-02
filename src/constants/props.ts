@@ -125,6 +125,16 @@ export const bankAccountProps = {
   },
 };
 
+export const photoCollageProps = {
+  images: [
+    "/images/webp/photo_collage_1.webp",
+    "/images/webp/photo_collage_2.webp",
+    "/images/webp/photo_collage_3.webp",
+    "/images/webp/photo_collage_4.webp",
+    "/images/webp/photo_collage_5.webp",
+  ],
+};
+
 export const footerProps = {
   message: FOOTER_MESSAGE,
   couple: WEDDING_COUPLE,

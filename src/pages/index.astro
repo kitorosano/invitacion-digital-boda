@@ -9,6 +9,7 @@ import Footer from "../components/Footer.astro";
 import Hero from "../components/Hero.astro";
 import LargeImageSeparator from "../components/LargeImageSeparator.astro";
 import MessageSeparator from "../components/MessageSeparator.astro";
+import PhotoCollage from "../components/PhotoCollage.astro";
 import QuoteSeparator from "../components/QuoteSeparator.astro";
 import RSVPForm from "../components/RSVPForm.astro";
 import Schedule from "../components/Schedule.astro";
@@ -24,6 +25,7 @@ import {
   imageSeparatorProps,
   layoutProps,
   messageSeparatorProps,
+  photoCollageProps,
   placeDetailsProps,
   quoteSeparatorProps,
   rsvpProps,
@@ -49,7 +51,7 @@ export const prerender = true;
   <SmallImageSeparator {...imageSeparatorProps[1]} />
   <BankAccount {...bankAccountProps} />
   <RSVPForm {...rsvpProps} />
-  <!-- PHOTO COLLAGE -->
+  <PhotoCollage {...photoCollageProps} />
   <Footer {...footerProps} />
   <LargeImageSeparator {...imageSeparatorProps[2]} />
 </Layout>
