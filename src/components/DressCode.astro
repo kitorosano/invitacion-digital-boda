@@ -85,8 +85,7 @@ const img = "/images/dress_code.svg";
     width: 100%;
     height: 100%;
 
-    --image-height: 270px;
-    min-height: var(--image-height);
+    min-height: 270px; // same as picture height
 
     margin: 1rem auto 0 auto;
     padding: 0 auto;
@@ -158,7 +157,7 @@ const img = "/images/dress_code.svg";
     margin: 0 auto;
 
     width: 100%;
-    height: var(--image-height);
+    height: 270px;
     display: block;
     overflow: hidden;
     position: absolute;
@@ -217,29 +216,35 @@ const img = "/images/dress_code.svg";
   }
 
   @media (min-width: 1024px) {
-    .dresscode-container {
-      margin: 4rem auto;
+    .dresscode-container > h2 {
+      font-size: var(--text-size-xl);
     }
 
-    .dresscode-container > picture {
-      height: 300px;
-    }
-    .dresscode-container > ul li {
-      width: 5rem;
-      height: 5rem;
+    .dresscode-restrictions {
+      min-height: 350px; // same as picture height
     }
 
-    .dresscode-container > ul li:nth-child(1) {
-      left: -6rem;
-      z-index: 1;
+    .restrictions-men,
+  .restrictions-women {
+    margin-top: 4rem;
+  }
+
+    .restrictions-men > ul,
+    .restrictions-women > ul {
+      width: 100%;
     }
-    .dresscode-container > ul li:nth-child(2) {
-      left: -2.5rem;
-      z-index: 2;
+      .restrictions-men > ul {
+    margin: 0rem auto 0 1rem;
+  }
+
+  .restrictions-women > ul {
+    margin: 0rem 1rem 0 auto;
+  }
+
+    .dresscode-restrictions > picture {
+      height: 350px;
     }
-    .dresscode-container > ul li:nth-child(3) {
-      left: 1rem;
-      z-index: 3;
-    }
+
+
   }
 </style>
