@@ -1,5 +1,5 @@
 ---
-import { dateForCalendar } from "../utils/formatDates";
+import { dateToCalendarRSVP } from "../utils/formatDates";
 interface Props {
   text: string;
   startDate: Date;
@@ -11,8 +11,8 @@ interface Props {
 const { text, startDate, endDate, details, location, filename } = Astro.props;
 
 const encodedText = encodeURIComponent(text);
-const formattedStartDate = dateForCalendar(startDate);
-const formattedEndDate = dateForCalendar(endDate);
+const formattedStartDate = dateToCalendarRSVP(startDate);
+const formattedEndDate = dateToCalendarRSVP(endDate);
 const encodedDetails = encodeURIComponent(details);
 const encodedLocation = encodeURIComponent(location);
 

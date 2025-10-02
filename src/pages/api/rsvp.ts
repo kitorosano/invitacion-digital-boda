@@ -19,6 +19,7 @@ export const POST: APIRoute = async ({ request }) => {
     hour: "2-digit",
     minute: "2-digit",
   });
+
   const body = JSON.stringify({ date, name, email, song, message, rsvp });
 
   try {

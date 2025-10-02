@@ -18,13 +18,13 @@ import {
   countdownProps,
   dateWithPhotosProps,
   entrypoints,
+  eventDetailsProps,
   footerProps,
   heroProps,
   imageSeparatorProps,
   layoutProps,
   messageSeparatorProps,
   photoCollageProps,
-  placeDetailsProps,
   quoteSeparatorProps,
   scheduleProps,
 } from "../constants/props";
@@ -44,8 +44,8 @@ export const getStaticPaths = () => {
   <Schedule {...scheduleProps} />
   <SmallImageSeparator {...imageSeparatorProps[0]} />
   <QuoteSeparator {...quoteSeparatorProps} />
-  <EventDetails {...placeDetailsProps[0]} imagePosition="left" />
-  <SmallImageSeparator {...imageSeparatorProps[1]} />
+  <EventDetails {...eventDetailsProps[0]} imagePosition="left" />
+  <!-- <SmallImageSeparator {...imageSeparatorProps[1]} /> -->
   <BankAccount {...bankAccountProps} />
   <PhotoCollage {...photoCollageProps} />
   <Footer {...footerProps} />

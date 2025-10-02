@@ -36,7 +36,7 @@ import {
   WEDDING_COUPLE,
   WEDDING_DATE,
 } from "astro:env/server";
-import { dateWithTz, timeForEvent, timeWithTz } from "../utils/formatDates";
+import { dateStringToDateUTC } from "../utils/formatDates";
 
 export const entrypoints = {
   CEREMONY: SITE_ENTRYPOINT_CEREMONY,
@@ -65,17 +65,17 @@ export const messageSeparatorProps = {
 };
 
 export const dateWithPhotosProps = {
-  date: dateWithTz(WEDDING_DATE),
+  date: new Date(WEDDING_DATE),
 };
 
 export const countdownProps = {
-  targetDate: dateWithTz(WEDDING_DATE),
+  targetDate: dateStringToDateUTC(WEDDING_DATE),
 };
 
 export const scheduleProps = {
   text: SCHEDULE_TITLE,
-  startDate: dateWithTz(SCHEDULE_START_DATE),
-  endDate: dateWithTz(SCHEDULE_END_DATE),
+  startDate: dateStringToDateUTC(SCHEDULE_START_DATE),
+  endDate: dateStringToDateUTC(SCHEDULE_END_DATE),
   details: SCHEDULE_DETAILS,
   location: SCHEDULE_LOCATION,
   filename: SCHEDULE_DOWNLOAD_FILENAME,
@@ -98,10 +98,10 @@ export const quoteSeparatorProps = {
   footer: QUOTE_FOOTER,
 };
 
-export const placeDetailsProps = [
+export const eventDetailsProps = [
   {
     name: EVENT_1_NAME,
-    time: timeForEvent(timeWithTz(EVENT_1_TIME), true),
+    time: EVENT_1_TIME,
     place: EVENT_1_PLACE,
     address: EVENT_1_ADDRESS,
     mapLink: EVENT_1_MAP_LINK,
@@ -109,7 +109,7 @@ export const placeDetailsProps = [
   },
   {
     name: EVENT_2_NAME,
-    time: timeForEvent(timeWithTz(EVENT_2_TIME), true),
+    time: EVENT_2_TIME,
     place: EVENT_2_PLACE,
     address: EVENT_2_ADDRESS,
     mapLink: EVENT_2_MAP_LINK,
