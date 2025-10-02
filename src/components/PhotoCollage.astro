@@ -22,7 +22,7 @@ const { images } = Astro.props;
 
 <style>
   .photo-collage-container {
-    margin: 2rem auto;
+    margin: 4rem auto;
     width: 90%;
     position: relative;
     display: grid;
@@ -46,7 +46,7 @@ const { images } = Astro.props;
 
   .photo-collage-row picture {
     width: 100%;
-    height: 300px;
+    height: 40dvh;
     display: block;
     overflow: hidden;
     position: relative;
@@ -59,8 +59,12 @@ const { images } = Astro.props;
     animation-range: entry 0% cover 30%;
   }
 
+  .photo-collage-row:nth-child(1) > picture > img {
+    filter: contrast(1.1) brightness(0.9);
+  }
+
   .photo-collage-row:nth-child(2) > picture {
-    height: 160px;
+    height: 22dvh;
   }
 
   .photo-collage-row picture img {
@@ -81,11 +85,29 @@ const { images } = Astro.props;
   @keyframes appear {
     from {
       opacity: 0;
-      scale: 0.7;
+      transform: scale(0.7);
     }
     to {
       opacity: 1;
-      scale: 1;
+      transform: scale(1);
+    }
+  }
+
+  @media (min-width: 768px) {
+  }
+
+  @media (min-width: 1024px) {
+    .photo-collage-container {
+      width: 80%;
+      gap: 1rem;
+    }
+
+    .photo-collage-row picture {
+      height: 90dvh;
+    }
+
+    .photo-collage-row:nth-child(2) > picture {
+      height: 70dvh;
     }
   }
 </style>
