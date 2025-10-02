@@ -45,7 +45,7 @@ export const bgmProps = {
 export const heroProps = {
   couple: WEDDING_COUPLE,
   title: HERO_TITLE,
-  img: "/images/hero.jpg",
+  img: "/images/webp/hero.webp",
 };
 
 export const messageSeparatorProps = {
@@ -70,10 +70,17 @@ export const scheduleProps = {
   filename: SCHEDULE_DOWNLOAD_FILENAME,
 };
 
-export const imageSeparatorProps = {
-  src: "/images/separator_1.jpg",
-  alt: "Separador decorativo",
-};
+export const imageSeparatorProps = [
+  {
+    src: "/images/webp/separator_1.webp",
+  },
+  {
+    src: "/images/webp/separator_2.webp",
+  },
+  {
+    src: "/images/webp/separator_3.webp",
+  },
+];
 
 export const quoteSeparatorProps = {
   quote: QUOTE_TEXT,
@@ -87,7 +94,7 @@ export const placeDetailsProps = [
     place: EVENT_1_PLACE,
     address: EVENT_1_ADDRESS,
     mapLink: EVENT_1_MAP_LINK,
-    image: "/images/event_detail_1.jpg",
+    image: "/images/webp/event_detail_1.webp",
   },
   {
     name: EVENT_2_NAME,
@@ -95,7 +102,7 @@ export const placeDetailsProps = [
     place: EVENT_2_PLACE,
     address: EVENT_2_ADDRESS,
     mapLink: EVENT_2_MAP_LINK,
-    image: "/images/event_detail_2.jpg",
+    image: "/images/webp/event_detail_2.webp",
   },
 ];
 
