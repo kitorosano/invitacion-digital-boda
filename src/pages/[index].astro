@@ -33,7 +33,11 @@ import {
 } from "../constants/props";
 import Layout from "../layouts/Layout.astro";
 
-export const prerender = true;
+export function getStaticPaths() {
+  return [{ params: { index: "ceremonia" } }, { params: { index: "civil" } }];
+}
+
+const isCeremonia = Astro.params.index === "ceremonia";
 ---
 
 <Layout {...layoutProps}>
@@ -46,11 +50,15 @@ export const prerender = true;
   <SmallImageSeparator {...imageSeparatorProps[0]} />
   <QuoteSeparator {...quoteSeparatorProps} />
   <EventDetails {...placeDetailsProps[0]} imagePosition="left" />
-  <EventDetails {...placeDetailsProps[1]} imagePosition="right" />
-  <DressCode {...dressCodeProps} />
+  {
+    isCeremonia && (
+      <EventDetails {...placeDetailsProps[1]} imagePosition="right" />
+      <DressCode {...dressCodeProps} />
+    )
+  }
   <SmallImageSeparator {...imageSeparatorProps[1]} />
   <BankAccount {...bankAccountProps} />
-  <RSVPForm {...rsvpProps} />
+  {isCeremonia && <RSVPForm {...rsvpProps} />}
   <PhotoCollage {...photoCollageProps} />
   <Footer {...footerProps} />
   <LargeImageSeparator {...imageSeparatorProps[2]} />

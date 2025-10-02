@@ -1,0 +1,62 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout title="Página no encontrada">
+  <div class="notfound-container">
+    <picture>
+      <img src="/images/webp/hero.webp" alt="Background image" />
+    </picture>
+    <h1>Algo salió mal</h1>
+    <p>La página que buscas no existe.</p>
+  </div>
+</Layout>
+
+<style>
+  .notfound-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100dvh;
+    text-align: center;
+    background-color: var(--color-dark);
+  }
+
+  .notfound-container picture {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    overflow: hidden;
+  }
+
+  .notfound-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 50% 40%;
+
+    filter: brightness(0.5) blur(30px);
+  }
+
+  .notfound-container h1 {
+    font-size: var(--text-size-3xl);
+    color: var(--color-text-light);
+    margin-bottom: 1rem;
+    z-index: 1;
+  }
+
+  .notfound-container p {
+    font-size: var(--text-size-xl);
+    color: var(--color-text-light);
+    z-index: 1;
+  }
+</style>
