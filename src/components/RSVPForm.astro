@@ -339,93 +339,96 @@ const deadlineLocaleString = deadline.toLocaleDateString("es-ES", {
 </style>
 
 <script>
-  // TODO: Refactor when not available
-  const $FORM = document.querySelector("form") as HTMLFormElement;
-  const $RADIO_YES = $FORM.querySelector(
-    'input[id="rsvp-yes"]',
-  ) as HTMLInputElement;
-  const $RADIO_NO = $FORM.querySelector(
-    'input[id="rsvp-no"]',
-  ) as HTMLInputElement;
-  const $INPUT_NAME = $FORM.querySelector(
-    'input[name="name"]',
-  ) as HTMLInputElement;
-  const $INPUT_SONG = $FORM.querySelector(
-    'input[name="song"]',
-  ) as HTMLInputElement;
-  const $BUTTON = $FORM.querySelector("button") as HTMLButtonElement;
-  const $TOAST = document.querySelector(".toast-container") as HTMLDivElement;
-  const $TOAST_MESSAGE = $TOAST.querySelector(
-    ".toast-message",
-  ) as HTMLSpanElement;
-  const $TOAST_PROGRESS = $TOAST.querySelector(
-    ".toast-progress",
-  ) as HTMLDivElement;
-  const duration = Number($TOAST.dataset.duration);
+  document.addEventListener("DOMContentLoaded", () => {
+    const $BODY = document.querySelector("body") as HTMLBodyElement;
+    const $FORM = document.querySelector("form") as HTMLFormElement;
+    const $RADIO_YES = $FORM.querySelector(
+      'input[id="rsvp-yes"]',
+    ) as HTMLInputElement;
+    const $RADIO_NO = $FORM.querySelector(
+      'input[id="rsvp-no"]',
+    ) as HTMLInputElement;
+    const $INPUT_NAME = $FORM.querySelector(
+      'input[name="name"]',
+    ) as HTMLInputElement;
+    const $INPUT_SONG = $FORM.querySelector(
+      'input[name="song"]',
+    ) as HTMLInputElement;
+    const $BUTTON = $FORM.querySelector("button") as HTMLButtonElement;
+    const $TOAST = document.querySelector(".toast-container") as HTMLDivElement;
+    const $TOAST_MESSAGE = $TOAST.querySelector(
+      ".toast-message",
+    ) as HTMLSpanElement;
+    const $TOAST_PROGRESS = $TOAST.querySelector(
+      ".toast-progress",
+    ) as HTMLDivElement;
+    const duration = Number($TOAST.dataset.duration);
 
-  $RADIO_YES.addEventListener("change", () => {
-    $INPUT_SONG.classList.remove("hidden");
-  });
-  $RADIO_NO.addEventListener("change", () => {
-    $INPUT_SONG.classList.add("hidden");
-  });
+    $RADIO_YES.addEventListener("change", () => {
+      $INPUT_SONG.classList.remove("hidden");
+    });
+    $RADIO_NO.addEventListener("change", () => {
+      $INPUT_SONG.classList.add("hidden");
+    });
 
-  $FORM.addEventListener("submit", async (event) => {
-    event.preventDefault();
+    $FORM.addEventListener("submit", async (event) => {
+      event.preventDefault();
 
-    $BUTTON.disabled = true;
-
-    const formData = new FormData($FORM);
-    await handleFetch(formData);
-
-    $FORM.reset();
-    $BUTTON.disabled = false;
-  });
-
-  $INPUT_NAME.addEventListener("input", () => {
-    if ($INPUT_NAME.value.trim() === "") {
       $BUTTON.disabled = true;
-      return;
-    }
-    if ($INPUT_NAME.value.length < 3) {
-      $BUTTON.disabled = true;
-      return;
-    }
-    $BUTTON.disabled = false;
-  });
+      $BODY.style.cursor = "progress";
+      const formData = new FormData($FORM);
+      await handleFetch(formData);
 
-  const handleFetch = async (formData: FormData) => {
-    try {
-      const response = await fetch("/api/rsvp", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        },
-        body: JSON.stringify(Object.fromEntries(formData)),
-      });
+      $FORM.reset();
+      $BUTTON.disabled = false;
+      $BODY.style.cursor = "auto";
+    });
 
-      const data = await response.json();
-      showToast(data.message);
-    } catch (error) {
-      showToast(
-        "Ha ocurrido un error. Por favor, inténtalo de nuevo más tarde.",
-      );
-    }
-  };
+    $INPUT_NAME.addEventListener("input", () => {
+      if ($INPUT_NAME.value.trim() === "") {
+        $BUTTON.disabled = true;
+        return;
+      }
+      if ($INPUT_NAME.value.length < 3) {
+        $BUTTON.disabled = true;
+        return;
+      }
+      $BUTTON.disabled = false;
+    });
 
-  const showToast = (message: string) => {
-    $TOAST_MESSAGE.textContent = message;
-    $TOAST.classList.add("show");
-    $TOAST_PROGRESS.style.transitionDuration = `${duration / 1000}s`;
-    $TOAST_PROGRESS.style.width = "0%";
+    const handleFetch = async (formData: FormData) => {
+      try {
+        const response = await fetch("/api/rsvp", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+          body: JSON.stringify(Object.fromEntries(formData)),
+        });
 
-    setTimeout(() => {
-      $TOAST.classList.remove("show");
+        const data = await response.json();
+        showToast(data.message);
+      } catch (error) {
+        showToast(
+          "Ha ocurrido un error. Por favor, inténtalo de nuevo más tarde.",
+        );
+      }
+    };
+
+    const showToast = (message: string) => {
+      $TOAST_MESSAGE.textContent = message;
+      $TOAST.classList.add("show");
+      $TOAST_PROGRESS.style.transitionDuration = `${duration / 1000}s`;
+      $TOAST_PROGRESS.style.width = "0%";
 
       setTimeout(() => {
-        $TOAST_PROGRESS.style.width = "100%";
-      }, 1000);
-    }, duration);
-  };
+        $TOAST.classList.remove("show");
+
+        setTimeout(() => {
+          $TOAST_PROGRESS.style.width = "100%";
+        }, 1000);
+      }, duration);
+    };
+  });
 </script>
