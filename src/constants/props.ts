@@ -23,6 +23,7 @@ import {
   INVITATION_MESSAGE,
   QUOTE_FOOTER,
   QUOTE_TEXT,
+  RSVP_DEADLINE,
   RSVP_IS_AVAILABLE,
   SCHEDULE_DETAILS,
   SCHEDULE_DOWNLOAD_FILENAME,
@@ -119,6 +120,7 @@ export const eventDetailsProps = [
 
 export const rsvpProps = {
   isAvailable: RSVP_IS_AVAILABLE,
+  deadline: dateStringToDateUTC(RSVP_DEADLINE),
 };
 
 export const dressCodeProps = {

@@ -1,11 +1,16 @@
 ---
 interface Props {
+  deadline: Date;
   isAvailable?: boolean;
   toastDuration?: number;
 }
 
-const { isAvailable, toastDuration = 3000 } = Astro.props;
-// TODO: fecha limite por props
+const { deadline, isAvailable, toastDuration = 3000 } = Astro.props;
+
+const deadlineLocaleString = deadline.toLocaleDateString("es-ES", {
+  month: "long",
+  day: "numeric",
+});
 ---
 
 {
@@ -13,8 +18,8 @@ const { isAvailable, toastDuration = 3000 } = Astro.props;
     <form class="rsvp-container">
       <h2>Confirmar Asistencia</h2>
       <p>
-        Por favor, confirma tu asistencia hasta el <span>15 de Octubre</span>.
-        ¡Esperamos que puedas estar!
+        Por favor, confirma tu asistencia hasta el{" "}
+        <span>{deadlineLocaleString}</span>. ¡Esperamos que puedas estar!
       </p>
 
       <div class="rsvp-options">

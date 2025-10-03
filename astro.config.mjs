@@ -181,6 +181,11 @@ export default defineConfig({
         context: "server",
         access: "public",
       }),
+      RSVP_DEADLINE: envField.string({
+        default: "", // Formato: YYYY-MM-DD
+        context: "server",
+        access: "public",
+      }),
       // Dress Code Section
       DRESS_CODE_MESSAGE: envField.string({
         default: "Les pedimos de favor a los invitados evitar estos colores:",
