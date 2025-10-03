@@ -27,15 +27,15 @@ const formattedAccountNumber = accountNumber.replace(/[^0-9]/g, "");
     <p class="bank-account-info">
       <span>{bankName}</span>
     </p>
-    <a
-      href="javascript: void(0)"
+    <p
       id="account-number"
       class="bank-account-info"
       data-account-number={formattedAccountNumber}
     >
       <span>{accountType}</span>{accountNumber}
       <CopyIcon />
-    </a>
+      <span class="tooltip">¡Copiado!</span>
+    </p>
     <p class="bank-account-info">{accountHolder}</p>
   </div>
 
@@ -117,7 +117,8 @@ const formattedAccountNumber = accountNumber.replace(/[^0-9]/g, "");
   }
 
   #account-number {
-    display: flex;
+    position: relative;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
     gap: 0.25rem;
@@ -130,9 +131,42 @@ const formattedAccountNumber = accountNumber.replace(/[^0-9]/g, "");
     transform: scale(1.05);
   }
 
-  a.bank-account-info span {
+  #account-number span {
+    margin: 0;
     font-weight: 600;
     letter-spacing: 0rem;
+  }
+
+  .tooltip {
+    position: absolute;
+    width: max-content;
+    padding: 0.25rem 0.5rem;
+
+    right: -1.5rem;
+    bottom: 2.2rem;
+
+    color: var(--color-dark);
+    text-align: center;
+    font-size: var(--text-size-xs);
+
+    border-radius: 10px;
+
+    background-color: var(--color-grey);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.2s ease;
+    z-index: 10;
+  }
+
+  .tooltip::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: var(--color-grey) transparent transparent transparent;
   }
 
   .bank-account-container button {
@@ -182,6 +216,17 @@ const formattedAccountNumber = accountNumber.replace(/[^0-9]/g, "");
     .bank-account-container button:hover {
       transform: scale(1.05);
     }
+
+    #account-number {
+      gap: 0.5rem;
+    }
+
+    .tooltip {
+      padding: 0.5rem 1rem;
+
+      right: -2.5rem;
+      bottom: 3rem;
+    }
   }
 
   @media (min-width: 1440px) {
@@ -191,6 +236,14 @@ const formattedAccountNumber = accountNumber.replace(/[^0-9]/g, "");
 
     .bank-account-container > p {
       margin: 4rem auto 0 auto;
+    }
+
+    #account-number {
+      gap: 1rem;
+    }
+
+    .tooltip {
+      bottom: 4rem;
     }
   }
 </style>
@@ -205,20 +258,34 @@ const formattedAccountNumber = accountNumber.replace(/[^0-9]/g, "");
   const $ACCOUNT_NUMBER = document.getElementById(
     "account-number",
   ) as HTMLParagraphElement;
+  const $TOOLTIP = document.querySelector(".tooltip") as HTMLSpanElement;
 
   $BUTTON.addEventListener("click", () => {
     $CONTENT.classList.toggle("hidden");
   });
 
-  $ACCOUNT_NUMBER?.addEventListener("click", async () => {
+  $ACCOUNT_NUMBER.addEventListener("click", async () => {
     const accountNumber = $ACCOUNT_NUMBER.dataset.accountNumber || "";
     if (!accountNumber) return;
 
     try {
       await navigator.clipboard.writeText(accountNumber);
+      showTooltip();
     } catch (error) {
       console.error("Error al copiar al portapapeles:", error);
       return;
     }
   });
+
+  const showTooltip = () => {
+    $TOOLTIP.style.opacity = "1";
+    $TOOLTIP.style.visibility = "visible";
+
+    setTimeout(() => {
+      $TOOLTIP.style.opacity = "0";
+      setTimeout(() => {
+        $TOOLTIP.style.visibility = "hidden";
+      }, 200);
+    }, 2000);
+  };
 </script>
