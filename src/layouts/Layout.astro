@@ -89,18 +89,11 @@ const { title } = Astro.props;
     --font-secondary: "Aesthetic", cursive;
 
     /* COLORS */
-    --color-primary: #cbad8d;
-    --color-secondary: #a48374;
-    --color-tertiary: #d1c7bd;
-    --color-quaternary: #d1c7bd;
-
     --color-light: #f1ede6;
-    --color-dark: #3a2d28;
-
-    --color-text-light: #f1ede6;
-    --color-text-dark: #3a2d28;
-
-    --bg-color: var(--color-tertiary);
+    --color-dark: #0f130c;
+    --color-dark-hover: #262a23;
+    --color-grey: #dddcd7;
+    --bg-color: #f3f2f1;
 
     /* TEXT SIZE */
     --text-size-xs: 0.6rem;
@@ -115,7 +108,7 @@ const { title } = Astro.props;
   html {
     font-family: var(--font-primary);
     background: var(--bg-color);
-    color: var(--color-text-dark);
+    color: var(--color-dark);
   }
 
   body {
@@ -125,6 +118,7 @@ const { title } = Astro.props;
 
     max-width: 100dvw;
     min-height: 100dvh;
+    overflow-x: hidden;
   }
 
   /* TABLET STYLES */
@@ -158,11 +152,11 @@ const { title } = Astro.props;
     :root {
       /* TEXT SIZE */
       --text-size-sm: 1.5rem;
-      --text-size-md: 1.8rem;
-      --text-size-lg: 2.5rem;
-      --text-size-xl: 3.5rem;
-      --text-size-2xl: 5rem;
-      --text-size-3xl: 7rem;
+      --text-size-md: 2rem;
+      --text-size-lg: 3em;
+      --text-size-xl: 4rem;
+      --text-size-2xl: 6rem;
+      --text-size-3xl: 8rem;
     }
   }
 </style>

@@ -1,17 +1,26 @@
 ---
 interface Props {
+  deadline: Date;
   isAvailable?: boolean;
   toastDuration?: number;
 }
 
-const { isAvailable, toastDuration = 3000 } = Astro.props;
+const { deadline, isAvailable, toastDuration = 3000 } = Astro.props;
+
+const deadlineLocaleString = deadline.toLocaleDateString("es-ES", {
+  month: "long",
+  day: "numeric",
+});
 ---
 
 {
   isAvailable ? (
     <form class="rsvp-container">
       <h2>Confirmar Asistencia</h2>
-      <p>Por favor, confirma tu asistencia ¡Esperamos que estés alli!</p>
+      <p>
+        Por favor, confirma tu asistencia hasta el{" "}
+        <span>{deadlineLocaleString}</span>. ¡Esperamos que puedas estar!
+      </p>
 
       <div class="rsvp-options">
         <label for="rsvp-yes">
@@ -44,7 +53,11 @@ const { isAvailable, toastDuration = 3000 } = Astro.props;
           type="text"
           placeholder="¿Qué canción no puede faltar?"
         />
-        <textarea name="message" placeholder="Dejanos un mensajito:" rows="4" />
+        <textarea
+          name="message"
+          placeholder="Déjanos un mensajito..."
+          rows="4"
+        />
       </div>
 
       <button disabled type="submit">
@@ -80,12 +93,9 @@ const { isAvailable, toastDuration = 3000 } = Astro.props;
 
     font-size: var(--text-size-lg);
     font-weight: 600;
-    color: var(--color-text-dark);
+    color: var(--color-dark);
     text-transform: uppercase;
     letter-spacing: 0.05em;
-
-    max-width: 70%;
-    text-wrap: balance;
   }
 
   .rsvp-container > p {
@@ -93,12 +103,16 @@ const { isAvailable, toastDuration = 3000 } = Astro.props;
 
     font-size: var(--text-size-md);
     font-weight: 400;
-    color: var(--color-text-dark);
+    color: var(--color-dark);
 
     max-width: 70%;
     text-wrap: balance;
     line-height: 1.5;
     letter-spacing: 0.02em;
+  }
+
+  .rsvp-container > p span {
+    font-weight: 600;
   }
 
   .rsvp-options {
@@ -115,14 +129,14 @@ const { isAvailable, toastDuration = 3000 } = Astro.props;
     font-size: var(--text-size-md);
     font-weight: 400;
     letter-spacing: 0.02em;
-    color: var(--color-text-dark);
+    color: var(--color-dark);
     cursor: pointer;
     user-select: none;
   }
 
   .rsvp-options input[type="radio"] {
     margin-right: 0.5rem;
-    accent-color: var(--color-secondary);
+    accent-color: var(--color-dark);
     cursor: pointer;
   }
 
@@ -138,6 +152,7 @@ const { isAvailable, toastDuration = 3000 } = Astro.props;
 
   .rsvp-fields input {
     width: 80%;
+    height: 1.2rem;
     padding: 0.6rem 1rem;
 
     font-size: var(--text-size-md);
@@ -146,11 +161,11 @@ const { isAvailable, toastDuration = 3000 } = Astro.props;
     font-family: var(--font-primary);
     letter-spacing: 0.02em;
 
-    color: var(--color-text-dark);
+    color: var(--color-dark);
     border: none;
     border-radius: 5px;
 
-    background: var(--color-light);
+    background: #fafafa;
     opacity: 1;
     transition: all 0.4s ease;
   }
@@ -165,12 +180,12 @@ const { isAvailable, toastDuration = 3000 } = Astro.props;
     font-family: var(--font-primary);
     letter-spacing: 0.02em;
 
-    color: var(--color-text-dark);
+    color: var(--color-dark);
     border: none;
     border-radius: 5px;
-    resize: vertical;
+    resize: none;
 
-    background: var(--color-light);
+    background: #fafafa;
   }
 
   .rsvp-fields input[name="name"] {
@@ -199,7 +214,7 @@ const { isAvailable, toastDuration = 3000 } = Astro.props;
     padding: 0.6rem 2rem;
 
     font-size: var(--text-size-sm);
-    color: var(--color-text-light);
+    color: var(--color-light);
     letter-spacing: 0.02em;
     text-transform: uppercase;
     background-color: var(--color-dark);
@@ -208,17 +223,17 @@ const { isAvailable, toastDuration = 3000 } = Astro.props;
     border-radius: 5px;
 
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.2s ease;
   }
 
   .rsvp-container button:hover {
-    background-color: var(--color-secondary);
+    background-color: var(--color-dark-hover);
   }
 
   .rsvp-container button:disabled {
-    background-color: var(--color-light);
-    color: var(--color-quaternary);
-    cursor: progress;
+    background-color: #fafafa;
+    color: var(--color-grey);
+    cursor: not-allowed;
   }
 
   .toast-container {
@@ -237,8 +252,8 @@ const { isAvailable, toastDuration = 3000 } = Astro.props;
     border-radius: 5px;
     overflow: hidden;
 
-    background: var(--color-primary);
-    color: var(--color-text-dark);
+    background: var(--color-grey);
+    color: var(--color-dark);
 
     opacity: 0;
     pointer-events: none;
@@ -287,10 +302,38 @@ const { isAvailable, toastDuration = 3000 } = Astro.props;
   }
 
   @media (min-width: 1024px) {
+    .rsvp-container {
+      margin: 6rem 0 0 0;
+    }
+
+    .rsvp-container > h2 {
+      font-size: var(--text-size-xl);
+    }
+
+    .rsvp-container > p {
+      margin: 2rem auto 0 auto;
+    }
+
+    .rsvp-options label {
+      display: inline-flex;
+      align-items: center;
+      margin: 0 1rem;
+    }
+
+    .rsvp-options label:hover input[type="radio"] {
+      transform: scale(1.5);
+    }
+
+    .rsvp-options input[type="radio"] {
+      margin-right: 1rem;
+      transform: scale(1.2);
+      transition: transform 0.2s ease;
+    }
+
     .rsvp-fields input,
     .rsvp-fields textarea {
       width: 60%;
-      padding: 0.8rem 1.2rem;
+      padding: 1rem 1.2rem;
     }
 
     .rsvp-container button {
@@ -321,95 +364,127 @@ const { isAvailable, toastDuration = 3000 } = Astro.props;
       }
     }
   }
+
+  @media (min-width: 1440px) {
+    .rsvp-container {
+      margin: 10rem 0 0 0;
+    }
+
+    .rsvp-options {
+      margin: 2rem auto 0 auto;
+    }
+    
+
+    .rsvp-options label:hover input[type="radio"] {
+      transform: scale(2);
+    }
+
+    .rsvp-options input[type="radio"] {
+      transform: scale(1.7);
+    }
+
+    .rsvp-fields input,
+    .rsvp-fields textarea {
+      padding: 1.2rem 1.5rem;
+    }
+
+    .rsvp-container button {
+      padding: 1rem 3rem;
+    }
+  }
 </style>
 
 <script>
-  const $FORM = document.querySelector("form") as HTMLFormElement;
-  const $RADIO_YES = $FORM.querySelector(
-    'input[id="rsvp-yes"]',
-  ) as HTMLInputElement;
-  const $RADIO_NO = $FORM.querySelector(
-    'input[id="rsvp-no"]',
-  ) as HTMLInputElement;
-  const $INPUT_NAME = $FORM.querySelector(
-    'input[name="name"]',
-  ) as HTMLInputElement;
-  const $INPUT_SONG = $FORM.querySelector(
-    'input[name="song"]',
-  ) as HTMLInputElement;
-  const $BUTTON = $FORM.querySelector("button") as HTMLButtonElement;
-  const $TOAST = document.querySelector(".toast-container") as HTMLDivElement;
-  const $TOAST_MESSAGE = $TOAST.querySelector(
-    ".toast-message",
-  ) as HTMLSpanElement;
-  const $TOAST_PROGRESS = $TOAST.querySelector(
-    ".toast-progress",
-  ) as HTMLDivElement;
-  const duration = Number($TOAST.dataset.duration);
+  document.addEventListener("DOMContentLoaded", () => {
+    const $BODY = document.querySelector("body") as HTMLBodyElement;
+    const $FORM = document.querySelector("form") as HTMLFormElement;
+    const $RADIO_YES = $FORM.querySelector(
+      'input[id="rsvp-yes"]',
+    ) as HTMLInputElement;
+    const $RADIO_NO = $FORM.querySelector(
+      'input[id="rsvp-no"]',
+    ) as HTMLInputElement;
+    const $INPUT_NAME = $FORM.querySelector(
+      'input[name="name"]',
+    ) as HTMLInputElement;
+    const $INPUT_SONG = $FORM.querySelector(
+      'input[name="song"]',
+    ) as HTMLInputElement;
+    const $BUTTON = $FORM.querySelector("button") as HTMLButtonElement;
+    const $TOAST = document.querySelector(".toast-container") as HTMLDivElement;
+    const $TOAST_MESSAGE = $TOAST.querySelector(
+      ".toast-message",
+    ) as HTMLSpanElement;
+    const $TOAST_PROGRESS = $TOAST.querySelector(
+      ".toast-progress",
+    ) as HTMLDivElement;
+    const duration = Number($TOAST.dataset.duration);
 
-  $RADIO_YES.addEventListener("change", () => {
-    $INPUT_SONG.classList.remove("hidden");
-  });
-  $RADIO_NO.addEventListener("change", () => {
-    $INPUT_SONG.classList.add("hidden");
-  });
+    $RADIO_YES.addEventListener("change", () => {
+      $INPUT_SONG.classList.remove("hidden");
+    });
+    $RADIO_NO.addEventListener("change", () => {
+      $INPUT_SONG.classList.add("hidden");
+    });
 
-  $FORM.addEventListener("submit", async (event) => {
-    event.preventDefault();
+    $FORM.addEventListener("submit", async (event) => {
+      event.preventDefault();
 
-    $BUTTON.disabled = true;
-
-    const formData = new FormData($FORM);
-    await handleFetch(formData);
-
-    $FORM.reset();
-    $BUTTON.disabled = false;
-  });
-
-  $INPUT_NAME.addEventListener("input", () => {
-    if ($INPUT_NAME.value.trim() === "") {
       $BUTTON.disabled = true;
-      return;
-    }
-    if ($INPUT_NAME.value.length < 3) {
-      $BUTTON.disabled = true;
-      return;
-    }
-    $BUTTON.disabled = false;
-  });
+      $BODY.style.cursor = "progress";
+      const formData = new FormData($FORM);
+      await handleFetch(formData);
 
-  const handleFetch = async (formData: FormData) => {
-    try {
-      const response = await fetch("/api/rsvp", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        },
-        body: JSON.stringify(Object.fromEntries(formData)),
-      });
+      $FORM.reset();
+      $BUTTON.disabled = false;
+      $BODY.style.cursor = "auto";
+    });
 
-      const data = await response.json();
-      showToast(data.message);
-    } catch (error) {
-      showToast(
-        "Ha ocurrido un error. Por favor, inténtalo de nuevo más tarde.",
-      );
-    }
-  };
+    $INPUT_NAME.addEventListener("input", () => {
+      if ($INPUT_NAME.value.trim() === "") {
+        $BUTTON.disabled = true;
+        return;
+      }
+      if ($INPUT_NAME.value.length < 3) {
+        $BUTTON.disabled = true;
+        return;
+      }
+      $BUTTON.disabled = false;
+    });
 
-  const showToast = (message: string) => {
-    $TOAST_MESSAGE.textContent = message;
-    $TOAST.classList.add("show");
-    $TOAST_PROGRESS.style.transitionDuration = `${duration / 1000}s`;
-    $TOAST_PROGRESS.style.width = "0%";
+    const handleFetch = async (formData: FormData) => {
+      try {
+        const response = await fetch("/api/rsvp", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+          body: JSON.stringify(Object.fromEntries(formData)),
+        });
 
-    setTimeout(() => {
-      $TOAST.classList.remove("show");
+        const data = await response.json();
+        showToast(data.message);
+      } catch (error) {
+        showToast(
+          "Ha ocurrido un error. Por favor, inténtalo de nuevo más tarde.",
+        );
+      }
+    };
+
+    const showToast = (message: string) => {
+      $TOAST_MESSAGE.textContent = message;
+      $TOAST.classList.add("show");
+      $TOAST_PROGRESS.style.transitionDuration = `${duration / 1000}s`;
+      $TOAST_PROGRESS.style.width = "0%";
 
       setTimeout(() => {
-        $TOAST_PROGRESS.style.width = "100%";
-      }, 1000);
-    }, duration);
-  };
+        $TOAST.classList.remove("show");
+
+        setTimeout(() => {
+          $TOAST_PROGRESS.style.width = "100%";
+        }, 1000);
+      }, duration);
+    };
+  });
 </script>

@@ -11,12 +11,6 @@ importers:
       '@astrojs/vercel':
         specifier: 8.2.7
         version: 8.2.7(astro@5.13.7)
-      '@date-fns/tz':
-        specifier: 1.4.1
-        version: 1.4.1
-      '@date-fns/utc':
-        specifier: ^2.1.1
-        version: 2.1.1
       '@vercel/analytics':
         specifier: ^1.5.0
         version: 1.5.0
@@ -32,6 +26,9 @@ importers:
       date-fns:
         specifier: 4.1.0
         version: 4.1.0
+      date-fns-tz:
+        specifier: ^3.2.0
+        version: 3.2.0(date-fns@4.1.0)
 
 packages:
 
@@ -154,14 +151,6 @@ packages:
       fontkit: 2.0.4
     transitivePeerDependencies:
       - encoding
-    dev: false
-
-  /@date-fns/tz@1.4.1:
-    resolution: {integrity: sha512-P5LUNhtbj6YfI3iJjw5EL9eUAG6OitD0W3fWQcpQjDRc/QIsL0tRNuO1PcDvPccWL1fSTXXdE1ds+l95DV/OFA==}
-    dev: false
-
-  /@date-fns/utc@2.1.1:
-    resolution: {integrity: sha512-SlJDfG6RPeEX8wEVv6ZB3kak4MmbtyiI2qX/5zuKdordbrhB/iaJ58GVMZgJ6P1sJaM1gMgENFYYeg1JWrCFrA==}
     dev: false
 
   /@emnapi/runtime@1.5.0:
@@ -1645,6 +1634,14 @@ packages:
     resolution: {integrity: sha512-/Tb/JcjK111nNScGob5MNtsntNM1aCNUDipB/TkwZFhyDrrE47SOx/18wF2bbjgc3ZzCSKW1T5nt5EbFoAz/Vg==}
     engines: {node: '>=4'}
     hasBin: true
+    dev: false
+
+  /date-fns-tz@3.2.0(date-fns@4.1.0):
+    resolution: {integrity: sha512-sg8HqoTEulcbbbVXeg84u5UnlsQa8GS5QXMqjjYIhS4abEVVKIUwe0/l/UhrZdKaL/W5eWZNlbTeEIiOXTcsBQ==}
+    peerDependencies:
+      date-fns: ^3.0.0 || ^4.0.0
+    dependencies:
+      date-fns: 4.1.0
     dev: false
 
   /date-fns@4.1.0:

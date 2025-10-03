@@ -31,7 +31,7 @@ const {
 
     <div class={`event-details-info`}>
       <p class="event-info-text">{place}</p>
-      <p class="event-info-time">{time}</p>
+      <p class="event-info-time">{time} hrs.</p>
       <p class="event-info-text">{address}</p>
     </div>
 
@@ -46,11 +46,10 @@ const {
   </picture>
 </div>
 
-<!-- MOBILE STYLES -->
 <style>
   .event-details-container {
     width: 100%;
-    margin: 2rem auto 3rem auto;
+    margin: 2rem auto 0 auto;
 
     display: flex;
     flex-direction: row;
@@ -64,9 +63,7 @@ const {
     overflow: hidden;
     position: relative;
 
-    border: 2px solid var(--color-dark);
-    border-top-left-radius: 80px;
-    border-top-right-radius: 80px;
+    border-radius: 100px;
   }
 
   picture img {
@@ -90,7 +87,7 @@ const {
     text-align: center;
     margin: 2rem 0 1rem 0;
 
-    color: var(--color-text-dark);
+    color: var(--color-dark);
     letter-spacing: 0.02em;
   }
 
@@ -106,7 +103,7 @@ const {
 
   .event-details-info {
     height: 100%;
-    margin: .5rem 0;
+    margin: 0.5rem 0;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -128,7 +125,6 @@ const {
     margin: 0.5rem 0;
 
     font-weight: 600;
-    
   }
 
   section a {
@@ -139,36 +135,36 @@ const {
     padding: 0.5rem 1rem;
     border-radius: 10px;
 
-    color: var(--color-text-light);
+    color: var(--color-light);
     font-size: var(--text-size-xs);
     text-decoration: none;
     display: inline-flex;
 
-    transition: background 0.3s ease;
+    transition: background 0.2s ease;
     background: var(--color-dark);
     z-index: 2;
   }
 
   section a:hover {
-    background: var(--color-secondary);
+    background: var(--color-dark-hover);
   }
 
   @media (min-width: 768px) {
     .event-details-container {
-      margin: 3rem auto 4rem auto;
+      margin: 3rem auto 0 auto;
       gap: 2rem;
     }
 
     picture {
       width: 30%;
       height: 500px;
-      border-top-left-radius: 170px;
-      border-top-right-radius: 170px;
+
+      border-radius: 180px;
     }
 
     section {
       width: 30%;
-      margin: 3rem 0 1rem 0;
+      margin: 4rem 0;
     }
 
     section h2 {
@@ -177,6 +173,8 @@ const {
 
     .event-details-info {
       gap: 0.5rem;
+      justify-content: flex-start;
+      margin: 2rem 0 0 0;
     }
 
     .event-info-text {
@@ -190,6 +188,31 @@ const {
     section a {
       font-size: var(--text-size-sm);
       padding: 0.75rem 1.5rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    section a {
+      transition: all 0.2s ease;
+    }
+
+    section a:hover {
+      background: var(--color-dark);
+      transform: scale(1.1);
+    }
+  }
+
+  @media (min-width: 1440px) {
+    picture {
+      height: 700px;
+    }
+
+    .event-details-info {
+      margin: 5rem 0 0 0;
+    }
+
+    section a {
+      padding: 1rem 2rem;
     }
   }
 </style>

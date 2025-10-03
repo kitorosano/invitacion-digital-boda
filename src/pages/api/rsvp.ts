@@ -6,6 +6,8 @@ import {
   RSVP_SUCCESS_MESSAGE,
 } from "astro:env/server";
 
+export const prerender = false;
+
 export const POST: APIRoute = async ({ request }) => {
   const { rsvp, name, email, song, message } = await request.json();
 
@@ -17,6 +19,7 @@ export const POST: APIRoute = async ({ request }) => {
     hour: "2-digit",
     minute: "2-digit",
   });
+
   const body = JSON.stringify({ date, name, email, song, message, rsvp });
 
   try {

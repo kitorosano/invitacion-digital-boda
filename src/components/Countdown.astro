@@ -5,10 +5,12 @@ interface Props {
 
 const { targetDate } = Astro.props;
 const formattedDate = targetDate.toISOString();
+
+export const prerender = false;
 ---
 
 <div class="countdown-container">
-  <h2>Faltan:</h2>
+  <h2>Estamos a solo</h2>
   <div class="countdown-timer-container" data-countdown={formattedDate}>
     <div class="time-segment-container">
       <span class="time-value" id="days"></span>
@@ -32,25 +34,35 @@ const formattedDate = targetDate.toISOString();
 <style>
   .countdown-container {
     width: 100%;
+    margin: 2rem 0 0 0;
 
-    text-align: center;
-    color: var(--color-text-dark);
-    margin-top: 2rem;
+    color: var(--color-dark);
+    position: relative;
   }
 
   .countdown-container > h2 {
-    margin: 0;
-    text-transform: uppercase;
-    font-size: var(--text-size-lg);
+    margin: 0 auto;
+
+    font-family: var(--font-secondary);
+    font-size: var(--text-size-2xl);
     font-weight: 300;
+    color: var(--color-dark);
+    text-align: center;
   }
 
   .countdown-timer-container {
+    margin: 0 1rem;
+
     display: flex;
     justify-content: center;
+    align-items: center;
 
-    margin-top: 1rem;
+    padding: 1.5rem 0 1rem 0;
+
     gap: 2rem;
+
+    border-radius: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
   }
 
   .time-segment-container {
@@ -63,10 +75,54 @@ const formattedDate = targetDate.toISOString();
   .time-value {
     font-size: var(--text-size-2xl);
     font-weight: 300;
+    pointer-events: none;
   }
 
   .time-label {
     font-size: var(--text-size-md);
+    pointer-events: none;
+  }
+
+  @media (min-width: 768px) {
+  }
+
+  @media (min-width: 1024px) {
+    .countdown-timer-container {
+      gap: 2rem;
+
+      padding: 0;
+      box-shadow: none;
+    }
+
+    .time-segment-container {
+      padding: 1rem 2rem;
+      border-radius: 20px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+
+      transition: transform 0.2s ease;
+    }
+
+    .time-segment-container:hover {
+      cursor: pointer;
+      transform: scale(1.05);
+    }
+  }
+  @media (min-width: 1440px) {
+    .countdown-container {
+      margin: 3rem 0 0 0;
+    }
+
+    .countdown-container > h2 {
+      margin: 0 auto 1rem auto;
+    }
+
+    .countdown-timer-container {
+      gap: 3rem;
+    }
+
+    .time-segment-container {
+      padding: 1.5rem 3rem;
+    }
   }
 </style>
 
@@ -110,8 +166,13 @@ const formattedDate = targetDate.toISOString();
     HOURS_HTML.textContent = formattedHours;
     MINUTES_HTML.textContent = formattedMinutes;
     SECONDS_HTML.textContent = formattedSeconds;
+    // console.log({
+    //   formattedDays,
+    //   formattedHours,
+    //   formattedMinutes,
+    //   formattedSeconds,
+    // });
   };
 
   interval = setInterval(updateCountdown, 1000);
-  updateCountdown();
 </script>

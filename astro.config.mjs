@@ -6,7 +6,7 @@ import vercel from "@astrojs/vercel";
 
 // https://astro.build/config
 export default defineConfig({
-  output: "server",
+  output: "static",
   adapter: vercel(),
   integrations: [favicons()],
   env: {
@@ -14,6 +14,16 @@ export default defineConfig({
       // Global
       SITE_TITLE: envField.string({
         default: "Invitación de boda",
+        context: "server",
+        access: "public",
+      }),
+      SITE_ENTRYPOINT_CEREMONY: envField.string({
+        default: "",
+        context: "server",
+        access: "public",
+      }),
+      SITE_ENTRYPOINT_CIVIL: envField.string({
+        default: "civil",
         context: "server",
         access: "public",
       }),
@@ -29,6 +39,17 @@ export default defineConfig({
       }),
       DATE_TIMEZONE: envField.string({
         default: "",
+        context: "server",
+        access: "public",
+      }),
+      // BGM
+      BGM_IS_ENABLED: envField.boolean({
+        default: false,
+        context: "server",
+        access: "public",
+      }),
+      BGM_VOLUME: envField.number({
+        default: 0.3,
         context: "server",
         access: "public",
       }),
@@ -160,6 +181,11 @@ export default defineConfig({
         context: "server",
         access: "public",
       }),
+      RSVP_DEADLINE: envField.string({
+        default: "", // Formato: YYYY-MM-DD
+        context: "server",
+        access: "public",
+      }),
       // Dress Code Section
       DRESS_CODE_MESSAGE: envField.string({
         default: "Les pedimos de favor a los invitados evitar estos colores:",
@@ -183,12 +209,17 @@ export default defineConfig({
         context: "server",
         access: "public",
       }),
-      ACCOUNT_NUMBER: envField.string({
+      BANK_ACCOUNT_TYPE: envField.string({
+        default: "C.A.",
+        context: "server",
+        access: "public",
+      }),
+      BANK_ACCOUNT_NUMBER: envField.string({
         default: "",
         context: "server",
         access: "public",
       }),
-      ACCOUNT_HOLDER: envField.string({
+      BANK_ACCOUNT_HOLDER: envField.string({
         default: "",
         context: "server",
         access: "public",

@@ -1,0 +1,60 @@
+---
+import BankAccount from "../components/BankAccount.astro";
+import BGM from "../components/BGM.astro";
+import Countdown from "../components/Countdown.astro";
+import DateWithPhotos from "../components/DateWithPhotos.astro";
+import DressCode from "../components/DressCode.astro";
+import EventDetails from "../components/EventDetails.astro";
+import Footer from "../components/Footer.astro";
+import Hero from "../components/Hero.astro";
+import LargeImageSeparator from "../components/LargeImageSeparator.astro";
+import MessageSeparator from "../components/MessageSeparator.astro";
+import PhotoCollage from "../components/PhotoCollage.astro";
+import QuoteSeparator from "../components/QuoteSeparator.astro";
+import RSVPForm from "../components/RSVPForm.astro";
+import Schedule from "../components/Schedule.astro";
+import SmallImageSeparator from "../components/SmallImageSeparator.astro";
+import {
+  bankAccountProps,
+  bgmProps,
+  countdownProps,
+  dateWithPhotosProps,
+  dressCodeProps,
+  entrypoints,
+  eventDetailsProps,
+  footerProps,
+  heroProps,
+  imageSeparatorProps,
+  layoutProps,
+  messageSeparatorProps,
+  photoCollageProps,
+  quoteSeparatorProps,
+  rsvpProps,
+  scheduleProps,
+} from "../constants/props";
+import Layout from "../layouts/Layout.astro";
+
+export const getStaticPaths = () => {
+  return [{ params: { ceremony: entrypoints.CEREMONY } }];
+};
+---
+
+<Layout {...layoutProps}>
+  <BGM {...bgmProps} />
+  <Hero {...heroProps} />
+  <MessageSeparator {...messageSeparatorProps} />
+  <DateWithPhotos {...dateWithPhotosProps} />
+  <Countdown {...countdownProps} />
+  <Schedule {...scheduleProps} />
+  <SmallImageSeparator {...imageSeparatorProps[0]} />
+  <QuoteSeparator {...quoteSeparatorProps} />
+  <EventDetails {...eventDetailsProps[0]} imagePosition="left" />
+  <EventDetails {...eventDetailsProps[1]} imagePosition="right" />
+  <DressCode {...dressCodeProps} />
+  <SmallImageSeparator {...imageSeparatorProps[1]} />
+  <BankAccount {...bankAccountProps} />
+  <RSVPForm {...rsvpProps} />
+  <PhotoCollage {...photoCollageProps} />
+  <Footer {...footerProps} />
+  <LargeImageSeparator {...imageSeparatorProps[2]} />
+</Layout>

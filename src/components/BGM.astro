@@ -1,15 +1,21 @@
 ---
 interface Props {
   src: string;
+  isEnabled: boolean;
+  volume: number;
 }
 
-const { src } = Astro.props;
+const { src, isEnabled, volume } = Astro.props;
 ---
 
-<div class="bgm-container">
-  <audio src={src} preload="auto" loop></audio>
-  <button aria-label="Play background music"></button>
-</div>
+{
+  isEnabled && (
+    <div class="bgm-container">
+      <audio src={src} preload="auto" loop data-volume={volume} />
+      <button aria-label="Play background music" />
+    </div>
+  )
+}
 
 <style>
   .bgm-container {
@@ -25,13 +31,13 @@ const { src } = Astro.props;
     margin-right: 1rem;
     margin-top: 1rem;
 
-    background: var(--color-primary);
+    background: var(--color-dark);
     border: none;
     border-radius: 50%;
     cursor: pointer;
 
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    transition: background 0.3s ease;
+    transition: background 0.2s ease;
 
     display: flex;
     align-items: center;
@@ -39,7 +45,7 @@ const { src } = Astro.props;
   }
 
   .bgm-container button:hover {
-    background: var(--color-secondary);
+    background: var(--color-dark-hover);
   }
 
   .bgm-container button::before {
@@ -55,18 +61,18 @@ const { src } = Astro.props;
 </style>
 
 <script>
-  const CONTAINER_HTML = document.querySelector(
-    ".bgm-container",
-  ) as HTMLDivElement;
-  const AUDIO_HTML = document.querySelector(
-    ".bgm-container audio",
-  ) as HTMLAudioElement;
-  const BUTTON_HTML = document.querySelector(
-    ".bgm-container button",
-  ) as HTMLButtonElement;
-
   document.addEventListener("DOMContentLoaded", () => {
-    AUDIO_HTML.volume = 0.2;
+    const CONTAINER_HTML = document.querySelector(
+      ".bgm-container",
+    ) as HTMLDivElement;
+    const AUDIO_HTML = document.querySelector(
+      ".bgm-container audio",
+    ) as HTMLAudioElement;
+    const BUTTON_HTML = document.querySelector(
+      ".bgm-container button",
+    ) as HTMLButtonElement;
+
+    AUDIO_HTML.volume = Number(AUDIO_HTML.dataset.volume!);
     const didPlay = AUDIO_HTML.play();
 
     if (didPlay !== undefined) {

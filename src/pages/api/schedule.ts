@@ -8,12 +8,17 @@ import {
   SCHEDULE_START_DATE,
   SCHEDULE_TITLE,
 } from "astro:env/server";
-import { dateForCalendar, dateWithTz } from "../../utils/formatDates";
+import {
+  dateStringToDateUTC,
+  dateToCalendarRSVP,
+} from "../../utils/formatDates";
 
 export const GET: APIRoute = async () => {
   const title = SCHEDULE_TITLE;
-  const startDate = dateForCalendar(dateWithTz(SCHEDULE_START_DATE));
-  const endDate = dateForCalendar(dateWithTz(SCHEDULE_END_DATE));
+  const startDate = dateToCalendarRSVP(
+    dateStringToDateUTC(SCHEDULE_START_DATE),
+  );
+  const endDate = dateToCalendarRSVP(dateStringToDateUTC(SCHEDULE_END_DATE));
   const description = SCHEDULE_DETAILS;
   const location = SCHEDULE_LOCATION;
 

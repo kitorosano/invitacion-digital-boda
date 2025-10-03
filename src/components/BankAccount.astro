@@ -4,6 +4,7 @@ interface Props {
   message: string;
   bankDetails: {
     bankName: string;
+    accountType: string;
     accountNumber: string;
     accountHolder: string;
   };
@@ -11,31 +12,31 @@ interface Props {
 
 const {
   message,
-  bankDetails: { bankName, accountNumber, accountHolder },
+  bankDetails: { bankName, accountType, accountNumber, accountHolder },
 } = Astro.props;
 
 const formattedAccountNumber = accountNumber.replace(/[^0-9]/g, "");
 ---
 
-<div class="bankaccount-container">
+<div class="bank-account-container">
   <h2>Cuenta bancaria</h2>
 
   <p>{message}</p>
 
-  <div class="bankaccount-content hidden">
-    <p class="bankaccount-info">
+  <div class="bank-account-content hidden">
+    <p class="bank-account-info">
       <span>{bankName}</span>
     </p>
     <a
       href="javascript: void(0)"
       id="account-number"
-      class="bankaccount-info"
+      class="bank-account-info"
       data-account-number={formattedAccountNumber}
     >
-      {accountNumber}
+      <span>{accountType}</span>{accountNumber}
       <CopyIcon />
     </a>
-    <p class="bankaccount-info">{accountHolder}</p>
+    <p class="bank-account-info">{accountHolder}</p>
   </div>
 
   <button>Ver datos bancarios</button>
@@ -43,41 +44,38 @@ const formattedAccountNumber = accountNumber.replace(/[^0-9]/g, "");
 
 <style>
   /* MOBILE STYLES */
-  .bankaccount-container {
+  .bank-account-container {
     margin: 3rem auto 0 auto;
     padding: 0.5rem 0;
     width: 100%;
     text-align: center;
   }
 
-  .bankaccount-container > h2 {
+  .bank-account-container > h2 {
     margin: 0 auto;
 
     font-size: var(--text-size-lg);
     font-weight: 600;
-    color: var(--color-text-dark);
+    color: var(--color-dark);
     text-align: center;
     text-transform: uppercase;
     letter-spacing: 0.05em;
-
-    max-width: 50%;
-    text-wrap: balance;
   }
 
-  .bankaccount-container > p {
+  .bank-account-container > p {
     margin: 1rem auto;
 
     font-weight: 400;
     font-size: var(--text-size-md);
-    color: var(--color-text-dark);
+    color: var(--color-dark);
 
     max-width: 70%;
-    text-wrap: pretty;
+    text-wrap: balance;
     line-height: 1.5;
     letter-spacing: 0.02em;
   }
 
-  .bankaccount-content {
+  .bank-account-content {
     margin: 0 auto;
 
     display: flex;
@@ -85,35 +83,35 @@ const formattedAccountNumber = accountNumber.replace(/[^0-9]/g, "");
     align-items: center;
     justify-content: center;
 
-    width: 70%;
+    width: 100%;
     height: 100%;
 
     font-size: var(--text-size-md);
     line-height: 2;
 
     opacity: 1;
-    transition: all 0.3s ease;
+    transition: all 0.2s ease;
   }
 
-  .bankaccount-content.hidden {
+  .bank-account-content.hidden {
     height: 0.01%;
     opacity: 0;
     font-size: 0;
     pointer-events: none;
   }
 
-  .bankaccount-info {
+  .bank-account-info {
     margin: 0 auto;
 
     font-weight: 400;
-    color: var(--color-text-dark);
+    color: var(--color-dark);
     text-transform: uppercase;
     letter-spacing: 0.02em;
 
     text-decoration: none;
   }
 
-  .bankaccount-info span {
+  .bank-account-info span {
     font-weight: 700;
     letter-spacing: 0.1rem;
   }
@@ -132,37 +130,77 @@ const formattedAccountNumber = accountNumber.replace(/[^0-9]/g, "");
     transform: scale(1.05);
   }
 
-  .bankaccount-container button {
+  a.bank-account-info span {
+    font-weight: 600;
+    letter-spacing: 0rem;
+  }
+
+  .bank-account-container button {
     margin: 1rem auto 0 auto;
     padding: 1rem 2rem;
 
     font-size: var(--text-size-md);
     font-weight: 500;
     text-transform: uppercase;
-    color: var(--color-text-light);
+    color: var(--color-light);
 
     border: none;
     border-radius: 10px;
     cursor: pointer;
 
     background-color: var(--color-dark);
-    transition: all 0.3s ease;
+    transition: all 0.2s ease;
 
     height: 100%;
     opacity: 1;
   }
 
-  .bankaccount-container button:hover {
-    background-color: var(--color-secondary);
+  .bank-account-container button:hover {
+    background-color: var(--color-dark-hover);
+  }
+
+  @media (min-width: 768px) {
+  }
+
+  @media (min-width: 1024px) {
+    .bank-account-container > h2 {
+      font-size: var(--text-size-xl);
+    }
+
+    .bank-account-container > p {
+      margin: 2rem auto 0 auto;
+    }
+
+    .bank-account-content {
+      margin: 1rem auto 0 auto;
+    }
+
+    .bank-account-container button {
+      transition: all 0.2s ease;
+    }
+
+    .bank-account-container button:hover {
+      transform: scale(1.05);
+    }
+  }
+
+  @media (min-width: 1440px) {
+    .bank-account-container {
+      margin: 6rem auto 0 auto;
+    }
+
+    .bank-account-container > p {
+      margin: 4rem auto 0 auto;
+    }
   }
 </style>
 
 <script>
   const $CONTENT = document.querySelector(
-    ".bankaccount-content",
+    ".bank-account-content",
   ) as HTMLDivElement;
   const $BUTTON = document.querySelector(
-    ".bankaccount-container button",
+    ".bank-account-container button",
   ) as HTMLButtonElement;
   const $ACCOUNT_NUMBER = document.getElementById(
     "account-number",
