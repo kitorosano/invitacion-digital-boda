@@ -216,35 +216,61 @@ const img = "/images/dress_code.svg";
   }
 
   @media (min-width: 1024px) {
+    .dresscode-container {
+      margin: 6rem auto 0 auto;
+    }
+
     .dresscode-container > h2 {
       font-size: var(--text-size-xl);
     }
 
     .dresscode-restrictions {
-      min-height: 350px; // same as picture height
+      min-height: 350px;
     }
 
     .restrictions-men,
-  .restrictions-women {
-    margin-top: 4rem;
-  }
+    .restrictions-women {
+      margin-top: 4rem;
+    }
 
     .restrictions-men > ul,
     .restrictions-women > ul {
       width: 100%;
     }
-      .restrictions-men > ul {
-    margin: 0rem auto 0 1rem;
-  }
+    .restrictions-men > ul {
+      margin: 0rem auto 0 1rem;
+    }
 
-  .restrictions-women > ul {
-    margin: 0rem 1rem 0 auto;
-  }
+    .restrictions-women > ul {
+      margin: 0rem 1rem 0 auto;
+    }
 
     .dresscode-restrictions > picture {
       height: 350px;
     }
+  }
 
+  @media (min-width: 1440px) {
+    .dresscode-container {
+      margin: 10rem auto 0 auto;
+    }
+    
+    .dresscode-restrictions {
+      min-height: 500px; // same as picture height
+    }
+      
+    .restrictions-men > ul,
+    .restrictions-women > ul {
+      margin: 0rem auto;
+    }
 
+    .restrictions-men > ul h3,
+    .restrictions-women > ul h3 {
+      font-size: var(--text-size-lg);
+    }
+    
+    .dresscode-restrictions > picture {
+      height: 500px;
+    }
   }
 </style>

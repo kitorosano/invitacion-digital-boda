@@ -75,10 +75,12 @@ export const prerender = false;
   .time-value {
     font-size: var(--text-size-2xl);
     font-weight: 300;
+    pointer-events: none;
   }
 
   .time-label {
     font-size: var(--text-size-md);
+    pointer-events: none;
   }
 
   @media (min-width: 768px) {
@@ -96,6 +98,30 @@ export const prerender = false;
       padding: 1rem 2rem;
       border-radius: 20px;
       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+
+      transition: transform 0.2s ease;
+    }
+
+    .time-segment-container:hover {
+      cursor: pointer;
+      transform: scale(1.05);
+    }
+  }
+  @media (min-width: 1440px) {
+    .countdown-container {
+      margin: 3rem 0 0 0;
+    }
+
+    .countdown-container > h2 {
+      margin: 0 auto 1rem auto;
+    }
+
+    .countdown-timer-container {
+      gap: 3rem;
+    }
+
+    .time-segment-container {
+      padding: 1.5rem 3rem;
     }
   }
 </style>

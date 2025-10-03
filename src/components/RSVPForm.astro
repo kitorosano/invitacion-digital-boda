@@ -53,7 +53,11 @@ const deadlineLocaleString = deadline.toLocaleDateString("es-ES", {
           type="text"
           placeholder="¿Qué canción no puede faltar?"
         />
-        <textarea name="message" placeholder="Déjanos un mensajito:" rows="4" />
+        <textarea
+          name="message"
+          placeholder="Déjanos un mensajito..."
+          rows="4"
+        />
       </div>
 
       <button disabled type="submit">
@@ -219,7 +223,7 @@ const deadlineLocaleString = deadline.toLocaleDateString("es-ES", {
     border-radius: 5px;
 
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.2s ease;
   }
 
   .rsvp-container button:hover {
@@ -229,7 +233,7 @@ const deadlineLocaleString = deadline.toLocaleDateString("es-ES", {
   .rsvp-container button:disabled {
     background-color: #fafafa;
     color: var(--color-grey);
-    cursor: progress;
+    cursor: not-allowed;
   }
 
   .toast-container {
@@ -298,14 +302,38 @@ const deadlineLocaleString = deadline.toLocaleDateString("es-ES", {
   }
 
   @media (min-width: 1024px) {
+    .rsvp-container {
+      margin: 6rem 0 0 0;
+    }
+
     .rsvp-container > h2 {
       font-size: var(--text-size-xl);
+    }
+
+    .rsvp-container > p {
+      margin: 2rem auto 0 auto;
+    }
+
+    .rsvp-options label {
+      display: inline-flex;
+      align-items: center;
+      margin: 0 1rem;
+    }
+
+    .rsvp-options label:hover input[type="radio"] {
+      transform: scale(1.5);
+    }
+
+    .rsvp-options input[type="radio"] {
+      margin-right: 1rem;
+      transform: scale(1.2);
+      transition: transform 0.2s ease;
     }
 
     .rsvp-fields input,
     .rsvp-fields textarea {
       width: 60%;
-      padding: 0.8rem 1.2rem;
+      padding: 1rem 1.2rem;
     }
 
     .rsvp-container button {
@@ -334,6 +362,34 @@ const deadlineLocaleString = deadline.toLocaleDateString("es-ES", {
       to {
         transform: translate(0, 0);
       }
+    }
+  }
+
+  @media (min-width: 1440px) {
+    .rsvp-container {
+      margin: 10rem 0 0 0;
+    }
+
+    .rsvp-options {
+      margin: 2rem auto 0 auto;
+    }
+    
+
+    .rsvp-options label:hover input[type="radio"] {
+      transform: scale(2);
+    }
+
+    .rsvp-options input[type="radio"] {
+      transform: scale(1.7);
+    }
+
+    .rsvp-fields input,
+    .rsvp-fields textarea {
+      padding: 1.2rem 1.5rem;
+    }
+
+    .rsvp-container button {
+      padding: 1rem 3rem;
     }
   }
 </style>

@@ -58,7 +58,7 @@ const googleCalendarUrl = `https://www.google.com/calendar/render?action=TEMPLAT
     text-transform: uppercase;
 
     border-radius: 10px;
-    transition: background 0.3s ease;
+    transition: all 0.2s ease;
   }
 
   .schedule-link:hover {
@@ -71,6 +71,15 @@ const googleCalendarUrl = `https://www.google.com/calendar/render?action=TEMPLAT
   @media (min-width: 1024px) {
     .schedule-link {
       padding: 1rem 3rem;
+    }
+
+    .schedule-link:hover {
+      transform: scale(1.05);
+    }
+  }
+  @media (min-width: 1440px) {
+    .schedule-container {
+      margin: 3rem auto;
     }
   }
 </style>
