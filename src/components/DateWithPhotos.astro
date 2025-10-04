@@ -15,19 +15,19 @@ const year = date.getFullYear().toString().slice(-2);
 
   <div class="date-photo" data-date="day">
     <p>{day}</p>
-    <div class="date-photo-wrapper">
+    <div class="date-photo-wrapper animation-heartbeat animation-order-1">
       <img src="/images/webp/date_photo_1.webp" alt="Foto con fecha 1" />
     </div>
   </div>
   <div class="date-photo" data-date="month">
     <p>{month}</p>
-    <div class="date-photo-wrapper">
+    <div class="date-photo-wrapper animation-heartbeat animation-order-2">
       <img src="/images/webp/date_photo_2.webp" alt="Foto con fecha 2" />
     </div>
   </div>
   <div class="date-photo" data-date="year">
     <p>{year}</p>
-    <div class="date-photo-wrapper">
+    <div class="date-photo-wrapper animation-heartbeat animation-order-3">
       <img src="/images/webp/date_photo_3.webp" alt="Foto con fecha 3" />
     </div>
   </div>
@@ -140,6 +140,35 @@ const year = date.getFullYear().toString().slice(-2);
     object-position: 60% center;
   }
 
+  .animation-heartbeat {
+    animation: heartbeat 5s ease-out infinite;
+  }
+
+  .animation-order-1 {
+    animation-delay: 0s;
+  }
+  .animation-order-2 {
+    animation-delay: 1s;
+  }
+  .animation-order-3 {
+    animation-delay: 2s;
+  }
+
+  @keyframes heartbeat {
+    0%,
+    35%,
+    50% {
+      transform: scale(1);
+    }
+    7%,
+    21% {
+      transform: scale(1.01);
+    }
+    14% {
+      transform: scale(0.99);
+    }
+  }
+
   @media (min-width: 768px) {
   }
 
@@ -215,6 +244,7 @@ const year = date.getFullYear().toString().slice(-2);
       ".date-photo-overlay",
     ) as HTMLDivElement;
 
+    // Zoom In
     IMAGES_WRAPPERS_HTML.forEach((wrapper) => {
       wrapper.addEventListener("click", (e) => {
         e.stopPropagation();
@@ -224,16 +254,23 @@ const year = date.getFullYear().toString().slice(-2);
         ) as HTMLImageElement;
         img.classList.add("active");
 
+        IMAGES_WRAPPERS_HTML.forEach((wrapper) => {
+          wrapper.classList.remove("animation-heartbeat");
+        });
+
         OVERLAY_HTML.classList.add("active");
       });
     });
 
+    // Zoom Out
     OVERLAY_HTML.addEventListener("click", () => {
       IMAGES_WRAPPERS_HTML.forEach((wrapper) => {
         const img = wrapper.querySelector(
           ".date-photo-wrapper img",
         ) as HTMLImageElement;
         img.classList.remove("active");
+
+        wrapper.classList.add("animation-heartbeat");
       });
       OVERLAY_HTML.classList.remove("active");
     });
