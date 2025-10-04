@@ -15,26 +15,25 @@ const year = date.getFullYear().toString().slice(-2);
 
   <div class="date-photo" data-date="day">
     <p>{day}</p>
-    <div class="date-photo-wrapper animation-heartbeat animation-order-1">
+    <picture class="animation-heartbeat animation-order-1">
       <img src="/images/webp/date_photo_1.webp" alt="Foto con fecha 1" />
-    </div>
+    </picture>
   </div>
   <div class="date-photo" data-date="month">
     <p>{month}</p>
-    <div class="date-photo-wrapper animation-heartbeat animation-order-2">
+    <picture class="animation-heartbeat animation-order-2">
       <img src="/images/webp/date_photo_2.webp" alt="Foto con fecha 2" />
-    </div>
+    </picture>
   </div>
   <div class="date-photo" data-date="year">
     <p>{year}</p>
-    <div class="date-photo-wrapper animation-heartbeat animation-order-3">
+    <picture class="animation-heartbeat animation-order-3">
       <img src="/images/webp/date_photo_3.webp" alt="Foto con fecha 3" />
-    </div>
+    </picture>
   </div>
 </div>
 
 <style>
-  /* MOBILE STYLES */
   .date-photo-container {
     width: 100%;
     display: flex;
@@ -67,7 +66,6 @@ const year = date.getFullYear().toString().slice(-2);
     width: 28%;
     height: 100%;
     text-align: center;
-    position: relative;
   }
 
   .date-photo[data-date="month"] {
@@ -85,33 +83,46 @@ const year = date.getFullYear().toString().slice(-2);
     color: var(--color-dark);
   }
 
-  .date-photo-wrapper {
+  .date-photo picture {
+    display: block;
     width: 100%;
     height: 100%;
     aspect-ratio: 1 / 2;
+    position: relative;
+    overflow: hidden;
   }
 
-  .date-photo-wrapper img {
+  .date-photo picture img {
+    position: absolute;
+    left: 0;
+
     width: 100%;
     height: 100%;
+
     object-fit: cover;
     border-radius: 8px;
-    position: relative;
+    aspect-ratio: inherit;
 
     filter: brightness(0.8);
     transition:
-      transform 0.2s ease,
-      filter 0.2s ease;
+      transform 0.3s ease-in-out 0.2s,
+      filter 0.3s ease-out;
 
     z-index: 10;
     pointer-events: none;
   }
 
-  .date-photo-wrapper img.active {
+  .date-photo:hover picture img {
+    filter: brightness(0.6);
+  }
+
+  .date-photo picture img.active {
     position: fixed;
-    transform: translate(-50%, -50%) scale(1.8);
-    top: 50%;
-    left: 50%;
+    margin: auto;
+
+    top: 0;
+    bottom: 0;
+    right: 0;
     aspect-ratio: 5 / 7;
 
     width: 45%;
@@ -122,21 +133,22 @@ const year = date.getFullYear().toString().slice(-2);
 
     border-radius: 16px;
     box-shadow: 0 0 32px 8px rgba(0, 0, 0, 0.4);
+    transform: scale(1.8);
     filter: brightness(1);
-    z-index: 1001;
+    z-index: 1001 !important;
 
     pointer-events: none;
   }
 
-  .date-photo[data-date="day"] .date-photo-wrapper img {
+  .date-photo[data-date="day"] picture img {
     object-position: 40% center;
   }
 
-  .date-photo[data-date="month"] .date-photo-wrapper img {
+  .date-photo[data-date="month"] picture img {
     object-position: 50% center;
   }
 
-  .date-photo[data-date="year"] .date-photo-wrapper img {
+  .date-photo[data-date="year"] picture img {
     object-position: 60% center;
   }
 
@@ -168,26 +180,41 @@ const year = date.getFullYear().toString().slice(-2);
       transform: scale(0.99);
     }
   }
-
-  @media (min-width: 768px) {
+  @media (min-width: 576px) {
+    .date-photo-container {
+      gap: 0.8rem;
+    }
   }
 
   @media (min-width: 1024px) {
     .date-photo-container {
-      margin: 2rem auto;
-      width: 70%;
-      gap: 3rem;
+      margin: 1.5rem auto;
+      width: 80%;
+      gap: 1rem;
     }
 
-    .date-photo-wrapper {
-      width: 100%;
-      height: 100%;
-      aspect-ratio: 2/3;
+    .date-photo {
+      width: 30%;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .date-photo picture {
+      aspect-ratio: 3/4;
+    }
+  }
+
+  @media (min-width: 1200px) {
+    .date-photo-container {
+      margin: 2rem auto;
+      width: 70%;
+      gap: 1rem;
     }
 
     .date-photo {
       width: 60%;
       cursor: pointer;
+      position: relative;
     }
 
     .date-photo p {
@@ -205,74 +232,63 @@ const year = date.getFullYear().toString().slice(-2);
       opacity: 0;
     }
 
-    .date-photo:hover .date-photo-wrapper img {
-      filter: brightness(0.5);
-      transform: scale(1.05);
-    }
-
     .date-photo:hover p {
       opacity: 1;
-      z-index: 11;
+      z-index: 12;
     }
 
-    .date-photo-wrapper img.active {
-      position: fixed;
-      transform: translate(-50%, -50%) scale(1);
-      top: 50%;
-      left: 50%;
+    .date-photo picture {
+      aspect-ratio: 2/3;
+    }
 
-      width: 45%;
-      height: auto;
+    .date-photo:hover picture img {
+      filter: brightness(0.5);
+    }
 
-      border-radius: 16px;
-      box-shadow: 0 0 32px 8px rgba(0, 0, 0, 0.4);
-      filter: brightness(1);
-      z-index: 1001;
-
-      pointer-events: none;
+    .date-photo picture img.active {
+      transform: scale(1);
     }
   }
 </style>
 
 <script>
   document.addEventListener("DOMContentLoaded", () => {
-    const IMAGES_WRAPPERS_HTML = document.querySelectorAll(
-      ".date-photo-wrapper",
+    const $DATE_PHOTO_CONTAINER = document.querySelector(
+      ".date-photo-container",
+    ) as HTMLDivElement;
+    const $PICTURES_HTML = $DATE_PHOTO_CONTAINER.querySelectorAll(
+      "picture",
     ) as NodeListOf<HTMLImageElement>;
 
-    const OVERLAY_HTML = document.querySelector(
+    const $OVERLAY_HTML = $DATE_PHOTO_CONTAINER.querySelector(
       ".date-photo-overlay",
     ) as HTMLDivElement;
 
     // Zoom In
-    IMAGES_WRAPPERS_HTML.forEach((wrapper) => {
-      wrapper.addEventListener("click", (e) => {
+    $PICTURES_HTML.forEach((picture) => {
+      picture.addEventListener("click", (e) => {
         e.stopPropagation();
 
-        const img = wrapper.querySelector(
-          ".date-photo-wrapper img",
-        ) as HTMLImageElement;
-        img.classList.add("active");
+        const IMG_HTML = picture.querySelector("img") as HTMLImageElement;
+        IMG_HTML.classList.add("active");
 
-        IMAGES_WRAPPERS_HTML.forEach((wrapper) => {
-          wrapper.classList.remove("animation-heartbeat");
+        $PICTURES_HTML.forEach((picture) => {
+          picture.classList.remove("animation-heartbeat");
         });
 
-        OVERLAY_HTML.classList.add("active");
+        $OVERLAY_HTML.classList.add("active");
       });
     });
 
     // Zoom Out
-    OVERLAY_HTML.addEventListener("click", () => {
-      IMAGES_WRAPPERS_HTML.forEach((wrapper) => {
-        const img = wrapper.querySelector(
-          ".date-photo-wrapper img",
-        ) as HTMLImageElement;
-        img.classList.remove("active");
+    $OVERLAY_HTML.addEventListener("click", () => {
+      $PICTURES_HTML.forEach((picture) => {
+        const IMG_HTML = picture.querySelector("img") as HTMLImageElement;
+        IMG_HTML.classList.remove("active");
 
-        wrapper.classList.add("animation-heartbeat");
+        picture.classList.add("animation-heartbeat");
       });
-      OVERLAY_HTML.classList.remove("active");
+      $OVERLAY_HTML.classList.remove("active");
     });
   });
 </script>

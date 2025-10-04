@@ -43,7 +43,6 @@ const formattedAccountNumber = accountNumber.replace(/[^0-9]/g, "");
 </div>
 
 <style>
-  /* MOBILE STYLES */
   .bank-account-container {
     margin: 3rem auto 0 auto;
     padding: 0.5rem 0;
@@ -193,14 +192,22 @@ const formattedAccountNumber = accountNumber.replace(/[^0-9]/g, "");
     background-color: var(--color-dark-hover);
   }
 
-  @media (min-width: 768px) {
+  .bank-account-container:has(.bank-account-content.hidden) button {
+    margin: 0 auto;
   }
 
-  @media (min-width: 1024px) {
+  @media (min-width: 576px) {
     .bank-account-container > h2 {
       font-size: var(--text-size-xl);
     }
 
+    .tooltip {
+      right: -2rem;
+      bottom: 2.5rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
     .bank-account-container > p {
       margin: 2rem auto 0 auto;
     }
@@ -249,23 +256,28 @@ const formattedAccountNumber = accountNumber.replace(/[^0-9]/g, "");
 </style>
 
 <script>
-  const $CONTENT = document.querySelector(
+  const $BANK_ACCOUNT_CONTAINER_HTML = document.querySelector(
+    ".bank-account-container",
+  ) as HTMLDivElement;
+  const $BANK_ACCOUNT_CONTENT_HTML = $BANK_ACCOUNT_CONTAINER_HTML.querySelector(
     ".bank-account-content",
   ) as HTMLDivElement;
-  const $BUTTON = document.querySelector(
-    ".bank-account-container button",
+  const $BUTTON_HTML = $BANK_ACCOUNT_CONTAINER_HTML.querySelector(
+    "button",
   ) as HTMLButtonElement;
-  const $ACCOUNT_NUMBER = document.getElementById(
-    "account-number",
+  const $ACCOUNT_NUMBER_HTML = $BANK_ACCOUNT_CONTENT_HTML.querySelector(
+    "#account-number",
   ) as HTMLParagraphElement;
-  const $TOOLTIP = document.querySelector(".tooltip") as HTMLSpanElement;
+  const $TOOLTIP_HTML = $BANK_ACCOUNT_CONTENT_HTML.querySelector(
+    ".tooltip",
+  ) as HTMLSpanElement;
 
-  $BUTTON.addEventListener("click", () => {
-    $CONTENT.classList.toggle("hidden");
+  $BUTTON_HTML.addEventListener("click", () => {
+    $BANK_ACCOUNT_CONTENT_HTML.classList.toggle("hidden");
   });
 
-  $ACCOUNT_NUMBER.addEventListener("click", async () => {
-    const accountNumber = $ACCOUNT_NUMBER.dataset.accountNumber || "";
+  $ACCOUNT_NUMBER_HTML.addEventListener("click", async () => {
+    const accountNumber = $ACCOUNT_NUMBER_HTML.dataset.accountNumber || "";
     if (!accountNumber) return;
 
     try {
@@ -278,13 +290,13 @@ const formattedAccountNumber = accountNumber.replace(/[^0-9]/g, "");
   });
 
   const showTooltip = () => {
-    $TOOLTIP.style.opacity = "1";
-    $TOOLTIP.style.visibility = "visible";
+    $TOOLTIP_HTML.style.opacity = "1";
+    $TOOLTIP_HTML.style.visibility = "visible";
 
     setTimeout(() => {
-      $TOOLTIP.style.opacity = "0";
+      $TOOLTIP_HTML.style.opacity = "0";
       setTimeout(() => {
-        $TOOLTIP.style.visibility = "hidden";
+        $TOOLTIP_HTML.style.visibility = "hidden";
       }, 200);
     }, 2000);
   };

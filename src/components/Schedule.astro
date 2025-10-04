@@ -65,7 +65,7 @@ const googleCalendarUrl = `https://www.google.com/calendar/render?action=TEMPLAT
     background: var(--color-dark-hover);
   }
 
-  @media (min-width: 768px) {
+  @media (min-width: 576px) {
   }
 
   @media (min-width: 1024px) {
@@ -87,14 +87,19 @@ const googleCalendarUrl = `https://www.google.com/calendar/render?action=TEMPLAT
 <script>
   const isIOS = /iPad|iPhone|iPod/g.test(navigator.userAgent);
 
-  const ANCHOR_IOS = document.querySelector("#link-ios") as HTMLAnchorElement;
-  const ANCHOR_GOOGLE = document.querySelector(
+  const $SCHEDULE_CONTAINER = document.querySelector(
+    ".schedule-container",
+  ) as HTMLDivElement;
+  const $ANCHOR_IOS_HTML = $SCHEDULE_CONTAINER.querySelector(
+    "#link-ios",
+  ) as HTMLAnchorElement;
+  const $ANCHOR_GOOGLE_HTML = $SCHEDULE_CONTAINER.querySelector(
     "#link-google",
   ) as HTMLAnchorElement;
 
   if (isIOS) {
-    ANCHOR_IOS.style.display = "inline-block";
+    $ANCHOR_IOS_HTML.style.display = "inline-block";
   } else {
-    ANCHOR_GOOGLE.style.display = "inline-block";
+    $ANCHOR_GOOGLE_HTML.style.display = "inline-block";
   }
 </script>

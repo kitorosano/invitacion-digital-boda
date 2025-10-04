@@ -149,21 +149,57 @@ const {
     background: var(--color-dark-hover);
   }
 
-  @media (min-width: 768px) {
+  @media (min-width: 576px) {
     .event-details-container {
       margin: 3rem auto 0 auto;
       gap: 2rem;
     }
 
     picture {
-      width: 30%;
+      width: 40%;
+      height: 380px;
+
+      border-radius: 140px;
+    }
+
+    section {
+      margin: 3rem 0;
+    }
+
+    .event-details-info {
+      gap: 0.5rem;
+    }
+
+    .event-info-text {
+      font-size: var(--text-size-md);
+    }
+
+    .event-info-time {
+      font-size: 1.4rem;
+    }
+
+    section a {
+      font-size: var(--text-size-sm);
+      padding: 0.75rem 1.5rem;
+      transition: all 0.2s ease;
+    }
+
+    section a:hover {
+      background: var(--color-dark);
+      transform: scale(1.1);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    picture {
+      width: 32%;
       height: 500px;
 
       border-radius: 180px;
     }
 
     section {
-      width: 30%;
+      width: 35%;
       margin: 4rem 0;
     }
 
@@ -172,33 +208,14 @@ const {
     }
 
     .event-details-info {
-      gap: 0.5rem;
       justify-content: flex-start;
       margin: 2rem 0 0 0;
     }
-
-    .event-info-text {
-      font-size: var(--text-size-md);
-    }
-
-    .event-info-time {
-      font-size: var(--text-size-md);
-    }
-
-    section a {
-      font-size: var(--text-size-sm);
-      padding: 0.75rem 1.5rem;
-    }
   }
 
-  @media (min-width: 1024px) {
-    section a {
-      transition: all 0.2s ease;
-    }
-
-    section a:hover {
-      background: var(--color-dark);
-      transform: scale(1.1);
+  @media (min-width: 1200px) {
+    picture {
+      width: 30%;
     }
   }
 

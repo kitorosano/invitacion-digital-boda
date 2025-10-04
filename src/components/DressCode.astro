@@ -228,14 +228,10 @@ const img = "/images/dress_code.svg";
     }
   }
 
-  @media (min-width: 768px) {
-  }
-
-  @media (min-width: 1024px) {
+  @media (min-width: 576px) {
     .dresscode-container {
       margin: 6rem auto 0 auto;
     }
-
     .dresscode-container > h2 {
       font-size: var(--text-size-xl);
     }
@@ -244,10 +240,25 @@ const img = "/images/dress_code.svg";
       min-height: 350px;
     }
 
+    .dresscode-restrictions > picture {
+      height: 350px;
+    }
+
     .restrictions-men,
     .restrictions-women {
       margin-top: 4rem;
     }
+    
+    .restrictions-men > ul {
+      margin: 0rem auto 0 3rem;
+    }
+
+    .restrictions-women > ul {
+      margin: 0rem 3rem 0 auto;
+    }
+  }
+
+  @media (min-width: 1024px) {
 
     .restrictions-men > ul,
     .restrictions-women > ul {
@@ -259,10 +270,6 @@ const img = "/images/dress_code.svg";
 
     .restrictions-women > ul {
       margin: 0rem 1rem 0 auto;
-    }
-
-    .dresscode-restrictions > picture {
-      height: 350px;
     }
   }
 
