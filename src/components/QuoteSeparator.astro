@@ -45,10 +45,15 @@ const { quote, footer } = Astro.props;
     font-weight: 600;
   }
 
-  @media (min-width: 768px) {
+  @media (min-width: 576px) {
+    .quote-container > p {
+      font-size: 1.5rem;
+      max-width: 80%;
+    }
   }
 
-  @media (min-width: 1024px) {
+
+  @media (min-width: 1200px) {
     .quote-container {
       padding: 1rem 0;
     }

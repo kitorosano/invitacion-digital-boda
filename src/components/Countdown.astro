@@ -51,13 +51,13 @@ export const prerender = false;
   }
 
   .countdown-timer-container {
-    margin: 0 1rem;
+    width: max-content;
+    margin: 0 auto;
+    padding: 1.5rem 1.25rem 1rem 1.25rem;
 
     display: flex;
     justify-content: center;
     align-items: center;
-
-    padding: 1.5rem 0 1rem 0;
 
     gap: 2rem;
 
@@ -89,13 +89,16 @@ export const prerender = false;
     }
   }
 
-  @media (min-width: 768px) {
+  @media (min-width: 576px) {
+    .countdown-timer-container {
+      gap: 3.5rem;
+      padding: 1.5rem 2rem 1rem 2rem;
+    }
   }
 
   @media (min-width: 1024px) {
     .countdown-timer-container {
       gap: 2rem;
-
       padding: 0;
       box-shadow: none;
     }
@@ -104,7 +107,6 @@ export const prerender = false;
       padding: 1rem 2rem;
       border-radius: 20px;
       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-
       transition: transform 0.2s ease;
     }
 
@@ -135,15 +137,24 @@ export const prerender = false;
 <script>
   let interval: NodeJS.Timeout;
 
-  const COUNTDOWN_CONTAINER = document.querySelector(
+  const $COUNTDOWN_CONTAINER = document.querySelector(
+    ".countdown-container",
+  ) as HTMLElement;
+  const COUNTDOWN_TIMER_CONTAINER = $COUNTDOWN_CONTAINER.querySelector(
     "[data-countdown]",
   ) as HTMLElement;
-  const DAYS_HTML = document.querySelector("#days") as HTMLElement;
-  const HOURS_HTML = document.querySelector("#hours") as HTMLElement;
-  const MINUTES_HTML = document.querySelector("#minutes") as HTMLElement;
-  const SECONDS_HTML = document.querySelector("#seconds") as HTMLElement;
+  const DAYS_HTML = $COUNTDOWN_CONTAINER.querySelector("#days") as HTMLElement;
+  const HOURS_HTML = $COUNTDOWN_CONTAINER.querySelector(
+    "#hours",
+  ) as HTMLElement;
+  const MINUTES_HTML = $COUNTDOWN_CONTAINER.querySelector(
+    "#minutes",
+  ) as HTMLElement;
+  const SECONDS_HTML = $COUNTDOWN_CONTAINER.querySelector(
+    "#seconds",
+  ) as HTMLElement;
 
-  const targetDate = new Date(COUNTDOWN_CONTAINER.dataset.countdown!);
+  const targetDate = new Date(COUNTDOWN_TIMER_CONTAINER.dataset.countdown!);
 
   const updateCountdown = () => {
     const now = new Date();

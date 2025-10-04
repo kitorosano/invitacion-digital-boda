@@ -12,13 +12,12 @@ const { couple, title, img } = Astro.props;
   <img src={img} alt={title} />
 
   <div class="hero-content">
-    <p class="hero-title">{title}</p>
-    <p class="hero-couple">{couple}</p>
+    <h2>{title}</h2>
+    <p>{couple}</p>
   </div>
 </div>
 
 <style>
-  /* MOBILE STYLES */
   .hero-container {
     width: 100%;
     height: 90svh;
@@ -65,7 +64,7 @@ const { couple, title, img } = Astro.props;
     gap: 1rem;
   }
 
-  .hero-title {
+  .hero-content h2 {
     margin: 0;
 
     text-transform: uppercase;
@@ -76,7 +75,7 @@ const { couple, title, img } = Astro.props;
     text-shadow: 1px 2px 2px rgba(0, 0, 0, 0.7);
   }
 
-  .hero-couple {
+  .hero-content p {
     margin: 0;
 
     font-family: var(--font-secondary);
@@ -86,7 +85,12 @@ const { couple, title, img } = Astro.props;
     text-shadow: 2px 4px 4px rgba(0, 0, 0, 0.7);
   }
 
-  /* TABLET STYLES */
+  @media (min-width: 576px) {
+    .hero-container img {
+      object-position: 50% 40%;
+    }
+  }
+
   @media (min-width: 768px) {
     .hero-container {
       height: 100svh;
@@ -97,7 +101,11 @@ const { couple, title, img } = Astro.props;
     .hero-container img {
       width: 100%;
       height: 100%;
-      object-position: 50% 40%;
     }
+  }
+
+  @media (min-width: 1200px) {
+  }
+  @media (min-width: 1440px) {
   }
 </style>

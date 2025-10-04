@@ -65,7 +65,17 @@ const { src } = Astro.props;
     background: linear-gradient(to top, var(--bg-color), transparent);
   }
 
-  @media (min-width: 768px) {
+  @media (min-width: 576px) {
+    .small-image-separator-container picture {
+      height: 300px;
+    }
+
+    .small-image-separator-container picture > img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: 50% 40%;
+    }
   }
 
   @media (min-width: 1024px) {
@@ -78,9 +88,6 @@ const { src } = Astro.props;
     }
 
     .small-image-separator-container picture > img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
       object-position: 50% 35%;
     }
   }

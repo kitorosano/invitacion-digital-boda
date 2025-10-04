@@ -62,14 +62,14 @@ const { src, isEnabled, volume } = Astro.props;
 
 <script>
   document.addEventListener("DOMContentLoaded", () => {
-    const CONTAINER_HTML = document.querySelector(
+    const $CONTAINER_HTML = document.querySelector(
       ".bgm-container",
     ) as HTMLDivElement;
-    const AUDIO_HTML = document.querySelector(
-      ".bgm-container audio",
+    const AUDIO_HTML = $CONTAINER_HTML.querySelector(
+      "audio",
     ) as HTMLAudioElement;
-    const BUTTON_HTML = document.querySelector(
-      ".bgm-container button",
+    const BUTTON_HTML = $CONTAINER_HTML.querySelector(
+      "button",
     ) as HTMLButtonElement;
 
     AUDIO_HTML.volume = Number(AUDIO_HTML.dataset.volume!);
@@ -82,7 +82,7 @@ const { src, isEnabled, volume } = Astro.props;
         })
         .catch((error) => {
           // Show a UI element to let the user manually start playback.
-          CONTAINER_HTML.style.display = "block";
+          $CONTAINER_HTML.style.display = "block";
 
           BUTTON_HTML.addEventListener("click", () => {
             AUDIO_HTML.play();
