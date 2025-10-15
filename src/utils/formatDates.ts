@@ -1,15 +1,15 @@
-import { DATE_TIMEZONE } from "astro:env/server";
+import { INVITATION_DATE_TIMEZONE } from "astro:env/server";
 import { fromZonedTime } from "date-fns-tz";
 
 /**
- * Convierte una cadena de fecha a un objeto Date en UTC, considerando la zona horaria especificada en DATE_TIMEZONE.
+ * Convierte una cadena de fecha a un objeto Date en UTC, considerando la zona horaria especificada en INVITATION_DATE_TIMEZONE.
  * @param date - Cadena de fecha en formato ISO (YYYY-MM-DDTHH:MM:SS).
  * @returns Objeto Date en UTC.
  */
 export const dateStringToDateUTC = (date: string): Date => {
-  if (!DATE_TIMEZONE) return new Date(date);
+  if (!INVITATION_DATE_TIMEZONE) return new Date(date);
 
-  return fromZonedTime(date, DATE_TIMEZONE);
+  return fromZonedTime(date, INVITATION_DATE_TIMEZONE);
 };
 
 /**
