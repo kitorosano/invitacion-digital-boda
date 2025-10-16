@@ -1,8 +1,7 @@
 // @ts-check
+import vercel from "@astrojs/vercel";
 import favicons from "astro-favicons";
 import { defineConfig, envField } from "astro/config";
-
-import vercel from "@astrojs/vercel";
 
 // https://astro.build/config
 export default defineConfig({
@@ -205,22 +204,42 @@ export default defineConfig({
         context: "server",
         access: "public",
       }),
-      INVITATION_BANK_NAME: envField.string({
+      INVITATION_BANK_DETAIL_1_NAME: envField.string({
         default: "",
         context: "server",
         access: "public",
       }),
-      INVITATION_BANK_ACCOUNT_TYPE: envField.string({
+      INVITATION_BANK_DETAIL_1_ACCOUNT_TYPE: envField.string({
         default: "C.A.",
         context: "server",
         access: "public",
       }),
-      INVITATION_BANK_ACCOUNT_NUMBER: envField.string({
+      INVITATION_BANK_DETAIL_1_ACCOUNT_NUMBER: envField.string({
         default: "",
         context: "server",
         access: "public",
       }),
-      INVITATION_BANK_ACCOUNT_HOLDER: envField.string({
+      INVITATION_BANK_DETAIL_1_ACCOUNT_HOLDER: envField.string({
+        default: "",
+        context: "server",
+        access: "public",
+      }),
+      INVITATION_BANK_DETAIL_2_NAME: envField.string({
+        default: "",
+        context: "server",
+        access: "public",
+      }),
+      INVITATION_BANK_DETAIL_2_ACCOUNT_TYPE: envField.string({
+        default: "",
+        context: "server",
+        access: "public",
+      }),
+      INVITATION_BANK_DETAIL_2_ACCOUNT_NUMBER: envField.string({
+        default: "",
+        context: "server",
+        access: "public",
+      }),
+      INVITATION_BANK_DETAIL_2_ACCOUNT_HOLDER: envField.string({
         default: "",
         context: "server",
         access: "public",
