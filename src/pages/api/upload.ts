@@ -1,15 +1,15 @@
 import type { APIRoute } from "astro";
 import {
   BINGO_CLOUDINARY_UPLOAD_PRESET,
+  CLOUDINARY_API_KEY,
   CLOUDINARY_API_SECRET,
-  PUBLIC_CLOUDINARY_API_KEY,
-  PUBLIC_CLOUDINARY_CLOUD_NAME,
+  CLOUDINARY_CLOUD_NAME,
 } from "astro:env/server";
 import { v2 as cloudinary } from "cloudinary";
 
 cloudinary.config({
-  cloud_name: PUBLIC_CLOUDINARY_CLOUD_NAME,
-  api_key: PUBLIC_CLOUDINARY_API_KEY,
+  cloud_name: CLOUDINARY_CLOUD_NAME,
+  api_key: CLOUDINARY_API_KEY,
   api_secret: CLOUDINARY_API_SECRET,
 });
 

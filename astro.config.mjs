@@ -11,6 +11,11 @@ export default defineConfig({
   integrations: [favicons(), react()],
   env: {
     schema: {
+      PUBLIC_SITE: envField.string({
+        default: "http://localhost:4321",
+        context: "server",
+        access: "public",
+      }),
       // ## Invitation
       // Global
       INVITATION_SITE_TITLE: envField.string({
@@ -297,12 +302,12 @@ export default defineConfig({
       }),
 
       // ## Cloudinary
-      PUBLIC_CLOUDINARY_CLOUD_NAME: envField.string({
+      CLOUDINARY_CLOUD_NAME: envField.string({
         default: "",
         context: "server",
         access: "public",
       }),
-      PUBLIC_CLOUDINARY_API_KEY: envField.string({
+      CLOUDINARY_API_KEY: envField.string({
         default: "",
         context: "server",
         access: "secret",

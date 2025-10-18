@@ -1,17 +1,21 @@
 import type { APIRoute } from "astro";
 import {
   BINGO_CLOUDINARY_ASSETS_PATH,
+  CLOUDINARY_API_KEY,
   CLOUDINARY_API_SECRET,
-  PUBLIC_CLOUDINARY_API_KEY,
-  PUBLIC_CLOUDINARY_CLOUD_NAME,
+  CLOUDINARY_CLOUD_NAME,
 } from "astro:env/server";
 import { v2 as cloudinary } from "cloudinary";
 
 cloudinary.config({
-  cloud_name: PUBLIC_CLOUDINARY_CLOUD_NAME,
-  api_key: PUBLIC_CLOUDINARY_API_KEY,
+  cloud_name: CLOUDINARY_CLOUD_NAME,
+  api_key: CLOUDINARY_API_KEY,
   api_secret: CLOUDINARY_API_SECRET,
 });
+
+export const prerender = false;
+
+const MAX_RESULTS = 10; // TODO: temporary limit for testing
 
 export const GET: APIRoute = async () => {
   try {
@@ -19,7 +23,7 @@ export const GET: APIRoute = async () => {
       .expression(`asset_folder:${BINGO_CLOUDINARY_ASSETS_PATH}/*`)
       .sort_by("public_id", "desc")
       .fields(["secure_url", "width", "height"])
-      .max_results(500)
+      .max_results(MAX_RESULTS)
       .execute();
 
     const optimizedResources = resources.map((resource: any) => {
