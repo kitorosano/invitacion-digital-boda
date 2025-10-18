@@ -13,8 +13,6 @@ cloudinary.config({
   api_secret: CLOUDINARY_API_SECRET,
 });
 
-export const prerender = false;
-
 export const POST: APIRoute = async ({ request }) => {
   const { uri } = await request.json();
 

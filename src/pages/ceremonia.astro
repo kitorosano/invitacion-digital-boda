@@ -3,6 +3,7 @@ import BankAccount from "../components/invitation/BankAccount.astro";
 import BGM from "../components/invitation/BGM.astro";
 import Countdown from "../components/invitation/Countdown.astro";
 import DateWithPhotos from "../components/invitation/DateWithPhotos.astro";
+import DressCode from "../components/invitation/DressCode.astro";
 import EventDetails from "../components/invitation/EventDetails.astro";
 import Footer from "../components/invitation/Footer.astro";
 import Hero from "../components/invitation/Hero.astro";
@@ -10,13 +11,15 @@ import LargeImageSeparator from "../components/invitation/LargeImageSeparator.as
 import MessageSeparator from "../components/invitation/MessageSeparator.astro";
 import PhotoCollage from "../components/invitation/PhotoCollage.astro";
 import QuoteSeparator from "../components/invitation/QuoteSeparator.astro";
+import RSVPForm from "../components/invitation/RSVPForm.astro";
+import Schedule from "../components/invitation/Schedule.astro";
 import SmallImageSeparator from "../components/invitation/SmallImageSeparator.astro";
 import {
   bankAccountProps,
   bgmProps,
   countdownProps,
   dateWithPhotosProps,
-  entrypoints,
+  dressCodeProps,
   eventDetailsProps,
   footerProps,
   heroProps,
@@ -25,12 +28,12 @@ import {
   messageSeparatorProps,
   photoCollageProps,
   quoteSeparatorProps,
+  rsvpProps,
+  scheduleProps,
 } from "../constants/invitation";
 import Layout from "../layouts/Layout.astro";
 
-export const getStaticPaths = () => {
-  return [{ params: { civil: entrypoints.CIVIL } }];
-};
+export const prerender = true;
 ---
 
 <Layout {...layoutProps}>
@@ -39,10 +42,15 @@ export const getStaticPaths = () => {
   <MessageSeparator {...messageSeparatorProps} />
   <DateWithPhotos {...dateWithPhotosProps} />
   <Countdown {...countdownProps} />
+  <Schedule {...scheduleProps} />
   <SmallImageSeparator {...imageSeparatorProps[0]} />
   <QuoteSeparator {...quoteSeparatorProps} />
   <EventDetails {...eventDetailsProps[0]} imagePosition="left" />
+  <EventDetails {...eventDetailsProps[1]} imagePosition="right" />
+  <DressCode {...dressCodeProps} />
+  <SmallImageSeparator {...imageSeparatorProps[1]} />
   <BankAccount {...bankAccountProps} />
+  <RSVPForm {...rsvpProps} />
   <PhotoCollage {...photoCollageProps} />
   <Footer {...footerProps} />
   <LargeImageSeparator {...imageSeparatorProps[2]} />

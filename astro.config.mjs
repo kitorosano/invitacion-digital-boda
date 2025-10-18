@@ -6,16 +6,12 @@ import { defineConfig, envField } from "astro/config";
 
 // https://astro.build/config
 export default defineConfig({
-  output: "static",
+  output: "server",
   adapter: vercel(),
   integrations: [favicons(), react()],
+  devToolbar: { enabled: false },
   env: {
     schema: {
-      PUBLIC_SITE: envField.string({
-        default: "http://localhost:4321",
-        context: "server",
-        access: "public",
-      }),
       // ## Invitation
       // Global
       INVITATION_SITE_TITLE: envField.string({

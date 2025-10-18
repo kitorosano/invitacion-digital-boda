@@ -13,8 +13,6 @@ cloudinary.config({
   api_secret: CLOUDINARY_API_SECRET,
 });
 
-export const prerender = false;
-
 const MAX_RESULTS = 10; // TODO: temporary limit for testing
 
 export const GET: APIRoute = async () => {
