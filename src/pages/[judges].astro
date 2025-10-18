@@ -1,0 +1,23 @@
+---
+import GoUpButton from "../components/bingo/GoUpButton.astro";
+import GridGallery from "../components/bingo/GridGallery.tsx";
+import Header from "../components/bingo/Header.astro";
+import { entrypoints, layoutProps } from "../constants/bingo";
+import Layout from "../layouts/Layout.astro";
+
+export const getStaticPaths = () => {
+  return [{ params: { judges: entrypoints.JUDGES } }];
+};
+
+const response = await fetch(new URL("/api/photos", Astro.url), {
+  method: "GET",
+  headers: { Accept: "application/json" },
+});
+const { resources: initialImages } = await response.json();
+---
+
+<Layout {...layoutProps}>
+  <Header />
+  <GridGallery client:load initialImages={initialImages} />
+  <GoUpButton />
+</Layout>

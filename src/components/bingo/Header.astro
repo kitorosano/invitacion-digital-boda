@@ -1,0 +1,41 @@
+---
+interface Props {}
+
+const {} = Astro.props;
+---
+
+<nav class="header-container">
+  <ul>
+    <li>Todas</li>
+    <li>Categorias</li>
+    <li>Invitados</li>
+  </ul>
+</nav>
+
+<style>
+  .header-container {
+    width: 100%;
+    margin: 1rem auto;
+    text-align: center;
+
+    margin-bottom: 3rem;
+  }
+  .header-container > ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    display: flex;
+    justify-content: center;
+    gap: 3rem;
+  }
+
+  .header-container > ul > li {
+    color: var(--color-dark);
+
+    font-size: var(--text-size-lg);
+    font-weight: 500;
+
+    cursor: pointer;
+  }
+</style>
