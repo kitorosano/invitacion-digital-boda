@@ -1,0 +1,15 @@
+---
+import Board from "../components/bingo/Board.tsx";
+import Instructions from "../components/bingo/Instructions.astro";
+import { boardProps, entrypoints, layoutProps } from "../constants/bingo";
+import Layout from "../layouts/Layout.astro";
+
+export const getStaticPaths = () => {
+  return [{ params: { bingo: entrypoints.BINGO } }];
+};
+---
+
+<Layout {...layoutProps}>
+  <Instructions />
+  <Board client:load {...boardProps} />
+</Layout>
