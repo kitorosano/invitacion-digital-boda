@@ -1,4 +1,5 @@
 // @ts-check
+import react from "@astrojs/react";
 import vercel from "@astrojs/vercel";
 import favicons from "astro-favicons";
 import { defineConfig, envField } from "astro/config";
@@ -7,7 +8,7 @@ import { defineConfig, envField } from "astro/config";
 export default defineConfig({
   output: "static",
   adapter: vercel(),
-  integrations: [favicons()],
+  integrations: [favicons(), react()],
   env: {
     schema: {
       // ## Invitation
@@ -249,6 +250,67 @@ export default defineConfig({
         default: "Te esperamos",
         context: "server",
         access: "public",
+      }),
+
+      // ## Bingo
+      // Global
+      BINGO_SITE_TITLE: envField.string({
+        default: "Bingo Boda",
+        context: "server",
+        access: "public",
+      }),
+      BINGO_SITE_ENTRYPOINT: envField.string({
+        default: "",
+        context: "server",
+        access: "public",
+      }),
+      BINGO_SITE_ENTRYPOINT_JUDGES: envField.string({
+        default: "",
+        context: "server",
+        access: "public",
+      }),
+      // Board
+      BINGO_OPTIONAL_TASKS: envField.string({
+        default: "", // Tareas separadas por |
+        context: "server",
+        access: "public",
+      }),
+      BINGO_MANDATORY_TASKS: envField.string({
+        default: "", // Tareas separadas por |
+        context: "server",
+        access: "public",
+      }),
+      BINGO_LOCAL_STORAGE_KEY: envField.string({
+        default: "bingo-tasks",
+        context: "client",
+        access: "public",
+      }),
+      BINGO_CLOUDINARY_ASSETS_PATH: envField.string({
+        default: "",
+        context: "server",
+        access: "public",
+      }),
+      BINGO_CLOUDINARY_UPLOAD_PRESET: envField.string({
+        default: "",
+        context: "server",
+        access: "public",
+      }),
+
+      // ## Cloudinary
+      PUBLIC_CLOUDINARY_CLOUD_NAME: envField.string({
+        default: "",
+        context: "server",
+        access: "public",
+      }),
+      PUBLIC_CLOUDINARY_API_KEY: envField.string({
+        default: "",
+        context: "server",
+        access: "secret",
+      }),
+      CLOUDINARY_API_SECRET: envField.string({
+        default: "",
+        context: "server",
+        access: "secret",
       }),
     },
   },
