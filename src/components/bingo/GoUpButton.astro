@@ -3,7 +3,7 @@ import ArrowUpIcon from "./icons/ArrowUp.astro";
 ---
 
 <div class="go-up-button-container">
-  <button class="go-up-button">
+  <button>
     <ArrowUpIcon />
   </button>
 </div>
@@ -15,7 +15,7 @@ import ArrowUpIcon from "./icons/ArrowUp.astro";
     right: 2rem;
   }
 
-  .go-up-button {
+  .go-up-button-container button {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -23,7 +23,7 @@ import ArrowUpIcon from "./icons/ArrowUp.astro";
     width: 3rem;
     height: 3rem;
 
-    background-color: var(--color-dark);
+    background-color: var(--color-bg);
 
     border: none;
     border-radius: 50%;
@@ -34,8 +34,8 @@ import ArrowUpIcon from "./icons/ArrowUp.astro";
     transition: background-color 0.3s ease;
   }
 
-  .go-up-button:hover {
-    background-color: var(--color-dark-hover);
+  .go-up-button-container button:hover {
+    background-color: var(--color-bg-light);
   }
 </style>
 

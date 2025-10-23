@@ -19,12 +19,13 @@
 }
 
 .modal-container {
-  padding: 1rem 2rem 2rem 2rem;
+  min-width: 70%;
+  padding: 1rem;
 
   text-align: center;
 
-  border-radius: 10px;
-  background: var(--color-light);
+  border-radius: 1rem;
+  background: var(--color-bg);
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 
   transition: all 0.3s ease;
@@ -45,7 +46,7 @@
   font-size: 2rem;
 
   background: none;
-  color: var(--color-dark);
+  color: var(--color-text);
   border: none;
 
   cursor: pointer;

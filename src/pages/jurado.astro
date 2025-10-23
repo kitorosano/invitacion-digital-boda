@@ -3,7 +3,7 @@ import GoUpButton from "../components/bingo/GoUpButton.astro";
 import GridGallery from "../components/bingo/GridGallery.tsx";
 import Header from "../components/bingo/Header.astro";
 import { layoutProps } from "../constants/bingo";
-import Layout from "../layouts/Layout.astro";
+import BingoLayout from "../layouts/BingoLayout.astro";
 
 const response = await fetch(new URL("/api/photos", Astro.url), {
   method: "GET",
@@ -12,8 +12,8 @@ const response = await fetch(new URL("/api/photos", Astro.url), {
 const { resources: initialImages } = await response.json();
 ---
 
-<Layout {...layoutProps}>
+<BingoLayout {...layoutProps}>
   <Header />
   <GridGallery client:load initialImages={initialImages} />
   <GoUpButton />
-</Layout>
+</BingoLayout>

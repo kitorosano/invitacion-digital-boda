@@ -27,15 +27,8 @@ const { title } = Astro.props;
     <slot />
   </body>
 </html>
-<style>
-  @font-face {
-    font-family: "Aesthetic";
-    src: url("/fonts/Aesthetic.otf") format("opentype");
-    font-weight: normal;
-    font-style: normal;
-    font-display: swap;
-  }
 
+<style>
   @font-face {
     font-family: "Helvetica Neue";
     src: url("/fonts/HelveticaNeueThin.otf") format("opentype");
@@ -87,14 +80,35 @@ const { title } = Astro.props;
   :root {
     /* FONTS FAMILY */
     --font-primary: "Helvetica Neue", Arial, sans-serif;
-    --font-secondary: "Aesthetic", cursive;
 
     /* COLORS */
-    --color-light: #f1ede6;
-    --color-dark: #0f130c;
-    --color-dark-hover: #262a23;
-    --color-grey: #dddcd7;
-    --bg-color: #f3f2f1;
+    --color-bg-dark: oklch(0.92 0.02 260);
+    --color-bg: oklch(0.96 0.02 260);
+    --color-bg-light: oklch(1 0.02 260);
+    --color-text: oklch(0.15 0.04 260);
+    --color-text-muted: oklch(0.4 0.04 260);
+    --color-highlight: oklch(1 0.04 260);
+    --color-border: oklch(0.6 0.04 260);
+    --color-border-muted: oklch(0.7 0.04 260);
+
+    --color-danger: oklch(0.5 0.08 30);
+    --color-warning: oklch(0.5 0.08 100);
+    --color-success: oklch(0.5 0.08 160);
+    --color-info: oklch(0.5 0.08 260);
+
+    --gradient: linear-gradient(
+      0deg,
+      var(--color-bg) 95%,
+      var(--color-bg-light)
+    );
+    --gradient-hover: linear-gradient(
+      0deg,
+      var(--color-bg),
+      var(--color-bg-light)
+    );
+
+    /* SHADOWS */
+    --shadow: 0 2px 2px hsla(0, 0%, 0%, 0.07), 0 4px 4px hsla(0, 0%, 0%, 0.15);
 
     /* TEXT SIZE */
     --text-size-xs: 0.6rem;
@@ -108,7 +122,7 @@ const { title } = Astro.props;
 
   html {
     font-family: var(--font-primary);
-    background: var(--bg-color);
+    background: var(--color-bg-dark);
     color: var(--color-dark);
   }
 
@@ -117,8 +131,6 @@ const { title } = Astro.props;
     padding: 0;
     box-sizing: border-box;
 
-    max-width: 100dvw;
-    min-height: 100dvh;
     overflow-x: hidden;
 
     user-select: none; /* Standard property */
@@ -152,32 +164,6 @@ const { title } = Astro.props;
       --text-size-xl: 3rem;
       --text-size-2xl: 4.5rem;
       --text-size-3xl: 6rem;
-    }
-  }
-
-  /* DESKTOP STYLES */
-  @media (min-width: 1200px) {
-    :root {
-      --text-size-xs: 0.8rem;
-      --text-size-sm: 1.2rem;
-      --text-size-md: 1.5rem;
-      --text-size-lg: 2.25rem;
-      --text-size-xl: 3rem;
-      --text-size-2xl: 4.5rem;
-      --text-size-3xl: 6rem;
-    }
-  }
-
-  /* LARGE DESKTOP STYLES */
-  @media (min-width: 1440px) {
-    :root {
-      --text-size-xs: 1rem;
-      --text-size-sm: 1.5rem;
-      --text-size-md: 2rem;
-      --text-size-lg: 3em;
-      --text-size-xl: 4rem;
-      --text-size-2xl: 6rem;
-      --text-size-3xl: 8rem;
     }
   }
 </style>
