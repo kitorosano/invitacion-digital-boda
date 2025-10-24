@@ -15,7 +15,7 @@ const Modal = ({ open, onClose, children, withCloseButton = true }: Props) => {
         onClick={(e) => e.stopPropagation()}
       >
         {withCloseButton && (
-          <button className="modal-close-button" onClick={onClose}>
+          <button className="modal-close" onClick={onClose}>
             &times;
           </button>
         )}

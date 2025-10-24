@@ -9,6 +9,7 @@ import {
 import { shuffleTasks, type Task } from "../../utils/shuffleTasks";
 import "./Board.css";
 import ChecklistIcon from "./icons/Checklist";
+import PhotoEditIcon from "./icons/PhotoEdit";
 import Modal from "./Modal";
 
 interface Props {
@@ -83,16 +84,12 @@ const Board = ({ optionalTasks, mandatoryTasks }: Props) => {
     }
   };
 
-  const handleDeletePhoto = (taskId?: string) => {
-    if (!taskId) return;
-
-    const updatedTasks = tasks.map((task) =>
-      task.id === taskId ? { ...task, imageId: "" } : task,
-    );
-
-    setTasks(updatedTasks);
-    saveToLocalStorage(BINGO_LOCAL_STORAGE_KEY, updatedTasks);
+  const handleDeletePhoto = (task?: Task | null) => {
+    if (!task) return;
     handleCloseModal();
+
+    const taskWithoutImage = { ...task, imageId: "" };
+    handleTaskClick(taskWithoutImage);
   };
 
   const handleCloseModal = () => {
@@ -125,7 +122,11 @@ const Board = ({ optionalTasks, mandatoryTasks }: Props) => {
 
       <ul>
         {tasks.map((task) => (
-          <li key={task.id} onClick={() => handleTaskClick(task)}>
+          <li
+            key={task.id}
+            className="task-card-container"
+            onClick={() => handleTaskClick(task)}
+          >
             {!task.imageId ? (
               <span>{task.text}</span>
             ) : (
@@ -146,11 +147,7 @@ const Board = ({ optionalTasks, mandatoryTasks }: Props) => {
         {tasks.length}
       </p>
 
-      <Modal
-        open={shouldOpenModal}
-        onClose={handleCloseModal}
-        withCloseButton={false}
-      >
+      <Modal open={shouldOpenModal} onClose={handleCloseModal}>
         <div className="task-container">
           <ChecklistIcon size={64} />
           <p>"{selectedTask?.text}"</p>
@@ -158,12 +155,9 @@ const Board = ({ optionalTasks, mandatoryTasks }: Props) => {
             <img src={selectedTask?.imageId} alt={selectedTask?.text} />
           </picture>
           <div className="task-actions">
-            <button onClick={handleCloseModal}>Volver</button>
-            <button
-              onClick={() => handleDeletePhoto(selectedTask?.id)}
-              className="danger"
-            >
-              Borrar
+            <button onClick={() => handleDeletePhoto(selectedTask)}>
+              <PhotoEditIcon size={16} />
+              Cambiar foto
             </button>
           </div>
         </div>
