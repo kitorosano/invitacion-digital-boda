@@ -22,6 +22,7 @@ const Board = ({ optionalTasks, mandatoryTasks }: Props) => {
   const [selectedTask, setSelectedTask] = useState<Task | null>(null);
   const [shouldOpenModal, setShouldOpenModal] = useState(false);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const storedTasks = loadFromLocalStorage<Task[]>(BINGO_LOCAL_STORAGE_KEY);
@@ -57,6 +58,7 @@ const Board = ({ optionalTasks, mandatoryTasks }: Props) => {
     if (!file || !selectedTask) return;
 
     try {
+      setIsLoading(true);
       const uri = await fileToUri(file);
 
       const response = await fetch("/api/upload", {
@@ -81,6 +83,8 @@ const Board = ({ optionalTasks, mandatoryTasks }: Props) => {
     } catch (error) {
       console.error("Error uploading file:", error);
       // TODO: show error message to user
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -112,6 +116,13 @@ const Board = ({ optionalTasks, mandatoryTasks }: Props) => {
 
   return (
     <div className="board-container">
+      {isLoading && (
+        <div className="loading-container">
+          <div className="loader" />
+          <span>Cargando...</span>
+        </div>
+      )}
+
       <input
         type="file"
         accept="image/*"
@@ -165,7 +176,8 @@ const Board = ({ optionalTasks, mandatoryTasks }: Props) => {
     </div>
   );
 };
-// TODO: add loading on task, for image upload
 // TODO: addheartbeat effect to tasks-progress when completed tasks
+// TODO: guardar el orden de usuarios que completan el bingo; replantear guardar los demas datos del usuario.
+// TODO: cuando completas el bingo, ya no deberia dejar cambiar fotos.
 
 export default Board;
