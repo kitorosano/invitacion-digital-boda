@@ -101,10 +101,8 @@ const Board = ({ optionalTasks, mandatoryTasks }: Props) => {
     setSelectedTask(null);
   };
 
+  const hasFinished = tasks.length !== 0 && tasks.every((task) => task.imageId);
   useEffect(() => {
-    if (tasks.length === 0) return;
-
-    const hasFinished = tasks.every((task) => task.imageId);
     if (hasFinished) {
       confetti({
         particleCount: 200,
@@ -112,7 +110,7 @@ const Board = ({ optionalTasks, mandatoryTasks }: Props) => {
         origin: { y: 0.9 },
       });
     }
-  }, [tasks]);
+  }, [hasFinished]);
 
   return (
     <div className="board-container">
@@ -165,12 +163,14 @@ const Board = ({ optionalTasks, mandatoryTasks }: Props) => {
           <picture>
             <img src={selectedTask?.imageId} alt={selectedTask?.text} />
           </picture>
-          <div className="task-actions">
-            <button onClick={() => handleDeletePhoto(selectedTask)}>
-              <PhotoEditIcon size={16} />
-              Cambiar foto
-            </button>
-          </div>
+          {!hasFinished && (
+            <div className="task-actions">
+              <button onClick={() => handleDeletePhoto(selectedTask)}>
+                <PhotoEditIcon size={16} />
+                Cambiar foto
+              </button>
+            </div>
+          )}
         </div>
       </Modal>
     </div>
@@ -178,6 +178,5 @@ const Board = ({ optionalTasks, mandatoryTasks }: Props) => {
 };
 // TODO: addheartbeat effect to tasks-progress when completed tasks
 // TODO: guardar el orden de usuarios que completan el bingo; replantear guardar los demas datos del usuario.
-// TODO: cuando completas el bingo, ya no deberia dejar cambiar fotos.
 
 export default Board;
