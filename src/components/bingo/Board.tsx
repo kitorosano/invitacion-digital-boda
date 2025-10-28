@@ -24,6 +24,7 @@ const Board = ({ optionalTasks, mandatoryTasks }: Props) => {
     task: null as Task | null,
   });
   const [shouldAnimateProgress, setShouldAnimateProgress] = useState(false);
+  const completedTasksCount = tasks.filter((task) => task.imageId).length;
   const hasFinished = tasks.length !== 0 && tasks.every((task) => task.imageId);
 
   useEffect(() => {
@@ -80,8 +81,7 @@ const Board = ({ optionalTasks, mandatoryTasks }: Props) => {
       </ul>
 
       <p className={`tasks-progress ${shouldAnimateProgress ? "animate" : ""}`}>
-        Tareas completadas: {tasks.filter((task) => task.imageId).length} /{" "}
-        {tasks.length}
+        Tareas completadas: {completedTasksCount} / {tasks.length}
       </p>
 
       <Modal open={selectedTaskModal.open} onClose={handleCloseModal}>
