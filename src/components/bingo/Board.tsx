@@ -6,7 +6,7 @@ import {
   saveToLocalStorage,
 } from "../../utils/localStorage";
 import { shuffleTasks, type Task } from "../../utils/shuffleTasks";
-import "./Board.css";
+import "./styles/Board.css";
 import BoardTask from "./BoardTask";
 import ChecklistIcon from "./icons/Checklist";
 import PhotoEditIcon from "./icons/PhotoEdit";
