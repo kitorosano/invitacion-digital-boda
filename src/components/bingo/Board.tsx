@@ -23,6 +23,7 @@ const Board = ({ optionalTasks, mandatoryTasks }: Props) => {
     open: false,
     task: null as Task | null,
   });
+  const [shouldAnimateProgress, setShouldAnimateProgress] = useState(false);
   const hasFinished = tasks.length !== 0 && tasks.every((task) => task.imageId);
 
   useEffect(() => {
@@ -49,6 +50,8 @@ const Board = ({ optionalTasks, mandatoryTasks }: Props) => {
     );
 
     setTasks(updatedTasks);
+    setShouldAnimateProgress(true);
+    setTimeout(() => setShouldAnimateProgress(false), 1000);
     saveToLocalStorage(BINGO_LOCAL_STORAGE_KEY, updatedTasks);
   };
 
@@ -76,7 +79,7 @@ const Board = ({ optionalTasks, mandatoryTasks }: Props) => {
         ))}
       </ul>
 
-      <p className="tasks-progress">
+      <p className={`tasks-progress ${shouldAnimateProgress ? "animate" : ""}`}>
         Tareas completadas: {tasks.filter((task) => task.imageId).length} /{" "}
         {tasks.length}
       </p>
@@ -105,7 +108,6 @@ const Board = ({ optionalTasks, mandatoryTasks }: Props) => {
   );
 };
 
-// TODO: add heartbeat effect to tasks-progress when completed tasks
 // TODO: guardar el orden de usuarios que completan el bingo; replantear guardar los demas datos del usuario.
 
 export default Board;
