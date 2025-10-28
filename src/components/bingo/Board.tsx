@@ -1,13 +1,13 @@
 import { BINGO_LOCAL_STORAGE_KEY } from "astro:env/client";
 import confetti from "canvas-confetti";
-import { useEffect, useRef, useState } from "react";
-import { fileToUri } from "../../utils/formatFiles";
+import { useEffect, useState } from "react";
 import {
   loadFromLocalStorage,
   saveToLocalStorage,
 } from "../../utils/localStorage";
 import { shuffleTasks, type Task } from "../../utils/shuffleTasks";
 import "./Board.css";
+import BoardTask from "./BoardTask";
 import ChecklistIcon from "./icons/Checklist";
 import PhotoEditIcon from "./icons/PhotoEdit";
 import Modal from "./Modal";
@@ -19,10 +19,11 @@ interface Props {
 
 const Board = ({ optionalTasks, mandatoryTasks }: Props) => {
   const [tasks, setTasks] = useState<Task[]>([]);
-  const [selectedTask, setSelectedTask] = useState<Task | null>(null);
-  const [shouldOpenModal, setShouldOpenModal] = useState(false);
-  const fileInputRef = useRef<HTMLInputElement | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
+  const [selectedTaskModal, setSelectedTaskModal] = useState({
+    open: false,
+    task: null as Task | null,
+  });
+  const hasFinished = tasks.length !== 0 && tasks.every((task) => task.imageId);
 
   useEffect(() => {
     const storedTasks = loadFromLocalStorage<Task[]>(BINGO_LOCAL_STORAGE_KEY);
@@ -32,76 +33,6 @@ const Board = ({ optionalTasks, mandatoryTasks }: Props) => {
     setTasks(initialTasks);
   }, []);
 
-  const handleImageError = (taskWithError: Task) => {
-    const updatedTasks = tasks.map((task) =>
-      task.id === taskWithError.id ? { ...task, imageId: "" } : task,
-    );
-
-    setTasks(updatedTasks);
-    saveToLocalStorage(BINGO_LOCAL_STORAGE_KEY, updatedTasks);
-  };
-
-  const handleTaskClick = (task: Task) => {
-    setSelectedTask(task);
-
-    if (!task.imageId) {
-      fileInputRef.current?.click();
-    } else {
-      setShouldOpenModal(true);
-    }
-  };
-
-  const handleUploadFile = async (
-    file: File | undefined,
-    selectedTask: Task | null,
-  ) => {
-    if (!file || !selectedTask) return;
-
-    try {
-      setIsLoading(true);
-      const uri = await fileToUri(file);
-
-      const response = await fetch("/api/upload", {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ uri }),
-      });
-      const { data } = await response.json();
-
-      const updatedTasks = tasks.map((task) =>
-        task.id === selectedTask?.id
-          ? { ...task, imageId: data.secure_url }
-          : task,
-      );
-
-      setTasks(updatedTasks);
-      setSelectedTask(null);
-      saveToLocalStorage(BINGO_LOCAL_STORAGE_KEY, updatedTasks);
-    } catch (error) {
-      console.error("Error uploading file:", error);
-      // TODO: show error message to user
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const handleDeletePhoto = (task?: Task | null) => {
-    if (!task) return;
-    handleCloseModal();
-
-    const taskWithoutImage = { ...task, imageId: "" };
-    handleTaskClick(taskWithoutImage);
-  };
-
-  const handleCloseModal = () => {
-    setShouldOpenModal(false);
-    setSelectedTask(null);
-  };
-
-  const hasFinished = tasks.length !== 0 && tasks.every((task) => task.imageId);
   useEffect(() => {
     if (hasFinished) {
       confetti({
@@ -112,42 +43,36 @@ const Board = ({ optionalTasks, mandatoryTasks }: Props) => {
     }
   }, [hasFinished]);
 
+  const updateTask = (taskId: string, imageId: string) => {
+    const updatedTasks = tasks.map((task) =>
+      task.id === taskId ? { ...task, imageId } : task,
+    );
+
+    setTasks(updatedTasks);
+    saveToLocalStorage(BINGO_LOCAL_STORAGE_KEY, updatedTasks);
+  };
+
+  const handleDeletePhoto = () => {
+    if (!selectedTaskModal.task) return;
+    handleCloseModal();
+
+    updateTask(selectedTaskModal.task.id, "");
+  };
+
+  const handleCloseModal = () => {
+    setSelectedTaskModal({ open: false, task: null });
+  };
+
   return (
     <div className="board-container">
-      {isLoading && (
-        <div className="loading-container">
-          <div className="loader" />
-          <span>Cargando...</span>
-        </div>
-      )}
-
-      <input
-        type="file"
-        accept="image/*"
-        ref={fileInputRef}
-        onChange={(e) => handleUploadFile(e.target.files?.[0], selectedTask)}
-        style={{ display: "none" }}
-      />
-
       <ul>
         {tasks.map((task) => (
-          <li
+          <BoardTask
             key={task.id}
-            className="task-card-container"
-            onClick={() => handleTaskClick(task)}
-          >
-            {!task.imageId ? (
-              <span>{task.text}</span>
-            ) : (
-              <picture>
-                <img
-                  src={task.imageId}
-                  alt={task.text}
-                  onError={() => handleImageError(task)}
-                />
-              </picture>
-            )}
-          </li>
+            task={task}
+            updateTask={updateTask}
+            setSelectedTaskModal={setSelectedTaskModal}
+          />
         ))}
       </ul>
 
@@ -156,16 +81,19 @@ const Board = ({ optionalTasks, mandatoryTasks }: Props) => {
         {tasks.length}
       </p>
 
-      <Modal open={shouldOpenModal} onClose={handleCloseModal}>
-        <div className="task-container">
+      <Modal open={selectedTaskModal.open} onClose={handleCloseModal}>
+        <div className="modal-content">
           <ChecklistIcon size={64} />
-          <p>"{selectedTask?.text}"</p>
+          <p>"{selectedTaskModal.task?.text}"</p>
           <picture>
-            <img src={selectedTask?.imageId} alt={selectedTask?.text} />
+            <img
+              src={selectedTaskModal.task?.imageId}
+              alt={selectedTaskModal.task?.text}
+            />
           </picture>
           {!hasFinished && (
             <div className="task-actions">
-              <button onClick={() => handleDeletePhoto(selectedTask)}>
+              <button onClick={handleDeletePhoto}>
                 <PhotoEditIcon size={16} />
                 Cambiar foto
               </button>
@@ -176,7 +104,8 @@ const Board = ({ optionalTasks, mandatoryTasks }: Props) => {
     </div>
   );
 };
-// TODO: addheartbeat effect to tasks-progress when completed tasks
+
+// TODO: add heartbeat effect to tasks-progress when completed tasks
 // TODO: guardar el orden de usuarios que completan el bingo; replantear guardar los demas datos del usuario.
 
 export default Board;

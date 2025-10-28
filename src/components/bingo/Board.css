@@ -1,52 +1,8 @@
 .board-container {
   width: 100%;
-  margin: 0 auto 2rem auto;
+  margin: 2rem auto;
 
   text-align: center;
-}
-
-.loading-container {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 10;
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.4);
-}
-
-.loading-container .loader {
-  border: 8px solid var(--color-bg);
-  border-top: 8px solid transparent;
-  border-radius: 50%;
-  width: 60px;
-  height: 60px;
-
-  animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}
-
-.loading-container span {
-  margin-top: 1rem;
-
-  font-size: var(--text-size-sm);
-  font-weight: 600;
-  color: var(--color-bg);
 }
 
 .board-container ul {
@@ -62,52 +18,6 @@
 
   list-style: none;
 }
-.task-card-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-
-  height: 140px;
-
-  border: 1px solid var(--color-bg);
-  border-top: 1px solid var(--color-highlight);
-  border-radius: 0.5rem;
-
-  background: var(--gradient);
-  box-shadow: var(--shadow);
-
-  cursor: pointer;
-  user-select: none;
-  transition: background 1s, color 0.3s;
-}
-.task-card-container:hover {
-  background: var(--gradient-hover);
-}
-
-.task-card-container > span {
-  padding: 0 0.5rem;
-
-  font-size: var(--text-size-sm);
-  font-weight: 600;
-  color: var(--color-text);
-  text-wrap: balance;
-}
-
-.task-card-container picture {
-  width: 100%;
-  height: 100%;
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.task-card-container picture img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
 
 .tasks-progress {
   margin: 1rem auto;
@@ -119,7 +29,7 @@
   color: var(--color-text-muted);
 }
 
-.task-container {
+.modal-content {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -128,7 +38,7 @@
   font-family: var(--font-primary);
 }
 
-.task-container > p {
+.modal-content > p {
   margin: 0;
 
   font-size: var(--text-size-md);
@@ -136,17 +46,17 @@
   text-align: center;
 }
 
-.task-container picture {
+.modal-content picture {
   margin: 1rem 0 0.5rem 0;
 }
 
-.task-container picture img {
+.modal-content picture img {
   width: 100%;
   height: auto;
   object-fit: cover;
 
   border-radius: 0.5rem;
-  box-shadow: var(--shadow);
+  box-shadow: var(--shadow-md);
 }
 
 .task-actions {
