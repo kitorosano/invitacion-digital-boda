@@ -39,8 +39,9 @@ const BoardTask = ({ task, updateTask, setSelectedTaskModal }: Props) => {
 
       updateTask(task.id, data.secure_url);
     } catch (error) {
-      console.error("Error uploading file:", error);
-      // TODO: show error message to user
+      alert(
+        "Ha ocurrido un error al subir la imagen. Por favor, recarga la página.",
+      );
     } finally {
       setIsLoading(false);
     }
@@ -82,7 +83,5 @@ const BoardTask = ({ task, updateTask, setSelectedTaskModal }: Props) => {
     </li>
   );
 };
-
-// TODO: replantear custom hook para manejar subida de imagenes.
 
 export default BoardTask;

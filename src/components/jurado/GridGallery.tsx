@@ -32,8 +32,9 @@ const GridGallery = ({ initialImages = [] }: Props) => {
 
       setImages(resources);
     } catch (error) {
-      console.error("Error fetching images:", error);
-      // TODO: show error message to user
+      alert(
+        "Ha ocurrido un error al obtener las imágenes. Por favor, recarga la página.",
+      );
     }
   };
 
