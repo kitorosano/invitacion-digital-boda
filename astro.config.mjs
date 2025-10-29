@@ -313,6 +313,32 @@ export default defineConfig({
         context: "server",
         access: "secret",
       }),
+      // ## Redis
+      REDIS_STORAGE_KV_URL: envField.string({
+        default: "",
+        context: "server",
+        access: "secret",
+      }),
+      REDIS_STORAGE_KV_REST_API_URL: envField.string({
+        default: "",
+        context: "server",
+        access: "secret",
+      }),
+      REDIS_STORAGE_KV_REST_API_TOKEN: envField.string({
+        default: "",
+        context: "server",
+        access: "secret",
+      }),
+      REDIS_STORAGE_KV_REST_API_READ_ONLY_TOKEN: envField.string({
+        default: "",
+        context: "server",
+        access: "secret",
+      }),
+      REDIS_STORAGE_REDIS_URL: envField.string({
+        default: "",
+        context: "server",
+        access: "secret",
+      }),
     },
   },
 });
