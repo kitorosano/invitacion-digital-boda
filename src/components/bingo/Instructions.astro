@@ -1,12 +1,24 @@
 ---
+interface Props {
+  isLogged: boolean;
+  notLoggedTitle: string;
+  notLoggedDescription: string;
+  loggedTitle: string;
+  loggedDescription: string;
+}
 
+const {
+  isLogged,
+  notLoggedTitle,
+  notLoggedDescription,
+  loggedTitle,
+  loggedDescription,
+} = Astro.props;
 ---
 
 <div class="instructions-container">
-  <h2>Instrucciones</h2>
-  <p>
-    Completa el tablero subiendo la foto para cada tarea realizada. ¡Diviértete!
-  </p>
+  <h2>{isLogged ? loggedTitle : notLoggedTitle}</h2>
+  <p>{isLogged ? loggedDescription : notLoggedDescription}</p>
 </div>
 
 <style>

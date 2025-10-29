@@ -1,9 +1,25 @@
 ---
-import Board from "../components/bingo/Board.tsx";
-import { boardProps, layoutProps } from "../constants/bingo";
+import Board from "../components/bingo/Board";
+import Instructions from "../components/bingo/Instructions.astro";
+import RegisterUser from "../components/bingo/RegisterUser.astro";
+import {
+  boardProps,
+  instructionsProps,
+  layoutProps,
+  registerUserProps,
+} from "../constants/bingo";
 import BingoLayout from "../layouts/BingoLayout.astro";
+
+const isLogged = Astro.cookies.has("userId");
 ---
 
 <BingoLayout {...layoutProps}>
-  <Board client:load {...boardProps} />
+  <Instructions {...instructionsProps} isLogged={isLogged} />
+  {
+    !isLogged ? (
+      <RegisterUser {...registerUserProps} />
+    ) : (
+      <Board {...boardProps} client:load />
+    )
+  }
 </BingoLayout>

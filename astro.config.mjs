@@ -270,6 +270,29 @@ export default defineConfig({
         context: "server",
         access: "public",
       }),
+      // Instructions
+      BINGO_INSTRUCTIONS_NOT_LOGGED_TITLE: envField.string({
+        default: "¡Bienvenido!",
+        context: "server",
+        access: "public",
+      }),
+      BINGO_INSTRUCTIONS_NOT_LOGGED_DESCRIPTION: envField.string({
+        default:
+          "Por favor ingresa tu nombre y así podrás ver las tareas del bingo.",
+        context: "server",
+        access: "public",
+      }),
+      BINGO_INSTRUCTIONS_LOGGED_TITLE: envField.string({
+        default: "Instrucciones",
+        context: "server",
+        access: "public",
+      }),
+      BINGO_INSTRUCTIONS_LOGGED_DESCRIPTION: envField.string({
+        default:
+          "Completa el tablero subiendo la foto para cada tarea realizada. ¡Diviértete!",
+        context: "server",
+        access: "public",
+      }),
       // Board
       BINGO_OPTIONAL_TASKS: envField.string({
         default: "", // Tareas separadas por |

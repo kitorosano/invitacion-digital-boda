@@ -1,4 +1,8 @@
 import {
+  BINGO_INSTRUCTIONS_LOGGED_DESCRIPTION,
+  BINGO_INSTRUCTIONS_LOGGED_TITLE,
+  BINGO_INSTRUCTIONS_NOT_LOGGED_DESCRIPTION,
+  BINGO_INSTRUCTIONS_NOT_LOGGED_TITLE,
   BINGO_MANDATORY_TASKS,
   BINGO_OPTIONAL_TASKS,
   BINGO_SITE_TITLE,
@@ -6,6 +10,18 @@ import {
 
 export const layoutProps = {
   title: BINGO_SITE_TITLE,
+};
+
+export const instructionsProps = {
+  notLoggedTitle: BINGO_INSTRUCTIONS_NOT_LOGGED_TITLE,
+  notLoggedDescription: BINGO_INSTRUCTIONS_NOT_LOGGED_DESCRIPTION,
+
+  loggedTitle: BINGO_INSTRUCTIONS_LOGGED_TITLE,
+  loggedDescription: BINGO_INSTRUCTIONS_LOGGED_DESCRIPTION,
+};
+
+export const registerUserProps = {
+  maxUsernameLength: 18,
 };
 
 export const boardProps = {

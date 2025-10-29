@@ -1,3 +1,4 @@
+import { actions } from "astro:actions";
 import { BINGO_LOCAL_STORAGE_KEY } from "astro:env/client";
 import confetti from "canvas-confetti";
 import { useEffect, useState } from "react";
@@ -6,11 +7,13 @@ import {
   saveToLocalStorage,
 } from "../../utils/localStorage";
 import { shuffleTasks, type Task } from "../../utils/shuffleTasks";
-import "./styles/Board.css";
 import BoardTask from "./BoardTask";
 import ChecklistIcon from "./icons/Checklist";
 import PhotoEditIcon from "./icons/PhotoEdit";
 import Modal from "./Modal";
+import "./styles/Board.css";
+
+type User = { id: string; username: string };
 
 interface Props {
   optionalTasks: string[];
@@ -18,6 +21,7 @@ interface Props {
 }
 
 const Board = ({ optionalTasks, mandatoryTasks }: Props) => {
+  const [user, setUser] = useState<User | null>(null);
   const [tasks, setTasks] = useState<Task[]>([]);
   const [selectedTaskModal, setSelectedTaskModal] = useState({
     open: false,
@@ -33,7 +37,20 @@ const Board = ({ optionalTasks, mandatoryTasks }: Props) => {
       storedTasks || shuffleTasks(optionalTasks, mandatoryTasks);
 
     setTasks(initialTasks);
+
+    fetchUsername();
   }, []);
+
+  const fetchUsername = async () => {
+    try {
+      const { user } = await actions.getUserById.orThrow();
+      setUser(user);
+    } catch (error) {
+      console.error("Error fetching username:", error);
+      // TODO: show toast error message
+      return;
+    }
+  };
 
   useEffect(() => {
     if (hasFinished) {
@@ -80,9 +97,14 @@ const Board = ({ optionalTasks, mandatoryTasks }: Props) => {
         ))}
       </ul>
 
-      <p className={`tasks-progress ${shouldAnimateProgress ? "animate" : ""}`}>
-        Tareas completadas: {completedTasksCount} / {tasks.length}
-      </p>
+      <div className="board-info">
+        <p className="username">Tablero de {user?.username}</p>
+        <p
+          className={`tasks-progress ${shouldAnimateProgress ? "animate" : ""}`}
+        >
+          Tareas completadas: {completedTasksCount} / {tasks.length}
+        </p>
+      </div>
 
       <Modal open={selectedTaskModal.open} onClose={handleCloseModal}>
         <div className="modal-content">
@@ -107,7 +129,7 @@ const Board = ({ optionalTasks, mandatoryTasks }: Props) => {
     </div>
   );
 };
-
+// TODO: mover tipo User a algun otro lado compartido
 // TODO: guardar el orden de usuarios que completan el bingo; replantear guardar los demas datos del usuario.
 
 export default Board;
