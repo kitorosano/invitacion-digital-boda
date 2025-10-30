@@ -1,8 +1,4 @@
-export type Task = {
-  id: string;
-  text: string;
-  imageId: string;
-};
+import type { Task } from "../types";
 
 /**
  * Shuffles optional tasks and includes a random mandatory task.

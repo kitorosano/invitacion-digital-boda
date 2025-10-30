@@ -3,18 +3,17 @@ import { BINGO_LOCAL_STORAGE_KEY } from "astro:env/client";
 import { navigate } from "astro:transitions/client";
 import confetti from "canvas-confetti";
 import { useEffect, useState } from "react";
+import type { Task, User } from "../../types";
 import {
   loadFromLocalStorage,
   saveToLocalStorage,
 } from "../../utils/localStorage";
-import { shuffleTasks, type Task } from "../../utils/shuffleTasks";
+import { shuffleTasks } from "../../utils/shuffleTasks";
 import BoardTask from "./BoardTask";
 import ChecklistIcon from "./icons/Checklist";
 import PhotoEditIcon from "./icons/PhotoEdit";
 import Modal from "./Modal";
 import "./styles/Board.css";
-
-type User = { id: string; username: string };
 
 interface Props {
   optionalTasks: string[];
@@ -129,7 +128,6 @@ const Board = ({ optionalTasks, mandatoryTasks }: Props) => {
     </div>
   );
 };
-// TODO: mover tipo User a algun otro lado compartido
 // TODO: guardar el orden de usuarios que completan el bingo; replantear guardar los demas datos del usuario.
 
 export default Board;

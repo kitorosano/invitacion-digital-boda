@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, type ChangeEvent } from "react";
+import type { Task } from "../../types";
 import { fileToUri } from "../../utils/formatFiles";
-import type { Task } from "../../utils/shuffleTasks";
 import "./styles/BoardTask.css";
 
 interface Props {

@@ -1,8 +1,7 @@
 import { ActionError, defineAction } from "astro:actions";
 import { z } from "astro:schema";
+import type { User } from "../types";
 import redisClient from "../utils/redisClient";
-
-type User = { id: string; username: string };
 
 export const server = {
   registerUser: defineAction({
