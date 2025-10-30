@@ -22,7 +22,6 @@ export const server = {
       try {
         await redisClient.hset(`users:${userId}`, { username });
 
-
         ctx.cookies.set("userId", userId, {
           path: "/",
           httpOnly: true,
@@ -46,13 +45,14 @@ export const server = {
       }
     },
   }),
-  getUserById: defineAction({
+  getUser: defineAction({
     handler: async (input, ctx) => {
       try {
         const userId = ctx.cookies.get("userId")?.value ?? "-1";
         const foundUser = await redisClient.hgetall(`users:${userId}`);
 
         if (!foundUser) {
+          console.log("User not found on redis cache");
           throw new ActionError({
             message: "User not found",
             code: "NOT_FOUND",
@@ -69,6 +69,23 @@ export const server = {
         console.error("Error fetching user:", error);
         throw new ActionError({
           message: "Error fetching user",
+          code: "INTERNAL_SERVER_ERROR",
+        });
+      }
+    },
+  }),
+  unregisterUser: defineAction({
+    handler: async (input, ctx) => {
+      try {
+        const userId = ctx.cookies.get("userId")?.value ?? "-1";
+        await redisClient.del(`users:${userId}`);
+
+        ctx.cookies.delete("userId", { path: "/" });
+        return { success: true };
+      } catch (error) {
+        console.error("Error unregistering user:", error);
+        throw new ActionError({
+          message: "Error unregistering user",
           code: "INTERNAL_SERVER_ERROR",
         });
       }

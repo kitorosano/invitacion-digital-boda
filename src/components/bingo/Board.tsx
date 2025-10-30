@@ -1,5 +1,6 @@
 import { actions } from "astro:actions";
 import { BINGO_LOCAL_STORAGE_KEY } from "astro:env/client";
+import { navigate } from "astro:transitions/client";
 import confetti from "canvas-confetti";
 import { useEffect, useState } from "react";
 import {
@@ -43,12 +44,11 @@ const Board = ({ optionalTasks, mandatoryTasks }: Props) => {
 
   const fetchUsername = async () => {
     try {
-      const { user } = await actions.getUserById.orThrow();
+      const { user } = await actions.getUser.orThrow();
       setUser(user);
     } catch (error) {
-      console.error("Error fetching username:", error);
-      // TODO: show toast error message
-      return;
+      await actions.unregisterUser();
+      navigate("/bingo", { history: "replace" });
     }
   };
 
