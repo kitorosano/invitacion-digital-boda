@@ -337,11 +337,6 @@ export default defineConfig({
         access: "secret",
       }),
       // ## Redis
-      REDIS_STORAGE_KV_URL: envField.string({
-        default: "",
-        context: "server",
-        access: "secret",
-      }),
       REDIS_STORAGE_KV_REST_API_URL: envField.string({
         default: "",
         context: "server",
@@ -352,20 +347,10 @@ export default defineConfig({
         context: "server",
         access: "secret",
       }),
-      REDIS_STORAGE_KV_REST_API_READ_ONLY_TOKEN: envField.string({
-        default: "",
-        context: "server",
-        access: "secret",
-      }),
-      REDIS_STORAGE_REDIS_URL: envField.string({
-        default: "",
-        context: "server",
-        access: "secret",
-      }),
 
       // ## Jurado
       JURADO_HEADER_TABS: envField.string({
-        default: "All|Classification|Tasks",
+        default: "All|Boards|Tasks",
         context: "server",
         access: "public",
       }),
