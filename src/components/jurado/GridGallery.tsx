@@ -1,21 +1,16 @@
 import { useEffect, useState } from "react";
-import "./GridGallery.css";
+import type { Photo } from "../../types";
+import GridGalleryItem from "./GridGalleryItem";
+import "./styles/GridGallery.css";
 
 interface Props {
-  initialImages: Image[];
+  initialImages: Photo[];
 }
-
-type Image = {
-  secure_url: string;
-  public_id: string;
-  width: number;
-  height: number;
-};
 
 const REFETCH_INTERVAL_MS = 5000;
 
 const GridGallery = ({ initialImages = [] }: Props) => {
-  const [images, setImages] = useState<Image[]>(initialImages);
+  const [images, setImages] = useState<Photo[]>(initialImages);
 
   useEffect(() => {
     const intervalId = setInterval(fetchImages, REFETCH_INTERVAL_MS);
@@ -40,13 +35,9 @@ const GridGallery = ({ initialImages = [] }: Props) => {
 
   return (
     <div className="grid-gallery-container">
-      {images.map((image) => {
-        return (
-          <picture key={image.public_id}>
-            <img src={image.secure_url} width={200} height={300} />
-          </picture>
-        );
-      })}
+      {images.map((image) => (
+        <GridGalleryItem key={image.public_id} image={image} />
+      ))}
     </div>
   );
 };

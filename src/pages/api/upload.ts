@@ -13,12 +13,15 @@ cloudinary.config({
   api_secret: CLOUDINARY_API_SECRET,
 });
 
-export const POST: APIRoute = async ({ request }) => {
+export const POST: APIRoute = async ({ request, cookies }) => {
   const { uri } = await request.json();
 
   try {
+    const userId = cookies.get("userId")?.value ?? "anonymous";
+
     const data = await cloudinary.uploader.upload(uri, {
       upload_preset: BINGO_CLOUDINARY_UPLOAD_PRESET,
+      tags: [userId],
     });
 
     const optimizedImageUrl = data.secure_url.replace(

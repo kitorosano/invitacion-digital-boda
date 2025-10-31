@@ -6,6 +6,7 @@ import {
   CLOUDINARY_CLOUD_NAME,
 } from "astro:env/server";
 import { v2 as cloudinary } from "cloudinary";
+import type { Photo } from "../../types";
 
 cloudinary.config({
   cloud_name: CLOUDINARY_CLOUD_NAME,
@@ -13,36 +14,32 @@ cloudinary.config({
   api_secret: CLOUDINARY_API_SECRET,
 });
 
-const MAX_RESULTS = 10; // TODO: temporary limit for testing
+const MAX_RESULTS = 13; // TODO: temporary limit for testing
 
 export const GET: APIRoute = async () => {
   try {
     const { resources } = await cloudinary.search
       .expression(`asset_folder:${BINGO_CLOUDINARY_ASSETS_PATH}/*`)
       .sort_by("public_id", "desc")
-      .fields(["secure_url", "width", "height"])
+      .fields(["secure_url", "width", "height", "tags"])
       .max_results(MAX_RESULTS)
       .execute();
 
-    const optimizedResources = resources.map((resource: any) => {
+    const optimizedResources: Photo[] = resources.map((resource: any) => {
       return {
-        ...resource,
+        public_id: resource.public_id,
         secure_url: resource.secure_url.replace(
           "/upload/",
           "/upload/c_fill,h_600,w_auto/f_auto/",
         ),
+        userId: resource.tags[0],
       };
     });
 
-    return new Response(
-      JSON.stringify({
-        resources: optimizedResources,
-      }),
-      {
-        status: 200,
-        headers: { "Content-Type": "application/json" },
-      },
-    );
+    return new Response(JSON.stringify({ resources: optimizedResources }), {
+      status: 200,
+      headers: { "Content-Type": "application/json" },
+    });
   } catch (error) {
     console.error("Error fetching Cloudinary assets:", error);
 

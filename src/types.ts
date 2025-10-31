@@ -8,3 +8,9 @@ export type Task = {
   text: string;
   imageId: string;
 };
+
+export type Photo = {
+  public_id: string;
+  secure_url: string;
+  userId: User["id"];
+};

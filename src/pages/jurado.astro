@@ -14,6 +14,8 @@ const { resources: initialImages } = await response.json();
 
 <BingoLayout {...layoutProps}>
   <Header />
-  <GridGallery client:load initialImages={initialImages} />
+  <!-- <GridGallery client:load initialImages={initialImages} /> -->
   <GoUpButton />
 </BingoLayout>
+
+<!-- TODO: Make Header look better -->
