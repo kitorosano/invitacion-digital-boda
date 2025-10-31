@@ -362,6 +362,18 @@ export default defineConfig({
         context: "server",
         access: "secret",
       }),
+
+      // ## Jurado
+      JURADO_HEADER_TABS: envField.string({
+        default: "All|Classification|Tasks",
+        context: "server",
+        access: "public",
+      }),
+      JURADO_GRID_GALLERY_REFETCH_INTERVAL_MS: envField.number({
+        default: 5000,
+        context: "server",
+        access: "public",
+      }),
     },
   },
 });

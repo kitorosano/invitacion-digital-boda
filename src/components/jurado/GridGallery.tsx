@@ -5,15 +5,14 @@ import "./styles/GridGallery.css";
 
 interface Props {
   initialImages: Photo[];
+  refetchIntervalMs: number;
 }
 
-const REFETCH_INTERVAL_MS = 5000;
-
-const GridGallery = ({ initialImages = [] }: Props) => {
+const GridGallery = ({ initialImages = [], refetchIntervalMs }: Props) => {
   const [images, setImages] = useState<Photo[]>(initialImages);
 
   useEffect(() => {
-    const intervalId = setInterval(fetchImages, REFETCH_INTERVAL_MS);
+    const intervalId = setInterval(fetchImages, refetchIntervalMs);
     return () => clearInterval(intervalId);
   }, []);
 
@@ -24,7 +23,6 @@ const GridGallery = ({ initialImages = [] }: Props) => {
         headers: { Accept: "application/json" },
       });
       const { resources } = await response.json();
-
       setImages(resources);
     } catch (error) {
       alert(

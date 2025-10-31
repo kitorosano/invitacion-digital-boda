@@ -1,20 +1,24 @@
 ---
-interface Props {}
+interface Props {
+  tabs: string[];
+}
 
-const {} = Astro.props;
+const { tabs } = Astro.props;
 ---
 
-<nav class="header-container">
+<nav class="header-tabs-container">
   <ul>
-    <li class="active">Todas</li>
-    <li>Tareas</li>
-    <li>Invitados</li>
+    {
+      tabs.map((tab, index) => (
+        <li class={index === 0 ? "active" : ""}>{tab}</li>
+      ))
+    }
     <span id="active-overlay"></span>
   </ul>
 </nav>
 
 <style>
-  .header-container {
+  .header-tabs-container {
     position: fixed;
     top: 0;
     left: 0;
@@ -30,7 +34,7 @@ const {} = Astro.props;
     background: var(--color-bg);
     box-shadow: var(--shadow-sm);
   }
-  .header-container > ul {
+  .header-tabs-container > ul {
     list-style: none;
     padding: 0;
     margin: 0;
@@ -43,7 +47,7 @@ const {} = Astro.props;
     position: relative;
   }
 
-  .header-container > ul > li {
+  .header-tabs-container > ul > li {
     color: var(--color-text-muted);
 
     font-size: var(--text-size-md);
@@ -56,7 +60,7 @@ const {} = Astro.props;
     transition: color 0.2s ease-in-out;
   }
 
-  .header-container > ul > li.active {
+  .header-tabs-container > ul > li.active {
     color: var(--color-text);
   }
 
@@ -64,6 +68,8 @@ const {} = Astro.props;
     position: absolute;
     top: 50%;
     left: 0px;
+    width: 100%;
+    height: 100%;
 
     background-color: oklch(1 0.02 260);
     border: 2px solid var(--color-highlight);
@@ -82,11 +88,14 @@ const {} = Astro.props;
 <script>
   document.addEventListener("DOMContentLoaded", () => {
     const $tabs = document.querySelectorAll(
-      ".header-container ul li",
+      ".header-tabs-container ul li",
     ) as NodeListOf<HTMLLIElement>;
     const $activeOverlay = document.getElementById(
       "active-overlay",
     ) as HTMLSpanElement;
+    const $activeTab = document.querySelector(
+      ".header-tabs-container ul li.active",
+    ) as HTMLLIElement;
 
     const updateOverlayPosition = (activeTab: HTMLLIElement) => {
       const tabRect = activeTab.getBoundingClientRect();
@@ -100,10 +109,6 @@ const {} = Astro.props;
       $activeOverlay.style.height = `${height}px`;
     };
 
-    // Inicializar la posición del overlay en la tab activa
-    const $activeTab = document.querySelector(
-      ".header-container ul li.active",
-    ) as HTMLLIElement;
     if ($activeTab) {
       updateOverlayPosition($activeTab);
     }
