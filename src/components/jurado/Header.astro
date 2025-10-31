@@ -6,19 +6,29 @@ const {} = Astro.props;
 
 <nav class="header-container">
   <ul>
-    <li>Todas</li>
-    <li>Categorias</li>
+    <li class="active">Todas</li>
+    <li>Tareas</li>
     <li>Invitados</li>
+    <span id="active-overlay"></span>
   </ul>
 </nav>
 
 <style>
   .header-container {
-    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: fit-content;
     margin: 1rem auto;
-    text-align: center;
+    padding: 0.5rem 1rem;
 
-    margin-bottom: 3rem;
+    border: 2px solid var(--color-bg);
+    border-top: 2px solid var(--color-highlight);
+    border-radius: 2rem;
+
+    background: var(--color-bg);
+    box-shadow: var(--shadow-sm);
   }
   .header-container > ul {
     list-style: none;
@@ -27,15 +37,84 @@ const {} = Astro.props;
 
     display: flex;
     justify-content: center;
-    gap: 3rem;
+    align-items: center;
+    gap: 2rem;
+
+    position: relative;
   }
 
   .header-container > ul > li {
-    color: var(--color-text);
+    color: var(--color-text-muted);
 
-    font-size: var(--text-size-lg);
-    font-weight: 500;
+    font-size: var(--text-size-md);
+    font-weight: 600;
 
     cursor: pointer;
+    z-index: 2;
+
+    padding: 0.5rem 1rem;
+    transition: color 0.2s ease-in-out;
+  }
+
+  .header-container > ul > li.active {
+    color: var(--color-text);
+  }
+
+  #active-overlay {
+    position: absolute;
+    top: 50%;
+    left: 0px;
+
+    background-color: oklch(1 0.02 260);
+    border: 2px solid var(--color-highlight);
+    border-radius: 2rem;
+
+    padding: 0.5rem 1rem;
+    transform: translateY(-50%) translateX(-1rem);
+    transition: all 0.2s ease-in-out;
+
+    box-shadow: var(--shadow-md);
+
+    z-index: 1;
   }
 </style>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const $tabs = document.querySelectorAll(
+      ".header-container ul li",
+    ) as NodeListOf<HTMLLIElement>;
+    const $activeOverlay = document.getElementById(
+      "active-overlay",
+    ) as HTMLSpanElement;
+
+    const updateOverlayPosition = (activeTab: HTMLLIElement) => {
+      const tabRect = activeTab.getBoundingClientRect();
+
+      const left = activeTab.offsetLeft;
+      const width = tabRect.width;
+      const height = tabRect.height;
+
+      $activeOverlay.style.left = `${left}px`;
+      $activeOverlay.style.width = `${width}px`;
+      $activeOverlay.style.height = `${height}px`;
+    };
+
+    // Inicializar la posición del overlay en la tab activa
+    const $activeTab = document.querySelector(
+      ".header-container ul li.active",
+    ) as HTMLLIElement;
+    if ($activeTab) {
+      updateOverlayPosition($activeTab);
+    }
+
+    $tabs.forEach((tab) => {
+      tab.addEventListener("click", () => {
+        $tabs.forEach((t) => t.classList.remove("active"));
+        tab.classList.add("active");
+
+        updateOverlayPosition(tab);
+      });
+    });
+  });
+</script>
