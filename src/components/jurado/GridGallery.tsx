@@ -1,30 +1,28 @@
+import { actions } from "astro:actions";
 import { useEffect, useState } from "react";
 import type { Photo } from "../../types";
 import GridGalleryItem from "./GridGalleryItem";
 import "./styles/GridGallery.css";
 
 interface Props {
-  initialImages: Photo[];
+  initialPhotos: Photo[];
   refetchIntervalMs: number;
 }
 
-const GridGallery = ({ initialImages = [], refetchIntervalMs }: Props) => {
-  const [images, setImages] = useState<Photo[]>(initialImages);
+const GridGallery = ({ initialPhotos = [], refetchIntervalMs }: Props) => {
+  const [photos, setPhotos] = useState<Photo[]>(initialPhotos);
 
   useEffect(() => {
-    const intervalId = setInterval(fetchImages, refetchIntervalMs);
+    const intervalId = setInterval(fetchPhotos, refetchIntervalMs);
     return () => clearInterval(intervalId);
   }, []);
 
-  const fetchImages = async () => {
+  const fetchPhotos = async () => {
     try {
-      const response = await fetch("/api/photos", {
-        method: "GET",
-        headers: { Accept: "application/json" },
-      });
-      const { resources } = await response.json();
-      setImages(resources);
+      const data = await actions.getPhotos.orThrow();
+      setPhotos(data.photos);
     } catch (error) {
+      // TODO: more UI friendly error handling
       alert(
         "Ha ocurrido un error al obtener las imágenes. Por favor, recarga la página.",
       );
@@ -33,7 +31,7 @@ const GridGallery = ({ initialImages = [], refetchIntervalMs }: Props) => {
 
   return (
     <div className="grid-gallery-container">
-      {images.map((image) => (
+      {photos.map((image) => (
         <GridGalleryItem key={image.public_id} image={image} />
       ))}
     </div>

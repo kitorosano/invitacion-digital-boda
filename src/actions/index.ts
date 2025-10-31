@@ -1,6 +1,8 @@
 import { ActionError, defineAction } from "astro:actions";
+import { BINGO_CLOUDINARY_ASSETS_PATH } from "astro:env/server";
 import { z } from "astro:schema";
-import type { User } from "../types";
+import type { Photo, User } from "../types";
+import cloudinaryClient from "../utils/cloudinaryClient";
 import redisClient from "../utils/redisClient";
 
 export const server = {
@@ -85,6 +87,39 @@ export const server = {
         console.error("Error unregistering user:", error);
         throw new ActionError({
           message: "Error unregistering user",
+          code: "INTERNAL_SERVER_ERROR",
+        });
+      }
+    },
+  }),
+
+  getPhotos: defineAction({
+    handler: async (input, ctx) => {
+      const MAX_RESULTS = 13; // TODO: temporary limit for testing
+      try {
+        const { resources } = await cloudinaryClient.search
+          .expression(`asset_folder:${BINGO_CLOUDINARY_ASSETS_PATH}/*`)
+          .sort_by("public_id", "desc")
+          .fields(["secure_url", "width", "height", "tags"])
+          .max_results(MAX_RESULTS)
+          .execute();
+
+        const photos: Photo[] = resources.map((resource: any) => {
+          return {
+            public_id: resource.public_id,
+            secure_url: resource.secure_url.replace(
+              "/upload/",
+              "/upload/c_fill,h_600,w_auto/f_auto/",
+            ),
+            userId: resource.tags[0],
+          };
+        });
+
+        return { photos };
+      } catch (error) {
+        // console.error("Error fetching photos:", error);
+        throw new ActionError({
+          message: "Error fetching photos",
           code: "INTERNAL_SERVER_ERROR",
         });
       }

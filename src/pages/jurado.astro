@@ -1,22 +1,25 @@
 ---
+import { actions } from "astro:actions";
 import GoUpButton from "../components/jurado/GoUpButton.astro";
 import GridGallery from "../components/jurado/GridGallery.tsx";
 import HeaderTabs from "../components/jurado/HeaderTabs.astro";
-import { gridGalleryProps, headerTabsProps, layoutProps } from "../constants/jurado";
+import {
+  gridGalleryProps,
+  headerTabsProps,
+  layoutProps,
+} from "../constants/jurado";
 import BingoLayout from "../layouts/BingoLayout.astro";
 
-const response = await fetch(new URL("/api/photos", Astro.url), {
-  method: "GET",
-  headers: { Accept: "application/json" },
-});
-const { resources: initialImages } = await response.json();
+const initialPhotos = [];
+const { data } = await Astro.callAction(actions.getPhotos, {});
+if (data) initialPhotos.push(...data.photos);
 ---
 
 <BingoLayout {...layoutProps}>
   <HeaderTabs {...headerTabsProps} />
   <GridGallery
     client:load
-    initialImages={initialImages}
+    initialPhotos={initialPhotos}
     {...gridGalleryProps}
   />
   <GoUpButton />
