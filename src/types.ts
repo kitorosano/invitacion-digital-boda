@@ -21,3 +21,5 @@ export enum GalleryTab {
   BOARDS,
   TASKS,
 }
+
+export type Orientation = "landscape" | "portrait";

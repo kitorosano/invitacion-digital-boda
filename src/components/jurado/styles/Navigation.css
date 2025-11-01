@@ -1,0 +1,59 @@
+.navigation-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.orientation-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+
+  display: none;
+  margin: auto;
+
+  background: rgba(0, 0, 0, 0.6);
+  overflow: hidden;
+  z-index: 5;
+
+  color: var(--color-bg-light);
+  font-size: 1.5rem;
+}
+
+.orientation-overlay.active {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.orientation-overlay svg.landscape {
+  animation: landscape 2s infinite;
+}
+.orientation-overlay svg.portrait {
+  animation: portrait 2s infinite;
+}
+@keyframes portrait {
+  0% {
+    transform: rotate(0deg);
+  }
+  70% {
+    transform: rotate(90deg);
+  }
+  100% {
+    transform: rotate(90deg);
+  }
+}
+@keyframes landscape {
+  0% {
+    transform: rotate(90deg);
+  }
+  70% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}

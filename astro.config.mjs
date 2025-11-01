@@ -279,16 +279,6 @@ export default defineConfig({
         access: "public",
       }),
       // Board
-      BINGO_OPTIONAL_TASKS: envField.string({
-        default: "", // Tareas separadas por |
-        context: "server",
-        access: "public",
-      }),
-      BINGO_MANDATORY_TASKS: envField.string({
-        default: "", // Tareas separadas por |
-        context: "server",
-        access: "public",
-      }),
       BINGO_LOCAL_STORAGE_KEY: envField.string({
         default: "bingo-tasks",
         context: "client",

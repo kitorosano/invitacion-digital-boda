@@ -33,6 +33,7 @@ const { tabs } = Astro.props;
 
     background: var(--color-bg);
     box-shadow: var(--shadow-sm);
+    z-index: 10;
   }
   .header-tabs-container > ul {
     list-style: none;
@@ -86,7 +87,7 @@ const { tabs } = Astro.props;
 </style>
 
 <script>
-  import { selectedTab } from "../../store";
+  import { currentGalleryTab } from "../../store";
 
   document.addEventListener("DOMContentLoaded", () => {
     const $tabs = document.querySelectorAll(
@@ -120,7 +121,7 @@ const { tabs } = Astro.props;
         $tabs.forEach((t) => t.classList.remove("active"));
         tab.classList.add("active");
 
-        selectedTab.set(index);
+        currentGalleryTab.set(index);
         updateOverlayPosition(tab);
       });
     });
