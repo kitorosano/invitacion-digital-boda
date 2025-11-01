@@ -28,7 +28,10 @@ const BoardTask = ({ task, updateTask, setSelectedTaskModal }: Props) => {
       setIsLoading(true);
       const uri = await fileToUri(file);
 
-      const data = await actions.uploadPhoto.orThrow({ uri, taskId: task.id });
+      const data = await actions.uploadPhoto.orThrow({
+        uri,
+        taskId: task.id,
+      });
 
       updateTask(task.id, data.photo.secure_url);
     } catch (error) {

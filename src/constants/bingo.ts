@@ -3,8 +3,6 @@ import {
   BINGO_INSTRUCTIONS_LOGGED_TITLE,
   BINGO_INSTRUCTIONS_NOT_LOGGED_DESCRIPTION,
   BINGO_INSTRUCTIONS_NOT_LOGGED_TITLE,
-  BINGO_MANDATORY_TASKS,
-  BINGO_OPTIONAL_TASKS,
   BINGO_SITE_TITLE,
 } from "astro:env/server";
 
@@ -23,3 +21,5 @@ export const instructionsProps = {
 export const registerUserProps = {
   maxUsernameLength: 18,
 };
+
+export const PHOTO_LOW_Q_TRANSFORMATIONS = "c_fill,h_500,w_360/q_auto/f_auto/"; // height/width = (picture height/width in px) * 2

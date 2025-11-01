@@ -43,7 +43,7 @@ const Board = ({ optionalTasks, mandatoryTasks }: Props) => {
 
   const fetchUsername = async () => {
     try {
-      const { user } = await actions.getUser.orThrow();
+      const { user } = await actions.getCurrentUser.orThrow();
       setUser(user);
     } catch (error) {
       await actions.unregisterUser();
