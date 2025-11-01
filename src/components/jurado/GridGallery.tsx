@@ -1,6 +1,8 @@
+import { useStore } from "@nanostores/react";
 import { actions } from "astro:actions";
 import { useEffect, useState } from "react";
-import type { Photo } from "../../types";
+import { selectedTab } from "../../store";
+import { GalleryTab, type Photo } from "../../types";
 import GridGalleryItem from "./GridGalleryItem";
 import "./styles/GridGallery.css";
 
@@ -11,15 +13,22 @@ interface Props {
 
 const GridGallery = ({ initialPhotos = [], refetchIntervalMs }: Props) => {
   const [photos, setPhotos] = useState<Photo[]>(initialPhotos);
+  const $selectedTab = useStore(selectedTab);
 
   useEffect(() => {
-    const intervalId = setInterval(fetchPhotos, refetchIntervalMs);
+    const intervalId = setInterval(
+      () => fetchPhotos($selectedTab),
+      refetchIntervalMs,
+    );
     return () => clearInterval(intervalId);
-  }, []);
+  }, [$selectedTab]);
 
-  const fetchPhotos = async () => {
+  const fetchPhotos = async (tab: GalleryTab) => {
     try {
       const data = await actions.getPhotos.orThrow();
+
+      const filteredPhotos: Photo[] = [];
+
       setPhotos(data.photos);
     } catch (error) {
       // TODO: more UI friendly error handling
