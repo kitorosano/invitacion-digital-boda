@@ -17,7 +17,7 @@ const Navigation = ({
   tasksGalleryProps,
 }: Props) => {
   const $selectedTab = useStore(selectedTab);
-
+  console.log({ $selectedTab });
   switch ($selectedTab) {
     case GalleryTab.BOARDS:
       return <BoardGallery {...boardGalleryProps} />;

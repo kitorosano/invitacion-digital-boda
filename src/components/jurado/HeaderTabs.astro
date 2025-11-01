@@ -86,6 +86,8 @@ const { tabs } = Astro.props;
 </style>
 
 <script>
+  import { selectedTab } from "../../store";
+
   document.addEventListener("DOMContentLoaded", () => {
     const $tabs = document.querySelectorAll(
       ".header-tabs-container ul li",
@@ -113,11 +115,12 @@ const { tabs } = Astro.props;
       updateOverlayPosition($activeTab);
     }
 
-    $tabs.forEach((tab) => {
+    $tabs.forEach((tab, index) => {
       tab.addEventListener("click", () => {
         $tabs.forEach((t) => t.classList.remove("active"));
         tab.classList.add("active");
 
+        selectedTab.set(index);
         updateOverlayPosition(tab);
       });
     });
