@@ -32,7 +32,7 @@ const Board = ({ optionalTasks, mandatoryTasks }: Props) => {
   const hasFinished = tasks.length !== 0 && tasks.every((task) => task.imageId);
 
   useEffect(() => {
-    const storedTasks = loadFromLocalStorage<Task[]>(BINGO_LOCAL_STORAGE_KEY);
+    const storedTasks = loadFromLocalStorage<Task[]>(BINGO_LOCAL_STORAGE_KEY); // TODO: Save in redis instead of localStorage because of buggy behavior when fast uploads.
     const initialTasks =
       storedTasks || shuffleTasks(optionalTasks, mandatoryTasks);
 

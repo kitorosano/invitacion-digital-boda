@@ -1,5 +1,8 @@
 import { ActionError, defineAction } from "astro:actions";
-import { BINGO_CLOUDINARY_ASSETS_PATH } from "astro:env/server";
+import {
+  BINGO_CLOUDINARY_ASSETS_PATH,
+  BINGO_CLOUDINARY_UPLOAD_PRESET,
+} from "astro:env/server";
 import { z } from "astro:schema";
 import { PHOTO_LOW_Q_TRANSFORMATIONS } from "../constants/bingo";
 import { type Photo } from "../types";
@@ -48,7 +51,7 @@ export const photo = {
         const userId = ctx.cookies.get("userId")?.value ?? "anonymous";
 
         const data = await cloudinaryClient.uploader.upload(uri, {
-          upload_preset: BINGO_CLOUDINARY_ASSETS_PATH,
+          upload_preset: BINGO_CLOUDINARY_UPLOAD_PRESET,
           tags: [userId, taskId],
         });
 
