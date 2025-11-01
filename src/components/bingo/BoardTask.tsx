@@ -1,3 +1,4 @@
+import { actions } from "astro:actions";
 import { useEffect, useRef, useState, type ChangeEvent } from "react";
 import type { Task } from "../../types";
 import { fileToUri } from "../../utils/formatFiles";
@@ -27,17 +28,9 @@ const BoardTask = ({ task, updateTask, setSelectedTaskModal }: Props) => {
       setIsLoading(true);
       const uri = await fileToUri(file);
 
-      const response = await fetch("/api/upload", {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ uri }),
-      });
-      const { data } = await response.json();
+      const data = await actions.uploadPhoto.orThrow({ uri, taskId: task.id });
 
-      updateTask(task.id, data.secure_url);
+      updateTask(task.id, data.photo.secure_url);
     } catch (error) {
       alert(
         "Ha ocurrido un error al subir la imagen. Por favor, recarga la página.",

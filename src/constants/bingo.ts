@@ -23,8 +23,3 @@ export const instructionsProps = {
 export const registerUserProps = {
   maxUsernameLength: 18,
 };
-
-export const boardProps = {
-  optionalTasks: BINGO_OPTIONAL_TASKS.split("|"),
-  mandatoryTasks: BINGO_MANDATORY_TASKS.split("|"),
-};

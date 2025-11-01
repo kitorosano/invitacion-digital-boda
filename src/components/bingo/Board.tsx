@@ -16,8 +16,8 @@ import Modal from "./Modal";
 import "./styles/Board.css";
 
 interface Props {
-  optionalTasks: string[];
-  mandatoryTasks: string[];
+  optionalTasks: Task[];
+  mandatoryTasks: Task[];
 }
 
 const Board = ({ optionalTasks, mandatoryTasks }: Props) => {

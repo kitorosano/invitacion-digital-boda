@@ -112,6 +112,7 @@ export const server = {
               "/upload/c_fill,h_600,w_auto/f_auto/",
             ),
             userId: resource.tags[0],
+            taskId: resource.tags[1],
           };
         });
 
@@ -120,6 +121,42 @@ export const server = {
         // console.error("Error fetching photos:", error);
         throw new ActionError({
           message: "Error fetching photos",
+          code: "INTERNAL_SERVER_ERROR",
+        });
+      }
+    },
+  }),
+  uploadPhoto: defineAction({
+    input: z.object({
+      uri: z.string(),
+      taskId: z.string(),
+    }),
+    handler: async (input, ctx) => {
+      const { uri, taskId } = input;
+      try {
+        const userId = ctx.cookies.get("userId")?.value ?? "anonymous";
+
+        const data = await cloudinaryClient.uploader.upload(uri, {
+          upload_preset: BINGO_CLOUDINARY_ASSETS_PATH,
+          tags: [userId, taskId],
+        });
+
+        const uploadedPhoto: Photo = {
+          userId,
+          taskId,
+          public_id: data.public_id,
+          secure_url: data.secure_url.replace(
+            "/upload/",
+            "/upload/c_fill,h_300,w_auto/f_auto/",
+          ),
+        };
+
+        return { photo: uploadedPhoto };
+      } catch (error) {
+        console.error("Error uploading photo:", error);
+
+        throw new ActionError({
+          message: "Error uploading photo",
           code: "INTERNAL_SERVER_ERROR",
         });
       }

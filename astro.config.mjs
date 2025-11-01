@@ -19,16 +19,6 @@ export default defineConfig({
         context: "server",
         access: "public",
       }),
-      INVITATION_SITE_ENTRYPOINT_CEREMONY: envField.string({
-        default: "",
-        context: "server",
-        access: "public",
-      }),
-      INVITATION_SITE_ENTRYPOINT_CIVIL: envField.string({
-        default: "civil",
-        context: "server",
-        access: "public",
-      }),
       INVITATION_WEDDING_COUPLE: envField.string({
         default: "",
         context: "server",
@@ -260,13 +250,8 @@ export default defineConfig({
         context: "server",
         access: "public",
       }),
-      BINGO_SITE_ENTRYPOINT: envField.string({
-        default: "",
-        context: "server",
-        access: "public",
-      }),
-      BINGO_SITE_ENTRYPOINT_JUDGES: envField.string({
-        default: "",
+      BINGO_CONTENT_TASKS_STARTING_INDEX: envField.number({
+        default: 1000,
         context: "server",
         access: "public",
       }),

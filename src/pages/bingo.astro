@@ -1,9 +1,9 @@
 ---
+import { getCollection } from "astro:content";
 import Board from "../components/bingo/Board";
 import Instructions from "../components/bingo/Instructions.astro";
 import RegisterUser from "../components/bingo/RegisterUser.astro";
 import {
-  boardProps,
   instructionsProps,
   layoutProps,
   registerUserProps,
@@ -11,6 +11,13 @@ import {
 import BingoLayout from "../layouts/BingoLayout.astro";
 
 const isLogged = Astro.cookies.has("userId");
+
+const optionalTasks = await getCollection("optionalTasks");
+const mandatoryTasks = await getCollection("mandatoryTasks");
+const boardProps = {
+  optionalTasks: optionalTasks.map((task) => task.data),
+  mandatoryTasks: mandatoryTasks.map((task) => task.data),
+};
 ---
 
 <BingoLayout {...layoutProps}>
