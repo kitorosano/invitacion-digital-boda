@@ -41,11 +41,11 @@ import ArrowUpIcon from "./icons/ArrowUp.astro";
 
 <script>
   document.addEventListener("DOMContentLoaded", () => {
-    const $BUTTON = document.querySelector(
-      ".go-up-button",
+    const $button = document.querySelector(
+      ".go-up-button-container button",
     ) as HTMLButtonElement;
 
-    $BUTTON.addEventListener("click", () => {
+    $button.addEventListener("click", () => {
       window.scrollTo({ top: 0, behavior: "smooth" });
     });
   });
