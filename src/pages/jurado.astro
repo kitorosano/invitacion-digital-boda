@@ -1,12 +1,14 @@
 ---
 import { actions } from "astro:actions";
 import GoUpButton from "../components/jurado/GoUpButton.astro";
-import GridGallery from "../components/jurado/GridGallery.tsx";
 import HeaderTabs from "../components/jurado/HeaderTabs.astro";
+import Navigation from "../components/jurado/Navigation.tsx";
 import {
+  boardGalleryProps,
   gridGalleryProps,
   headerTabsProps,
   layoutProps,
+  tasksGalleryProps,
 } from "../constants/jurado";
 import BingoLayout from "../layouts/BingoLayout.astro";
 
@@ -17,10 +19,14 @@ if (data) initialPhotos.push(...data.photos);
 
 <BingoLayout {...layoutProps}>
   <HeaderTabs {...headerTabsProps} />
-  <GridGallery
+  <Navigation
+    gridGalleryProps={{
+      initialPhotos,
+      ...gridGalleryProps,
+    }}
+    boardGalleryProps={boardGalleryProps}
+    tasksGalleryProps={tasksGalleryProps}
     client:load
-    initialPhotos={initialPhotos}
-    {...gridGalleryProps}
   />
   <GoUpButton />
 </BingoLayout>

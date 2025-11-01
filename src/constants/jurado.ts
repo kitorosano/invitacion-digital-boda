@@ -15,3 +15,7 @@ export const headerTabsProps = {
 export const gridGalleryProps = {
   refetchIntervalMs: JURADO_GRID_GALLERY_REFETCH_INTERVAL_MS,
 };
+
+export const boardGalleryProps = {};
+
+export const tasksGalleryProps = {};

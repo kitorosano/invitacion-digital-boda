@@ -1,33 +1,25 @@
-import { useStore } from "@nanostores/react";
 import { actions } from "astro:actions";
 import { useEffect, useState } from "react";
-import { selectedTab } from "../../store";
-import { GalleryTab, type Photo } from "../../types";
+import { type Photo } from "../../types";
 import GridGalleryItem from "./GridGalleryItem";
 import "./styles/GridGallery.css";
 
-interface Props {
+export interface Props {
   initialPhotos: Photo[];
   refetchIntervalMs: number;
 }
 
 const GridGallery = ({ initialPhotos = [], refetchIntervalMs }: Props) => {
   const [photos, setPhotos] = useState<Photo[]>(initialPhotos);
-  const $selectedTab = useStore(selectedTab);
 
   useEffect(() => {
-    const intervalId = setInterval(
-      () => fetchPhotos($selectedTab),
-      refetchIntervalMs,
-    );
+    const intervalId = setInterval(() => fetchPhotos(), refetchIntervalMs);
     return () => clearInterval(intervalId);
-  }, [$selectedTab]);
+  }, []);
 
-  const fetchPhotos = async (tab: GalleryTab) => {
+  const fetchPhotos = async () => {
     try {
       const data = await actions.getPhotos.orThrow();
-
-      const filteredPhotos: Photo[] = [];
 
       setPhotos(data.photos);
     } catch (error) {
