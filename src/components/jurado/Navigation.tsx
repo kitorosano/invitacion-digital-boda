@@ -53,7 +53,7 @@ const Navigation = ({
   }, [$selectedTab]);
 
   return (
-    <div className="navigation-container">
+    <>
       <div
         className={`orientation-overlay ${
           orientationOverlay.show ? "active" : ""
@@ -72,7 +72,7 @@ const Navigation = ({
       {$selectedTab === GalleryTab.TASKS && (
         <TasksGallery {...tasksGalleryProps} />
       )}
-    </div>
+    </>
   );
 };
 

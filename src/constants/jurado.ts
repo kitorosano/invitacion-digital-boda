@@ -1,6 +1,7 @@
 import {
   BINGO_SITE_TITLE,
-  JURADO_GRID_GALLERY_REFETCH_INTERVAL_MS,
+  JURADO_GALLERY_REFETCH_INTERVAL_MS,
+  JURADO_GALLERY_TASKS_COLORS,
   JURADO_HEADER_TABS,
 } from "astro:env/server";
 
@@ -13,9 +14,12 @@ export const headerTabsProps = {
 };
 
 export const gridGalleryProps = {
-  refetchIntervalMs: JURADO_GRID_GALLERY_REFETCH_INTERVAL_MS,
+  refetchIntervalMs: JURADO_GALLERY_REFETCH_INTERVAL_MS,
 };
 
 export const boardGalleryProps = {};
 
-export const tasksGalleryProps = {};
+export const tasksGalleryProps = {
+  refetchIntervalMs: JURADO_GALLERY_REFETCH_INTERVAL_MS,
+  colors: JURADO_GALLERY_TASKS_COLORS.split(","),
+};

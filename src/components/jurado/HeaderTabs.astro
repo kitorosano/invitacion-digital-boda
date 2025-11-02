@@ -1,16 +1,19 @@
 ---
+import { currentGalleryTab } from "../../store";
+
 interface Props {
   tabs: string[];
 }
 
 const { tabs } = Astro.props;
+const initialTab = currentGalleryTab.get();
 ---
 
 <nav class="header-tabs-container">
   <ul>
     {
       tabs.map((tab, index) => (
-        <li class={index === 0 ? "active" : ""}>{tab}</li>
+        <li class={index === initialTab ? "active" : ""}>{tab}</li>
       ))
     }
     <span id="active-overlay"></span>

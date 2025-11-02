@@ -329,8 +329,13 @@ export default defineConfig({
         context: "server",
         access: "public",
       }),
-      JURADO_GRID_GALLERY_REFETCH_INTERVAL_MS: envField.number({
+      JURADO_GALLERY_REFETCH_INTERVAL_MS: envField.number({
         default: 5000,
+        context: "server",
+        access: "public",
+      }),
+      JURADO_GALLERY_TASKS_COLORS: envField.string({
+        default: "#fff",
         context: "server",
         access: "public",
       }),
