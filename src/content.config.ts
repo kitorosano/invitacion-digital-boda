@@ -5,7 +5,6 @@ import { BINGO_CONTENT_TASKS_STARTING_INDEX } from "astro:env/server";
 const TaskSchema = z.object({
   id: z.string(),
   text: z.string(),
-  imageId: z.string().optional().default(""),
 });
 
 const STARTING_INDEX = BINGO_CONTENT_TASKS_STARTING_INDEX;

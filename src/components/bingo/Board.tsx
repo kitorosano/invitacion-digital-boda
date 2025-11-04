@@ -3,7 +3,7 @@ import { BINGO_LOCAL_STORAGE_KEY } from "astro:env/client";
 import { navigate } from "astro:transitions/client";
 import confetti from "canvas-confetti";
 import { useEffect, useState } from "react";
-import type { Task, User } from "../../types";
+import type { Task, TaskWithImage, User } from "../../types";
 import {
   loadFromLocalStorage,
   saveToLocalStorage,
@@ -22,17 +22,19 @@ interface Props {
 
 const Board = ({ optionalTasks, mandatoryTasks }: Props) => {
   const [user, setUser] = useState<User | null>(null);
-  const [tasks, setTasks] = useState<Task[]>([]);
+  const [tasks, setTasks] = useState<TaskWithImage[]>([]);
   const [selectedTaskModal, setSelectedTaskModal] = useState({
     open: false,
-    task: null as Task | null,
+    task: null as TaskWithImage | null,
   });
   const [shouldAnimateProgress, setShouldAnimateProgress] = useState(false);
   const completedTasksCount = tasks.filter((task) => task.imageId).length;
   const hasFinished = tasks.length !== 0 && tasks.every((task) => task.imageId);
 
   useEffect(() => {
-    const storedTasks = loadFromLocalStorage<Task[]>(BINGO_LOCAL_STORAGE_KEY); // TODO: Save in redis instead of localStorage because of buggy behavior when fast uploads.
+    const storedTasks = loadFromLocalStorage<TaskWithImage[]>(
+      BINGO_LOCAL_STORAGE_KEY,
+    ); // TODO: Save in redis instead of localStorage because of buggy behavior when fast uploads.
     const initialTasks =
       storedTasks || shuffleTasks(optionalTasks, mandatoryTasks);
 

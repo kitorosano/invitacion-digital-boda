@@ -1,13 +1,16 @@
 import { actions } from "astro:actions";
 import { useEffect, useRef, useState, type ChangeEvent } from "react";
-import type { Task } from "../../types";
+import type { TaskWithImage } from "../../types";
 import { fileToUri } from "../../utils/formatFiles";
 import "./styles/BoardTask.css";
 
 interface Props {
-  task: Task;
+  task: TaskWithImage;
   updateTask: (taskId: string, imageId: string) => void;
-  setSelectedTaskModal: (state: { open: boolean; task: Task | null }) => void;
+  setSelectedTaskModal: (state: {
+    open: boolean;
+    task: TaskWithImage | null;
+  }) => void;
 }
 
 const BoardTask = ({ task, updateTask, setSelectedTaskModal }: Props) => {

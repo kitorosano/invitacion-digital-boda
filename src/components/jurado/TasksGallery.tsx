@@ -42,8 +42,9 @@ const TasksGallery = ({
           key={task.id}
           className="task-gallery-item"
           style={{ backgroundColor: colors[i % colors.length] }}
+          onClick={() => handleTaskClick(task)}
         >
-          <header onClick={() => handleTaskClick(task)}>
+          <header>
             <h3>{task.text}</h3>·<span>{task.photos.length} fotos</span>
             <p>Ver más...</p>
           </header>
