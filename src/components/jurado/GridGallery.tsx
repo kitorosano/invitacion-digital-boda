@@ -1,5 +1,4 @@
-import { actions } from "astro:actions";
-import { useEffect, useState } from "react";
+import usePhotos from "../../hooks/usePhotos";
 import { type Photo } from "../../types";
 import GridGalleryItem from "./GridGalleryItem";
 import "./styles/GridGallery.css";
@@ -7,28 +6,11 @@ import "./styles/GridGallery.css";
 export interface Props {
   initialPhotos: Photo[];
   refetchIntervalMs: number;
+  // TODO: add filtering props
 }
 
 const GridGallery = ({ initialPhotos = [], refetchIntervalMs }: Props) => {
-  const [photos, setPhotos] = useState<Photo[]>(initialPhotos);
-
-  useEffect(() => {
-    const intervalId = setInterval(() => fetchPhotos(), refetchIntervalMs);
-    return () => clearInterval(intervalId);
-  }, []);
-
-  const fetchPhotos = async () => {
-    try {
-      const data = await actions.getPhotos.orThrow();
-
-      setPhotos(data.photos);
-    } catch (error) {
-      // TODO: more UI friendly error handling
-      alert(
-        "Ha ocurrido un error al obtener las imágenes. Por favor, recarga la página.",
-      );
-    }
-  };
+  const { photos } = usePhotos({ initialPhotos, refetchIntervalMs });
 
   return (
     <div className="grid-gallery-container">

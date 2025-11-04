@@ -1,0 +1,22 @@
+---
+import { actions } from "astro:actions";
+import GridGallery from "../../../components/jurado/GridGallery";
+import { gridGalleryProps } from "../../../constants/jurado";
+import BingoLayout from "../../../layouts/BingoLayout.astro";
+
+const { id } = Astro.params;
+
+const initialPhotos = [];
+const { data } = await Astro.callAction(actions.getPhotos); // TODO: add filter by task ID
+if (data) initialPhotos.push(...data.photos);
+---
+
+<BingoLayout title={`Tarea ${id} - Jurado`}>
+  <h1>Tarea {id}</h1>
+
+  <GridGallery
+    initialPhotos={initialPhotos}
+    {...gridGalleryProps}
+    client:load
+  />
+</BingoLayout>
