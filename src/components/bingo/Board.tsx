@@ -9,10 +9,10 @@ import {
   saveToLocalStorage,
 } from "../../utils/localStorage";
 import { shuffleTasks } from "../../utils/shuffleTasks";
+import Modal from "../shared/Modal";
 import BoardTask from "./BoardTask";
 import ChecklistIcon from "./icons/Checklist";
 import PhotoEditIcon from "./icons/PhotoEdit";
-import Modal from "./Modal";
 import "./styles/Board.css";
 
 interface Props {
