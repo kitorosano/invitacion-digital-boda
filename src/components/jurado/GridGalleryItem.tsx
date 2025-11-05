@@ -2,14 +2,24 @@ import type { Photo } from "../../types";
 import "./styles/GridGalleryItem.css";
 
 interface Props {
-  image: Photo;
+  photo: Photo;
+  setSelectedPhotoModal: (state: {
+    open: boolean;
+    photo: Photo | null;
+  }) => void;
 }
 
-const GridGalleryItem = ({ image }: Props) => {
+const GridGalleryItem = ({ photo, setSelectedPhotoModal }: Props) => {
+  const onPhotoClick = () => {
+    setSelectedPhotoModal({ open: true, photo });
+  };
+
   return (
-    <picture>
-      <img src={image.secure_url} />
-    </picture>
+    <li className="grid-gallery-item-container" onClick={onPhotoClick}>
+      <picture>
+        <img src={photo.secure_url} />
+      </picture>
+    </li>
   );
 };
 

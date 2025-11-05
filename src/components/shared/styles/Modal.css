@@ -11,10 +11,11 @@
 
   transition: background-color 0.3s ease;
   visibility: hidden;
+  z-index: 1000;
 
   &.open {
     visibility: visible;
-    background-color: rgba(0, 0, 0, 0.2);
+    background-color: rgba(0, 0, 0, 0.3);
   }
 }
 

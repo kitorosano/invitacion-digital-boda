@@ -1,4 +1,4 @@
-picture {
+.grid-gallery-item-container {
   width: 100%;
   height: 250px; /* TODO: Move this into layout var */
 
@@ -10,7 +10,12 @@ picture {
   overflow: hidden;
 }
 
-picture img {
+.grid-gallery-item-container picture {
+  width: 100%;
+  height: 100%;
+}
+
+.grid-gallery-item-container picture img {
   width: 100%;
   height: 100%;
   object-fit: cover;
