@@ -1,0 +1,27 @@
+---
+import { actions } from "astro:actions";
+import GoUpButton from "../../components/jurado/GoUpButton.astro";
+import GridGallery from "../../components/jurado/GridGallery";
+import HeaderTabs from "../../components/jurado/HeaderTabs.astro";
+import {
+  gridGalleryProps,
+  headerTabsProps,
+  layoutProps,
+} from "../../constants/jurado";
+import BingoLayout from "../../layouts/BingoLayout.astro";
+import { GalleryTab } from "../../types";
+
+const initialPhotos = [];
+const { data } = await Astro.callAction(actions.getPhotos, {});
+if (data) initialPhotos.push(...data.photos);
+---
+
+<BingoLayout requiredOrientation="landscape" {...layoutProps}>
+  <HeaderTabs currentTab={GalleryTab.ALL} {...headerTabsProps} />
+  <GridGallery
+    initialPhotos={initialPhotos}
+    {...gridGalleryProps}
+    client:load
+  />
+  <GoUpButton />
+</BingoLayout>

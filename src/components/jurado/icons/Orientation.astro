@@ -1,0 +1,61 @@
+---
+import type { Orientation } from "../../../types";
+
+interface Props {
+  orientation: Orientation;
+  size?: number;
+}
+
+const { size = 24, orientation } = Astro.props;
+---
+
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  width={size}
+  height={size}
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  class={`orientationIcon ${orientation}`}
+>
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+  <path
+    d="M3 5m0 2a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2z"
+  ></path>
+  <path d="M7 12v-3h3"></path>
+  <path d="M17 12v3h-3"></path>
+</svg>
+
+<style>
+  .orientationIcon.landscape {
+    animation: landscape 2s infinite;
+  }
+  .orientationIcon.portrait {
+    animation: portrait 2s infinite;
+  }
+  @keyframes portrait {
+    0% {
+      transform: rotate(0deg);
+    }
+    70% {
+      transform: rotate(90deg);
+    }
+    100% {
+      transform: rotate(90deg);
+    }
+  }
+  @keyframes landscape {
+    0% {
+      transform: rotate(90deg);
+    }
+    70% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(0deg);
+    }
+  }
+</style>

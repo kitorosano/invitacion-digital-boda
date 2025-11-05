@@ -19,7 +19,7 @@ const { data } = await Astro.callAction(actions.getPhotos, { taskId: id });
 if (data) initialPhotos.push(...data.photos);
 ---
 
-<BingoLayout title={`Fotos por tarea - Jurado`}>
+<BingoLayout title={`Fotos por tarea - Jurado`} requiredOrientation="portrait">
   <GoBackButton />
 
   <h1>{task.data.text}</h1>

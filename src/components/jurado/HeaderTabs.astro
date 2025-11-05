@@ -1,21 +1,26 @@
 ---
-import { currentGalleryTab } from "../../store";
+import { GalleryTab } from "../../types";
 
 interface Props {
   tabs: string[];
+  currentTab: GalleryTab;
 }
 
-const { tabs } = Astro.props;
-const initialTab = currentGalleryTab.get();
+const { tabs, currentTab } = Astro.props;
 ---
 
 <nav class="header-tabs-container">
   <ul>
-    {
-      tabs.map((tab, index) => (
-        <li class={index === initialTab ? "active" : ""}>{tab}</li>
-      ))
-    }
+    <li class={currentTab === GalleryTab.ALL ? "active" : ""}>
+      <a href="/jurado">{tabs[GalleryTab.ALL]}</a>
+    </li>
+    <li class={currentTab === GalleryTab.BOARDS ? "active" : ""}>
+      <a href="/jurado/boards">{tabs[GalleryTab.BOARDS]}</a>
+    </li>
+    <li class={currentTab === GalleryTab.TASKS ? "active" : ""}>
+      <a href="/jurado/tasks">{tabs[GalleryTab.TASKS]}</a>
+    </li>
+
     <span id="active-overlay"></span>
   </ul>
 </nav>
@@ -64,6 +69,11 @@ const initialTab = currentGalleryTab.get();
     transition: color 0.2s ease-in-out;
   }
 
+  .header-tabs-container > ul > li > a {
+    text-decoration: none;
+    color: inherit;
+  }
+
   .header-tabs-container > ul > li.active {
     color: var(--color-text);
   }
@@ -90,12 +100,7 @@ const initialTab = currentGalleryTab.get();
 </style>
 
 <script>
-  import { currentGalleryTab } from "../../store";
-
   document.addEventListener("DOMContentLoaded", () => {
-    const $tabs = document.querySelectorAll(
-      ".header-tabs-container ul li",
-    ) as NodeListOf<HTMLLIElement>;
     const $activeOverlay = document.getElementById(
       "active-overlay",
     ) as HTMLSpanElement;
@@ -118,15 +123,5 @@ const initialTab = currentGalleryTab.get();
     if ($activeTab) {
       updateOverlayPosition($activeTab);
     }
-
-    $tabs.forEach((tab, index) => {
-      tab.addEventListener("click", () => {
-        $tabs.forEach((t) => t.classList.remove("active"));
-        tab.classList.add("active");
-
-        currentGalleryTab.set(index);
-        updateOverlayPosition(tab);
-      });
-    });
   });
 </script>

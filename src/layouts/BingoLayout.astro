@@ -2,12 +2,15 @@
 import Analytics from "@vercel/analytics/astro";
 import SpeedInsights from "@vercel/speed-insights/astro";
 import { ClientRouter } from "astro:transitions";
+import OrientationIcon from "../components/jurado/icons/Orientation.astro";
+import type { Orientation } from "../types";
 
 interface Props {
   title: string;
+  requiredOrientation: Orientation;
 }
 
-const { title } = Astro.props;
+const { title, requiredOrientation } = Astro.props;
 ---
 
 <!doctype html>
@@ -25,6 +28,11 @@ const { title } = Astro.props;
   </head>
   <body>
     <slot />
+
+    <div class="orientation-overlay">
+      <OrientationIcon size={192} orientation={requiredOrientation} />
+      ¡Gira tu dispositivo!
+    </div>
   </body>
 </html>
 
@@ -169,3 +177,49 @@ const { title } = Astro.props;
     }
   }
 </style>
+
+<style>
+  .orientation-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+
+    display: none;
+    margin: auto;
+
+    background: rgba(0, 0, 0, 0.6);
+    overflow: hidden;
+    z-index: 5;
+
+    color: var(--color-bg-light);
+    font-size: 1.5rem;
+  }
+
+  .orientation-overlay.active {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+</style>
+
+<script data-astro-rerun is:inline define:vars={{ requiredOrientation }}>
+  document.addEventListener("astro:page-load", () => {
+    const $orientationOverlay = document.querySelector(".orientation-overlay");
+
+    let currentOrientation =
+      window.innerWidth > window.innerHeight ? "landscape" : "portrait";
+
+    if (currentOrientation !== requiredOrientation) {
+      $orientationOverlay.classList.add("active");
+
+      setTimeout(() => {
+        $orientationOverlay.classList.remove("active");
+      }, 2000);
+    } else {
+      $orientationOverlay.classList.remove("active");
+    }
+  });
+</script>
