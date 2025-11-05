@@ -5,19 +5,27 @@ import type { Photo } from "../types";
 export interface Props {
   initialPhotos: Photo[];
   refetchIntervalMs: number;
+  filters?: {
+    taskId?: string;
+    userId?: string;
+  };
 }
 
-const usePhotos = ({ initialPhotos, refetchIntervalMs }: Props) => {
+const usePhotos = ({ initialPhotos, refetchIntervalMs, filters }: Props) => {
   const [photos, setPhotos] = useState<Photo[]>(initialPhotos);
 
   useEffect(() => {
-    const intervalId = setInterval(() => fetchPhotos(), refetchIntervalMs);
+    const intervalId = setInterval(
+      () => fetchPhotos(filters),
+      refetchIntervalMs,
+    );
     return () => clearInterval(intervalId);
-  }, []);
+  }, [filters]);
 
-  const fetchPhotos = async () => {
+  const fetchPhotos = async (filters?: Props["filters"]) => {
+    const { taskId, userId } = filters || {};
     try {
-      const data = await actions.getPhotos.orThrow();
+      const data = await actions.getPhotos.orThrow({ taskId, userId });
 
       setPhotos(data.photos);
     } catch (error) {

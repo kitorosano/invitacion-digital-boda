@@ -1,22 +1,45 @@
 ---
 import { actions } from "astro:actions";
+import { getCollection } from "astro:content";
+import GoBackButton from "../../../components/jurado/GoBackButton.astro";
+import GoUpButton from "../../../components/jurado/GoUpButton.astro";
 import GridGallery from "../../../components/jurado/GridGallery";
 import { gridGalleryProps } from "../../../constants/jurado";
 import BingoLayout from "../../../layouts/BingoLayout.astro";
 
 const { id } = Astro.params;
 
+const [task] = await getCollection(
+  "mandatoryTasks",
+  (task) => task.data.id === id,
+);
+
 const initialPhotos = [];
-const { data } = await Astro.callAction(actions.getPhotos); // TODO: add filter by task ID
+const { data } = await Astro.callAction(actions.getPhotos, { taskId: id });
 if (data) initialPhotos.push(...data.photos);
 ---
 
-<BingoLayout title={`Tarea ${id} - Jurado`}>
-  <h1>Tarea {id}</h1>
+<BingoLayout title={`Fotos por tarea - Jurado`}>
+  <GoBackButton />
+
+  <h1>{task.data.text}</h1>
 
   <GridGallery
+    client:load
     initialPhotos={initialPhotos}
     {...gridGalleryProps}
-    client:load
+    filters={{ taskId: id }}
   />
+
+  <GoUpButton />
 </BingoLayout>
+
+<style>
+  h1 {
+    margin: 1.5rem 0;
+    padding: 0 1.5rem;
+
+    font-weight: 700;
+    font-size: 3rem;
+  }
+</style>

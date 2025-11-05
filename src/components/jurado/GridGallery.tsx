@@ -6,11 +6,18 @@ import "./styles/GridGallery.css";
 export interface Props {
   initialPhotos: Photo[];
   refetchIntervalMs: number;
-  // TODO: add filtering props
+  filters?: {
+    taskId?: string;
+    userId?: string;
+  };
 }
 
-const GridGallery = ({ initialPhotos = [], refetchIntervalMs }: Props) => {
-  const { photos } = usePhotos({ initialPhotos, refetchIntervalMs });
+const GridGallery = ({
+  initialPhotos = [],
+  refetchIntervalMs,
+  filters,
+}: Props) => {
+  const { photos } = usePhotos({ initialPhotos, refetchIntervalMs, filters });
 
   return (
     <div className="grid-gallery-container">

@@ -10,10 +10,26 @@ import cloudinaryClient from "../utils/cloudinaryClient";
 
 export const photo = {
   getPhotos: defineAction({
+    input: z.object({
+      userId: z.string().optional(),
+      taskId: z.string().optional(),
+    }),
     handler: async (input, ctx) => {
+      const { userId, taskId } = input;
+
+      const expressionParts = [
+        `asset_folder:${BINGO_CLOUDINARY_ASSETS_PATH}/*`,
+      ];
+      if (userId) {
+        expressionParts.push(`tags=${userId}`);
+      }
+      if (taskId) {
+        expressionParts.push(`tags=${taskId}`);
+      }
+      const expression = expressionParts.join(" AND ");
       try {
         const { resources } = await cloudinaryClient.search
-          .expression(`asset_folder:${BINGO_CLOUDINARY_ASSETS_PATH}/*`)
+          .expression(expression)
           .sort_by("public_id", "desc")
           .fields(["secure_url", "width", "height", "tags"])
           .execute();

@@ -1,0 +1,55 @@
+---
+import ArrowLeftIcon from "./icons/ArrowLeft.astro";
+---
+
+<div class="go-back-button-container">
+  <button aria-label="Volver atrás">
+    <ArrowLeftIcon />
+  </button>
+</div>
+
+<style>
+  .go-up-button-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .go-back-button-container button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 1rem;
+
+    width: 4rem;
+    height: 4rem;
+
+    background-color: var(--color-bg);
+
+    border: none;
+    border-radius: 50%;
+
+    cursor: pointer;
+
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease;
+  }
+
+  .go-back-button-container button:hover {
+    background-color: var(--color-bg-light);
+  }
+</style>
+
+<script>
+  import { navigate } from "astro:transitions/client";
+
+  document.addEventListener("DOMContentLoaded", () => {
+    const $button = document.querySelector(
+      ".go-back-button-container button",
+    ) as HTMLButtonElement;
+
+    $button.addEventListener("click", () => {
+      navigate("/jurado");
+    });
+  });
+</script>
