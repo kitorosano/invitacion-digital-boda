@@ -1,8 +1,9 @@
 import { navigate } from "astro:transitions/client";
 import { useEffect, useState } from "react";
 import usePhotos from "../../hooks/usePhotos";
-import type { Photo, Task } from "../../types";
+import type { Photo, Task, TaskWithPhotos } from "../../types";
 import "./styles/TasksGallery.css";
+import TasksGalleryItem from "./TasksGalleryItem";
 
 export interface Props {
   initialPhotos: Photo[];
@@ -10,8 +11,6 @@ export interface Props {
   tasks: Task[];
   colors: string[];
 }
-
-type TaskWithPhotos = Task & { photos: Photo[] };
 
 const TasksGallery = ({
   initialPhotos,
@@ -38,28 +37,12 @@ const TasksGallery = ({
   return (
     <div className="tasks-gallery-container">
       {groupedTasks.map((task, i) => (
-        <div
+        <TasksGalleryItem
           key={task.id}
-          className="task-gallery-item"
-          style={{ backgroundColor: colors[i % colors.length] }}
-          onClick={() => handleTaskClick(task)}
-        >
-          <header>
-            <h3>{task.text}</h3>·<span>{task.photos.length} fotos</span>
-            <p>Ver más...</p>
-          </header>
-
-          <div className="task-photos">
-            {task.photos.map((photo, index) => (
-              <picture
-                key={photo.public_id}
-                className={index === 0 ? "active" : ""}
-              >
-                <img src={photo.secure_url} />
-              </picture>
-            ))}
-          </div>
-        </div>
+          task={task}
+          backgroundColor={colors[i % colors.length]}
+          onTaskClick={handleTaskClick}
+        />
       ))}
     </div>
   );

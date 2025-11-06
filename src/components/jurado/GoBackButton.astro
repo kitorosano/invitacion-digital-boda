@@ -1,9 +1,15 @@
 ---
 import ArrowLeftIcon from "./icons/ArrowLeft.astro";
+
+interface Props {
+  backHref: string;
+}
+
+const { backHref } = Astro.props;
 ---
 
 <div class="go-back-button-container">
-  <a href="/jurado/tasks" aria-label="Volver atrás">
+  <a href={backHref} aria-label="Volver atrás">
     <ArrowLeftIcon />
   </a>
 </div>

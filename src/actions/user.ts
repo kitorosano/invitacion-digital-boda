@@ -90,4 +90,35 @@ export const user = {
       }
     },
   }),
+  getUsers: defineAction({
+    handler: async (input, ctx) => {
+      try {
+        const userIds = await redisClient.keys("users:*");
+
+        if (userIds.length === 0) return { users: [] };
+
+        // Fetch all user hashes in parallel
+        const userDatas = await Promise.all(
+          userIds.map((userId) => redisClient.hgetall(userId)),
+        );
+
+        const users: User[] = userIds.map((key, i) => {
+          const userId = key.split(":")[1];
+          const userData = userDatas[i] ?? {};
+          return {
+            id: userId,
+            username: (userData.username as string) || "",
+          };
+        });
+
+        return { users };
+      } catch (error) {
+        console.error("Error fetching users:", error);
+        throw new ActionError({
+          message: "Error fetching users",
+          code: "INTERNAL_SERVER_ERROR",
+        });
+      }
+    },
+  }),
 };

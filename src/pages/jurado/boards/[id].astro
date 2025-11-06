@@ -1,6 +1,5 @@
 ---
 import { actions } from "astro:actions";
-import { getCollection } from "astro:content";
 import GoBackButton from "../../../components/jurado/GoBackButton.astro";
 import GoUpButton from "../../../components/jurado/GoUpButton.astro";
 import GridGallery from "../../../components/jurado/GridGallery";
@@ -9,37 +8,27 @@ import BingoLayout from "../../../layouts/BingoLayout.astro";
 
 const { id } = Astro.params;
 
-const [task] = await getCollection(
-  "mandatoryTasks",
-  (task) => task.data.id === id,
-);
-
 const initialPhotos = [];
-const { data } = await Astro.callAction(actions.getPhotos, { taskId: id });
+const { data } = await Astro.callAction(actions.getPhotos, { userId: id });
 if (data) initialPhotos.push(...data.photos);
 ---
 
-<BingoLayout title={`Fotos por tarea - Jurado`} requiredOrientation="portrait">
-  <GoBackButton backHref="/jurado/tasks" />
+<BingoLayout
+  title={`Fotos por tablero - Jurado`}
+  requiredOrientation="portrait"
+>
+  <GoBackButton backHref="/jurado/boards" />
 
-  <h1>{task.data.text}</h1>
+  <h1>Tablero de {id}</h1>
 
   <GridGallery
     client:load
     initialPhotos={initialPhotos}
     {...gridGalleryProps}
-    filters={{ taskId: id }}
+    filters={{ userId: id }}
   />
 
   <GoUpButton />
 </BingoLayout>
 
-<style>
-  h1 {
-    margin: 1.5rem 0;
-    padding: 0 1.5rem;
-
-    font-weight: 700;
-    font-size: 3rem;
-  }
-</style>
+<style></style>

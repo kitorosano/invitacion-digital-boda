@@ -27,6 +27,7 @@ export const photo = {
         expressionParts.push(`tags=${taskId}`);
       }
       const expression = expressionParts.join(" AND ");
+      console.log({ expression, userId, taskId });
       try {
         const { resources } = await cloudinaryClient.search
           .expression(expression)

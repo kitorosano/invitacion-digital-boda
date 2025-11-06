@@ -17,7 +17,9 @@ export const gridGalleryProps = {
   refetchIntervalMs: JURADO_GALLERY_REFETCH_INTERVAL_MS,
 };
 
-export const boardGalleryProps = {};
+export const boardsGalleryProps = {
+  refetchIntervalMs: JURADO_GALLERY_REFETCH_INTERVAL_MS,
+};
 
 export const tasksGalleryProps = {
   refetchIntervalMs: JURADO_GALLERY_REFETCH_INTERVAL_MS,

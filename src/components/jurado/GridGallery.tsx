@@ -47,7 +47,7 @@ const GridGallery = ({
           <picture>
             <img
               src={selectedPhotoModal.photo?.secure_url}
-              alt={selectedPhotoModal.photo?.taskId}
+              alt={selectedPhotoModal.photo?.taskId} // TODO: better alt text
             />
           </picture>
         </div>

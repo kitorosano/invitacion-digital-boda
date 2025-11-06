@@ -12,6 +12,8 @@ export type TaskWithImage = Task & {
   imageId: string;
 };
 
+export type TaskWithPhotos = Task & { photos: Photo[] };
+
 export type Photo = {
   public_id: string;
   secure_url: string;
