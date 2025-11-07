@@ -11,7 +11,6 @@ const useUsers = ({ initialUsers, refetchIntervalMs }: Props) => {
   const [users, setUsers] = useState<User[]>(initialUsers);
 
   useEffect(() => {
-    console.log(refetchIntervalMs);
     const intervalId = setInterval(() => fetchUsers(), refetchIntervalMs);
     return () => clearInterval(intervalId);
   }, []);
