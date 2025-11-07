@@ -7,7 +7,7 @@ import type { Orientation } from "../types";
 
 interface Props {
   title: string;
-  requiredOrientation: Orientation;
+  requiredOrientation?: Orientation;
 }
 
 const { title, requiredOrientation } = Astro.props;
@@ -29,10 +29,14 @@ const { title, requiredOrientation } = Astro.props;
   <body>
     <slot />
 
-    <div class="orientation-overlay">
-      <OrientationIcon size={192} orientation={requiredOrientation} />
-      ¡Gira tu dispositivo!
-    </div>
+    {
+      requiredOrientation && (
+        <div class="orientation-overlay">
+          <OrientationIcon size={192} orientation={requiredOrientation} />
+          ¡Gira tu dispositivo!
+        </div>
+      )
+    }
   </body>
 </html>
 
@@ -207,6 +211,8 @@ const { title, requiredOrientation } = Astro.props;
 
 <script data-astro-rerun is:inline define:vars={{ requiredOrientation }}>
   document.addEventListener("astro:page-load", () => {
+    if (!requiredOrientation) return;
+
     const $orientationOverlay = document.querySelector(".orientation-overlay");
 
     let currentOrientation =
