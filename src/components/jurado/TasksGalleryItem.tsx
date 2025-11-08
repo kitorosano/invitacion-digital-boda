@@ -19,7 +19,7 @@ const TasksGalleryItem = ({ task, backgroundColor, onTaskClick }: Props) => {
       onClick={handleTaskClick}
     >
       <header>
-        <h3>{task.text}</h3>·<span>{task.photos.length} fotos</span>
+        <h3>{task.description}</h3>·<span>{task.photos.length} fotos</span>
         <p>Ver más...</p>
       </header>
 

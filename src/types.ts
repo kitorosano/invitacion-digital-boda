@@ -5,7 +5,7 @@ export type User = {
 
 export type Task = {
   id: string;
-  text: string;
+  description: string;
 };
 
 export type TaskWithImage = Task & {

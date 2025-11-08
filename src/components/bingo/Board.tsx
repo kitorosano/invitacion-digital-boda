@@ -77,11 +77,11 @@ const Board = ({ optionalTasks, mandatoryTasks, user }: Props) => {
       <Modal open={selectedTaskModal.open} onClose={handleCloseModal}>
         <div className="modal-content">
           <ChecklistIcon size={64} />
-          <p>"{selectedTaskModal.task?.text}"</p>
+          <p>"{selectedTaskModal.task?.description}"</p>
           <picture>
             <img
               src={selectedTaskModal.task?.imageId}
-              alt={selectedTaskModal.task?.text}
+              alt={selectedTaskModal.task?.description}
             />
           </picture>
           {!hasFinished && (

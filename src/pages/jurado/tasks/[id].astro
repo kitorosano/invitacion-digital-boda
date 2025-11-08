@@ -22,7 +22,7 @@ if (data) initialPhotos.push(...data.photos);
 <BingoLayout title={`Fotos por tarea - Jurado`} requiredOrientation="portrait">
   <GoBackButton backHref="/jurado/tasks" />
 
-  <h1>{task.data.text}</h1>
+  <h1>{task.data.description}</h1>
 
   <GridGallery
     client:load

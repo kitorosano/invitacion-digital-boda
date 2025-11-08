@@ -73,10 +73,14 @@ const BoardTask = ({ task, updateTask, setSelectedTaskModal }: Props) => {
       )}
 
       {!task.imageId ? (
-        <span>{task.text}</span>
+        <span>{task.description}</span>
       ) : (
         <picture>
-          <img src={task.imageId} alt={task.text} onError={handleImageError} />
+          <img
+            src={task.imageId}
+            alt={task.description}
+            onError={handleImageError}
+          />
         </picture>
       )}
     </li>
