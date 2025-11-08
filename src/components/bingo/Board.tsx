@@ -1,12 +1,7 @@
-import { BINGO_LOCAL_STORAGE_KEY } from "astro:env/client";
 import confetti from "canvas-confetti";
 import { useEffect, useState } from "react";
+import useBoard from "../../hooks/useBoard";
 import type { Task, TaskWithImage, User } from "../../types";
-import {
-  loadFromLocalStorage,
-  saveToLocalStorage,
-} from "../../utils/localStorage";
-import { shuffleTasks } from "../../utils/shuffleTasks";
 import Modal from "../shared/Modal";
 import BoardTask from "./BoardTask";
 import ChecklistIcon from "./icons/Checklist";
@@ -20,45 +15,21 @@ interface Props {
 }
 
 const Board = ({ optionalTasks, mandatoryTasks, user }: Props) => {
-  const [tasks, setTasks] = useState<TaskWithImage[]>([]);
+  const { tasks, updateTask, completedTasksCount, hasFinished } = useBoard({
+    optionalTasks,
+    mandatoryTasks,
+  });
   const [selectedTaskModal, setSelectedTaskModal] = useState({
     open: false,
     task: null as TaskWithImage | null,
   });
   const [shouldAnimateProgress, setShouldAnimateProgress] = useState(false);
-  const completedTasksCount = tasks.filter((task) => task.imageId).length;
-  const hasFinished = tasks.length !== 0 && tasks.every((task) => task.imageId);
 
   useEffect(() => {
-    const storedTasks = loadFromLocalStorage<TaskWithImage[]>(
-      BINGO_LOCAL_STORAGE_KEY,
-    ); // TODO: Save in redis instead of localStorage because of buggy behavior when fast uploads.
-    const initialTasks =
-      storedTasks || shuffleTasks(optionalTasks, mandatoryTasks);
-
-    setTasks(initialTasks);
-  }, []);
-
-  useEffect(() => {
-    if (hasFinished) {
-      confetti({
-        particleCount: 200,
-        spread: 70,
-        origin: { y: 0.9 },
-      });
-    }
-  }, [hasFinished]);
-
-  const updateTask = (taskId: string, imageId: string) => {
-    const updatedTasks = tasks.map((task) =>
-      task.id === taskId ? { ...task, imageId } : task,
-    );
-
-    setTasks(updatedTasks);
     setShouldAnimateProgress(true);
-    setTimeout(() => setShouldAnimateProgress(false), 1000);
-    saveToLocalStorage(BINGO_LOCAL_STORAGE_KEY, updatedTasks);
-  };
+    const timeoutId = setTimeout(() => setShouldAnimateProgress(false), 1000);
+    return () => clearTimeout(timeoutId);
+  }, [tasks]);
 
   const handleDeletePhoto = () => {
     if (!selectedTaskModal.task) return;
@@ -70,6 +41,16 @@ const Board = ({ optionalTasks, mandatoryTasks, user }: Props) => {
   const handleCloseModal = () => {
     setSelectedTaskModal({ open: false, task: null });
   };
+
+  useEffect(() => {
+    if (hasFinished) {
+      confetti({
+        particleCount: 200,
+        spread: 70,
+        origin: { y: 0.9 },
+      });
+    }
+  }, [hasFinished]);
 
   return (
     <div className="board-container">
