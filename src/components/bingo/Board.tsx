@@ -1,6 +1,4 @@
-import { actions } from "astro:actions";
 import { BINGO_LOCAL_STORAGE_KEY } from "astro:env/client";
-import { navigate } from "astro:transitions/client";
 import confetti from "canvas-confetti";
 import { useEffect, useState } from "react";
 import type { Task, TaskWithImage, User } from "../../types";
@@ -18,10 +16,10 @@ import "./styles/Board.css";
 interface Props {
   optionalTasks: Task[];
   mandatoryTasks: Task[];
+  user: User;
 }
 
-const Board = ({ optionalTasks, mandatoryTasks }: Props) => {
-  const [user, setUser] = useState<User | null>(null);
+const Board = ({ optionalTasks, mandatoryTasks, user }: Props) => {
   const [tasks, setTasks] = useState<TaskWithImage[]>([]);
   const [selectedTaskModal, setSelectedTaskModal] = useState({
     open: false,
@@ -39,19 +37,7 @@ const Board = ({ optionalTasks, mandatoryTasks }: Props) => {
       storedTasks || shuffleTasks(optionalTasks, mandatoryTasks);
 
     setTasks(initialTasks);
-
-    fetchUsername();
   }, []);
-
-  const fetchUsername = async () => {
-    try {
-      const { user } = await actions.getCurrentUser.orThrow();
-      setUser(user);
-    } catch (error) {
-      await actions.unregisterUser();
-      navigate("/bingo", { history: "replace" });
-    }
-  };
 
   useEffect(() => {
     if (hasFinished) {

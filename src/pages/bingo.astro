@@ -1,4 +1,5 @@
 ---
+import { actions } from "astro:actions";
 import { getCollection } from "astro:content";
 import Board from "../components/bingo/Board";
 import Instructions from "../components/bingo/Instructions.astro";
@@ -10,7 +11,18 @@ import {
 } from "../constants/bingo";
 import BingoLayout from "../layouts/BingoLayout.astro";
 
-const isLogged = Astro.cookies.has("userId");
+let user = null;
+const hasCookie = Astro.cookies.has("userId");
+
+if (hasCookie) {
+  const { data, error } = await Astro.callAction(actions.getCurrentUser, {});
+  if (error) {
+    await Astro.callAction(actions.unregisterUser, {});
+  }
+  if (data) {
+    user = data.user;
+  }
+}
 
 const optionalTasks = await getCollection("optionalTasks");
 const mandatoryTasks = await getCollection("mandatoryTasks");
@@ -21,12 +33,12 @@ const boardProps = {
 ---
 
 <BingoLayout {...layoutProps}>
-  <Instructions {...instructionsProps} isLogged={isLogged} />
+  <Instructions {...instructionsProps} isLogged={!!user} />
   {
-    !isLogged ? (
+    !user ? (
       <RegisterUser {...registerUserProps} />
     ) : (
-      <Board {...boardProps} client:load />
+      <Board {...boardProps} user={user} client:load />
     )
   }
 </BingoLayout>
