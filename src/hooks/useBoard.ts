@@ -1,6 +1,6 @@
 import { BINGO_LOCAL_STORAGE_KEY } from "astro:env/client";
 import { useEffect, useState } from "react";
-import type { Task, TaskWithImage } from "../types";
+import type { Task, TaskWithPhoto } from "../types";
 import {
   loadFromLocalStorage,
   saveToLocalStorage,
@@ -13,16 +13,17 @@ interface Props {
 }
 
 const useBoard = ({ optionalTasks, mandatoryTasks }: Props) => {
-  const [tasks, setTasks] = useState<TaskWithImage[]>([]);
-  const completedTasksCount = tasks.filter((task) => task.imageId).length;
-  const hasFinished = tasks.length !== 0 && tasks.every((task) => task.imageId);
+  const [tasks, setTasks] = useState<TaskWithPhoto[]>([]);
+  const completedTasksCount = tasks.filter((task) => task.photoUrl).length;
+  const hasFinished =
+    tasks.length !== 0 && tasks.every((task) => task.photoUrl);
 
   useEffect(() => {
     fetchTasks();
   }, []);
 
   const fetchTasks = () => {
-    const storedTasks = loadFromLocalStorage<TaskWithImage[]>(
+    const storedTasks = loadFromLocalStorage<TaskWithPhoto[]>(
       BINGO_LOCAL_STORAGE_KEY,
     ); // TODO: Save in redis instead of localStorage because of buggy behavior when fast uploads.
     const initialTasks =
@@ -31,9 +32,9 @@ const useBoard = ({ optionalTasks, mandatoryTasks }: Props) => {
     setTasks(initialTasks);
   };
 
-  const updateTask = (taskId: string, imageId: string) => {
+  const updateTask = (taskId: string, photoUrl: string) => {
     const updatedTasks = tasks.map((task) =>
-      task.id === taskId ? { ...task, imageId } : task,
+      task.id === taskId ? { ...task, photoUrl } : task,
     );
 
     setTasks(updatedTasks);

@@ -36,14 +36,14 @@ export const photo = {
 
         const photos: Photo[] = resources.map((resource: any) => {
           return {
-            public_id: resource.public_id,
-            secure_url: resource.secure_url.replace(
+            id: resource.public_id,
+            url: resource.secure_url.replace(
               "/upload/",
               `/upload/${PHOTO_LOW_Q_TRANSFORMATIONS}`,
             ),
             userId: resource.tags[0],
             taskId: resource.tags[1],
-          };
+          } as Photo;
         });
 
         return { photos };
@@ -72,13 +72,13 @@ export const photo = {
         });
 
         const uploadedPhoto: Photo = {
-          userId,
-          taskId,
-          public_id: data.public_id,
-          secure_url: data.secure_url.replace(
+          id: data.public_id,
+          url: data.secure_url.replace(
             "/upload/",
             "/upload/c_fill,h_300,w_auto/f_auto/",
           ),
+          userId,
+          taskId,
         };
 
         return { photo: uploadedPhoto };

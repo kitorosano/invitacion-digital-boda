@@ -17,7 +17,7 @@ const GridGalleryItem = ({ photo, setSelectedPhotoModal }: Props) => {
   return (
     <li className="grid-gallery-item-container" onClick={onPhotoClick}>
       <picture>
-        <img src={photo.secure_url} />
+        <img src={photo.url} />
       </picture>
     </li>
   );

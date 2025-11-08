@@ -32,10 +32,10 @@ const GridGallery = ({
   return (
     <div className="grid-gallery-container">
       <ul>
-        {photos.map((image) => (
+        {photos.map((photo) => (
           <GridGalleryItem
-            key={image.public_id}
-            photo={image}
+            key={photo.id}
+            photo={photo}
             setSelectedPhotoModal={setSelectedPhotoModal}
           />
         ))}
@@ -46,7 +46,7 @@ const GridGallery = ({
           <p>"{selectedPhotoModal.photo?.taskId}"</p>
           <picture>
             <img
-              src={selectedPhotoModal.photo?.secure_url}
+              src={selectedPhotoModal.photo?.url}
               alt={selectedPhotoModal.photo?.taskId} // TODO: better alt text
             />
           </picture>

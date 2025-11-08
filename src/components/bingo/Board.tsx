@@ -1,7 +1,7 @@
 import confetti from "canvas-confetti";
 import { useEffect, useState } from "react";
 import useBoard from "../../hooks/useBoard";
-import type { Task, TaskWithImage, User } from "../../types";
+import type { Task, TaskWithPhoto, User } from "../../types";
 import Modal from "../shared/Modal";
 import BoardTask from "./BoardTask";
 import ChecklistIcon from "./icons/Checklist";
@@ -21,7 +21,7 @@ const Board = ({ optionalTasks, mandatoryTasks, user }: Props) => {
   });
   const [selectedTaskModal, setSelectedTaskModal] = useState({
     open: false,
-    task: null as TaskWithImage | null,
+    task: null as TaskWithPhoto | null,
   });
   const [shouldAnimateProgress, setShouldAnimateProgress] = useState(false);
 
@@ -80,7 +80,7 @@ const Board = ({ optionalTasks, mandatoryTasks, user }: Props) => {
           <p>"{selectedTaskModal.task?.description}"</p>
           <picture>
             <img
-              src={selectedTaskModal.task?.imageId}
+              src={selectedTaskModal.task?.photoUrl}
               alt={selectedTaskModal.task?.description}
             />
           </picture>

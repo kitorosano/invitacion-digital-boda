@@ -1,15 +1,15 @@
 import { actions } from "astro:actions";
 import { useEffect, useRef, useState, type ChangeEvent } from "react";
-import type { TaskWithImage } from "../../types";
+import type { TaskWithPhoto } from "../../types";
 import { fileToUri } from "../../utils/formatFiles";
 import "./styles/BoardTask.css";
 
 interface Props {
-  task: TaskWithImage;
-  updateTask: (taskId: string, imageId: string) => void;
+  task: TaskWithPhoto;
+  updateTask: (taskId: string, photoUrl: string) => void;
   setSelectedTaskModal: (state: {
     open: boolean;
-    task: TaskWithImage | null;
+    task: TaskWithPhoto | null;
   }) => void;
 }
 
@@ -18,7 +18,7 @@ const BoardTask = ({ task, updateTask, setSelectedTaskModal }: Props) => {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    if (!task.imageId && fileInputRef.current) {
+    if (!task.photoUrl && fileInputRef.current) {
       fileInputRef.current.value = "";
     }
   }, [task]);
@@ -31,12 +31,12 @@ const BoardTask = ({ task, updateTask, setSelectedTaskModal }: Props) => {
       setIsLoading(true);
       const uri = await fileToUri(file);
 
-      const data = await actions.uploadPhoto.orThrow({
+      const { photo } = await actions.uploadPhoto.orThrow({
         uri,
         taskId: task.id,
       });
 
-      updateTask(task.id, data.photo.secure_url);
+      updateTask(task.id, photo.url);
     } catch (error) {
       alert(
         "Ha ocurrido un error al subir la imagen. Por favor, recarga la página.",
@@ -49,7 +49,7 @@ const BoardTask = ({ task, updateTask, setSelectedTaskModal }: Props) => {
   const handleTaskClick = () => {
     if (isLoading) return;
 
-    if (task.imageId) setSelectedTaskModal({ open: true, task });
+    if (task.photoUrl) setSelectedTaskModal({ open: true, task });
     else fileInputRef.current?.click();
   };
 
@@ -72,12 +72,12 @@ const BoardTask = ({ task, updateTask, setSelectedTaskModal }: Props) => {
         </div>
       )}
 
-      {!task.imageId ? (
+      {!task.photoUrl ? (
         <span>{task.description}</span>
       ) : (
         <picture>
           <img
-            src={task.imageId}
+            src={task.photoUrl}
             alt={task.description}
             onError={handleImageError}
           />

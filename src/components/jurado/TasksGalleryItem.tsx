@@ -25,11 +25,8 @@ const TasksGalleryItem = ({ task, backgroundColor, onTaskClick }: Props) => {
 
       <div className="task-photos">
         {task.photos.map((photo, index) => (
-          <picture
-            key={photo.public_id}
-            className={index === 0 ? "active" : ""}
-          >
-            <img src={photo.secure_url} />
+          <picture key={photo.id} className={index === 0 ? "active" : ""}>
+            <img src={photo.url} />
           </picture>
         ))}
       </div>

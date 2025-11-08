@@ -8,15 +8,15 @@ export type Task = {
   description: string;
 };
 
-export type TaskWithImage = Task & {
-  imageId: string;
+export type TaskWithPhoto = Task & {
+  photoUrl: Photo["url"] | "";
 };
 
 export type TaskWithPhotos = Task & { photos: Photo[] };
 
 export type Photo = {
-  public_id: string;
-  secure_url: string;
+  id: string;
+  url: string;
   userId: User["id"];
   taskId: Task["id"];
 };

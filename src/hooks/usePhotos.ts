@@ -25,9 +25,9 @@ const usePhotos = ({ initialPhotos, refetchIntervalMs, filters }: Props) => {
   const fetchPhotos = async (filters?: Props["filters"]) => {
     const { taskId, userId } = filters || {};
     try {
-      const data = await actions.getPhotos.orThrow({ taskId, userId });
+      const { photos } = await actions.getPhotos.orThrow({ taskId, userId });
 
-      setPhotos(data.photos);
+      setPhotos(photos);
     } catch (error) {
       // TODO: more UI friendly error handling
       alert(
