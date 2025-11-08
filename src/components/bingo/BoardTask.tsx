@@ -6,7 +6,7 @@ import "./styles/BoardTask.css";
 
 interface Props {
   task: TaskWithPhoto;
-  updateTask: (taskId: string, photoUrl: string) => void;
+  updateTask: (taskId: string, photoId: string, photoUrl: string) => void;
   setSelectedTaskModal: (state: {
     open: boolean;
     task: TaskWithPhoto | null;
@@ -18,7 +18,7 @@ const BoardTask = ({ task, updateTask, setSelectedTaskModal }: Props) => {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    if (!task.photoUrl && fileInputRef.current) {
+    if (!task.photoId && fileInputRef.current) {
       fileInputRef.current.value = "";
     }
   }, [task]);
@@ -36,7 +36,7 @@ const BoardTask = ({ task, updateTask, setSelectedTaskModal }: Props) => {
         taskId: task.id,
       });
 
-      updateTask(task.id, photo.url);
+      updateTask(task.id, photo.id, photo.url);
     } catch (error) {
       alert(
         "Ha ocurrido un error al subir la imagen. Por favor, recarga la página.",
@@ -54,7 +54,7 @@ const BoardTask = ({ task, updateTask, setSelectedTaskModal }: Props) => {
   };
 
   const handleImageError = () => {
-    updateTask(task.id, "");
+    updateTask(task.id, "", "");
   };
 
   return (
@@ -72,7 +72,7 @@ const BoardTask = ({ task, updateTask, setSelectedTaskModal }: Props) => {
         </div>
       )}
 
-      {!task.photoUrl ? (
+      {!task.photoId ? (
         <span>{task.description}</span>
       ) : (
         <picture>

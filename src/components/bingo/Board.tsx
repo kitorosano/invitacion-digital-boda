@@ -35,7 +35,7 @@ const Board = ({ optionalTasks, mandatoryTasks, user }: Props) => {
     if (!selectedTaskModal.task) return;
     handleCloseModal();
 
-    updateTask(selectedTaskModal.task.id, "");
+    updateTask(selectedTaskModal.task.id, "", "");
   };
 
   const handleCloseModal = () => {
@@ -66,7 +66,7 @@ const Board = ({ optionalTasks, mandatoryTasks, user }: Props) => {
       </ul>
 
       <div className="board-info">
-        <p className="username">Tablero de {user?.username}</p>
+        <p className="username">Tablero de {user.username}</p>
         <p
           className={`tasks-progress ${shouldAnimateProgress ? "animate" : ""}`}
         >

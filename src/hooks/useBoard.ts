@@ -1,5 +1,5 @@
 import { BINGO_LOCAL_STORAGE_KEY } from "astro:env/client";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import type { Task, TaskWithPhoto } from "../types";
 import {
   loadFromLocalStorage,
@@ -14,9 +14,15 @@ interface Props {
 
 const useBoard = ({ optionalTasks, mandatoryTasks }: Props) => {
   const [tasks, setTasks] = useState<TaskWithPhoto[]>([]);
-  const completedTasksCount = tasks.filter((task) => task.photoUrl).length;
-  const hasFinished =
-    tasks.length !== 0 && tasks.every((task) => task.photoUrl);
+
+  const completedTasksCount = useMemo(
+    () => tasks.filter((task) => task.photoId).length,
+    [tasks],
+  );
+  const hasFinished = useMemo(
+    () => tasks.length !== 0 && tasks.every((task) => task.photoId),
+    [tasks],
+  );
 
   useEffect(() => {
     fetchTasks();
@@ -32,9 +38,9 @@ const useBoard = ({ optionalTasks, mandatoryTasks }: Props) => {
     setTasks(initialTasks);
   };
 
-  const updateTask = (taskId: string, photoUrl: string) => {
+  const updateTask = (id: string, photoId: string, photoUrl: string) => {
     const updatedTasks = tasks.map((task) =>
-      task.id === taskId ? { ...task, photoUrl } : task,
+      task.id === id ? { ...task, photoId, photoUrl } : task,
     );
 
     setTasks(updatedTasks);

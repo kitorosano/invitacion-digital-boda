@@ -8,17 +8,18 @@ export type Task = {
   description: string;
 };
 
-export type TaskWithPhoto = Task & {
-  photoUrl: Photo["url"] | "";
-};
-
-export type TaskWithPhotos = Task & { photos: Photo[] };
-
 export type Photo = {
   id: string;
   url: string;
   userId: User["id"];
   taskId: Task["id"];
+};
+
+export type TaskWithPhoto = {
+  id: Task["id"];
+  description: Task["description"];
+  photoId: Photo["id"] | "";
+  photoUrl: Photo["url"] | "";
 };
 
 export enum GalleryTab {
@@ -28,3 +29,5 @@ export enum GalleryTab {
 }
 
 export type Orientation = "landscape" | "portrait";
+
+export type TaskWithPhotos = Task & { photos: Photo[] };
