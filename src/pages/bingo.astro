@@ -10,6 +10,7 @@ import {
   registerUserProps,
 } from "../constants/bingo";
 import BingoLayout from "../layouts/BingoLayout.astro";
+import type { TaskWithPhoto } from "../types";
 
 let currentUser = null;
 const hasCookie = Astro.cookies.has("userId");
@@ -30,6 +31,23 @@ const boardProps = {
   optionalTasks: optionalTasks.map((task) => task.data),
   mandatoryTasks: mandatoryTasks.map((task) => task.data),
 };
+
+const initialTasksWithPhoto: TaskWithPhoto[] = [];
+
+const { data: tasksData } = await Astro.callAction(
+  actions.getCurrentUserTasks,
+  { allTasks: [...boardProps.optionalTasks, ...boardProps.mandatoryTasks] },
+);
+
+if (tasksData?.tasks.length === 0) {
+  const { data: newTasksData } = await Astro.callAction(
+    actions.initializeTasks,
+    {},
+  );
+  initialTasksWithPhoto.push(...(newTasksData?.tasks || []));
+} else {
+  initialTasksWithPhoto.push(...(tasksData?.tasks || []));
+}
 ---
 
 <BingoLayout {...layoutProps}>
@@ -38,7 +56,12 @@ const boardProps = {
     !currentUser ? (
       <RegisterUser {...registerUserProps} />
     ) : (
-      <Board {...boardProps} currentUser={currentUser} client:load />
+      <Board
+        {...boardProps}
+        currentUser={currentUser}
+        initialTasksWithPhoto={initialTasksWithPhoto}
+        client:load
+      />
     )
   }
 </BingoLayout>

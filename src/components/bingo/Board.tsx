@@ -9,13 +9,20 @@ import PhotoEditIcon from "./icons/PhotoEdit";
 import "./styles/Board.css";
 
 interface Props {
+  initialTasksWithPhoto: TaskWithPhoto[];
   optionalTasks: Task[];
   mandatoryTasks: Task[];
   currentUser: User;
 }
 
-const Board = ({ optionalTasks, mandatoryTasks, currentUser }: Props) => {
+const Board = ({
+  optionalTasks,
+  mandatoryTasks,
+  currentUser,
+  initialTasksWithPhoto,
+}: Props) => {
   const { tasks, updateBoard, completedTasksCount, hasFinished } = useBoard({
+    initialTasksWithPhoto,
     optionalTasks,
     mandatoryTasks,
   });
@@ -97,6 +104,5 @@ const Board = ({ optionalTasks, mandatoryTasks, currentUser }: Props) => {
     </div>
   );
 };
-// TODO: Pantalla de carga al traer las tareas
 
 export default Board;

@@ -3,12 +3,17 @@ import { useEffect, useMemo, useState } from "react";
 import type { Task, TaskWithPhoto } from "../types";
 
 interface Props {
+  initialTasksWithPhoto: TaskWithPhoto[];
   optionalTasks: Task[];
   mandatoryTasks: Task[];
 }
 
-const useBoard = ({ optionalTasks, mandatoryTasks }: Props) => {
-  const [tasks, setTasks] = useState<TaskWithPhoto[]>([]);
+const useBoard = ({
+  initialTasksWithPhoto,
+  optionalTasks,
+  mandatoryTasks,
+}: Props) => {
+  const [tasks, setTasks] = useState<TaskWithPhoto[]>(initialTasksWithPhoto);
 
   const completedTasksCount = useMemo(
     () => tasks.filter((task) => task.photoUrl).length,
