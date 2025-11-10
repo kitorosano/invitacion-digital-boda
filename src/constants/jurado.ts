@@ -10,7 +10,7 @@ export const layoutProps = {
 };
 
 export const headerTabsProps = {
-  tabs: JURADO_HEADER_TABS.split("|"),
+  tabNames: JURADO_HEADER_TABS.split("|"),
 };
 
 export const gridGalleryProps = {

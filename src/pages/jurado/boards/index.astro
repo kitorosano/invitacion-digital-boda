@@ -18,8 +18,11 @@ if (data) {
 }
 ---
 
-<BingoLayout requiredOrientation="landscape" {...layoutProps}>
-  <HeaderTabs currentTab={GalleryTab.BOARDS} {...headerTabsProps} />
+<BingoLayout requiredOrientation="portrait" {...layoutProps}>
+  <HeaderTabs
+    currentTab={GalleryTab.BOARDS}
+    {...headerTabsProps}
+  />
   <BoardsGallery
     initialUsers={initialUsers}
     {...boardsGalleryProps}

@@ -2,8 +2,10 @@
 import { actions } from "astro:actions";
 import GoBackButton from "../../../components/jurado/GoBackButton.astro";
 import GridGallery from "../../../components/jurado/GridGallery";
-import { gridGalleryProps } from "../../../constants/jurado";
+import HeaderTabs from "../../../components/jurado/HeaderTabs.astro";
+import { gridGalleryProps, headerTabsProps } from "../../../constants/jurado";
 import BingoLayout from "../../../layouts/BingoLayout.astro";
+import { GalleryTab } from "../../../types";
 
 const { id } = Astro.params;
 
@@ -24,6 +26,8 @@ if (tasksPromise.data)
   title={`Fotos por tablero - Jurado`}
   requiredOrientation="portrait"
 >
+  <HeaderTabs currentTab={GalleryTab.BOARDS} {...headerTabsProps} />
+
   <GoBackButton backHref="/jurado/boards" />
 
   <h2>Tablero de {userPromise.data?.user.name}</h2>
@@ -40,7 +44,7 @@ if (tasksPromise.data)
 <style>
   h2 {
     margin: 0 auto;
-    
+
     text-align: center;
     font-size: var(--text-size-lg);
     font-weight: 400;

@@ -22,7 +22,10 @@ const mandatoryTasks = (await getCollection("mandatoryTasks")).map(
 ---
 
 <BingoLayout requiredOrientation="portrait" {...layoutProps}>
-  <HeaderTabs currentTab={GalleryTab.TASKS} {...headerTabsProps} />
+  <HeaderTabs
+    currentTab={GalleryTab.TASKS}
+    {...headerTabsProps}
+  />
   <TasksGallery
     initialTasksWithPhoto={initialTaskWithPhoto}
     mandatoryTasks={mandatoryTasks}

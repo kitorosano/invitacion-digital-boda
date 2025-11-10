@@ -2,23 +2,33 @@
 import { GalleryTab } from "../../types";
 
 interface Props {
-  tabs: string[];
+  tabNames: string[];
   currentTab: GalleryTab;
 }
 
-const { tabs, currentTab } = Astro.props;
+const { tabNames, currentTab } = Astro.props;
+
+const isAllTabActiveClass = currentTab === GalleryTab.ALL ? "active" : "";
+const isBoardsTabActiveClass = currentTab === GalleryTab.BOARDS ? "active" : "";
+const isTasksTabActiveClass = currentTab === GalleryTab.TASKS ? "active" : "";
 ---
 
-<nav class="header-tabs-container">
+<nav class="header-tabs-container" transition:persist="header-tabs">
   <ul>
-    <li class={currentTab === GalleryTab.ALL ? "active" : ""}>
-      <a href="/jurado">{tabs[GalleryTab.ALL]}</a>
+    <li>
+      <a href="/jurado" class={isAllTabActiveClass}
+        >{tabNames[GalleryTab.ALL]}</a
+      >
     </li>
-    <li class={currentTab === GalleryTab.BOARDS ? "active" : ""}>
-      <a href="/jurado/boards">{tabs[GalleryTab.BOARDS]}</a>
+    <li>
+      <a href="/jurado/boards" class={isBoardsTabActiveClass}
+        >{tabNames[GalleryTab.BOARDS]}</a
+      >
     </li>
-    <li class={currentTab === GalleryTab.TASKS ? "active" : ""}>
-      <a href="/jurado/tasks">{tabs[GalleryTab.TASKS]}</a>
+    <li>
+      <a href="/jurado/tasks" class={isTasksTabActiveClass}
+        >{tabNames[GalleryTab.TASKS]}</a
+      >
     </li>
 
     <span id="active-overlay"></span>
@@ -33,7 +43,7 @@ const { tabs, currentTab } = Astro.props;
     right: 0;
     width: fit-content;
     margin: 1rem auto;
-    padding: 0.5rem 1rem;
+    padding: 0 0.5rem;
 
     border: 2px solid var(--color-bg);
     border-top: 2px solid var(--color-highlight);
@@ -55,23 +65,16 @@ const { tabs, currentTab } = Astro.props;
 
     position: relative;
   }
+  .header-tabs-container > ul > li > a {
+    display: inline-flex;
+    padding: 1rem;
 
-  .header-tabs-container > ul > li {
-    color: var(--color-text-muted);
-
+    text-decoration: none;
     font-size: var(--text-size-md);
     font-weight: 600;
+    color: var(--color-text-muted);
 
-    cursor: pointer;
-    z-index: 2;
-
-    padding: 0.5rem 1rem;
     transition: color 0.2s ease-in-out;
-  }
-
-  .header-tabs-container > ul > li > a {
-    text-decoration: none;
-    color: inherit;
   }
 
   .header-tabs-container > ul > li.active {
@@ -89,41 +92,49 @@ const { tabs, currentTab } = Astro.props;
     border: 2px solid var(--color-highlight);
     border-radius: 2rem;
 
-    padding: 0.5rem 1rem;
+    padding: 0 1rem;
     transform: translateY(-50%) translateX(-1rem);
     transition: all 0.2s ease-in-out;
 
     box-shadow: var(--shadow-md);
 
-    z-index: 1;
+    z-index: -1;
   }
 </style>
 
 <script>
-  document.addEventListener("DOMContentLoaded", () => {
-    const $activeOverlay = document.getElementById(
-      "active-overlay",
-    ) as HTMLSpanElement;
-    const $activeTab = document.querySelector(
-      ".header-tabs-container ul li.active",
-    ) as HTMLLIElement;
+  const $activeOverlay = document.getElementById(
+    "active-overlay",
+  ) as HTMLSpanElement;
+  const $activeTab = document.querySelector(
+    ".header-tabs-container ul li a.active",
+  ) as HTMLLIElement;
+  const $tabs = document.querySelectorAll(
+    ".header-tabs-container ul li a",
+  ) as NodeListOf<HTMLLIElement>;
 
-    const updateOverlayPosition = (activeTab: HTMLLIElement) => {
-      const tabRect = activeTab.getBoundingClientRect();
+  const updateOverlayPosition = (activeTab: HTMLLIElement) => {
+    const tabRect = activeTab.getBoundingClientRect();
 
-      const left = activeTab.offsetLeft;
-      const width = tabRect.width;
-      const height = tabRect.height;
+    const left = activeTab.offsetLeft;
+    const width = tabRect.width;
+    const height = tabRect.height;
 
-      $activeOverlay.style.left = `${left}px`;
-      $activeOverlay.style.width = `${width}px`;
-      $activeOverlay.style.height = `${height}px`;
-    };
+    $activeOverlay.style.left = `${left}px`;
+    $activeOverlay.style.width = `${width}px`;
+    $activeOverlay.style.height = `${height}px`;
+  };
 
-    if ($activeTab) {
-      updateOverlayPosition($activeTab);
-    }
+  if ($activeTab) {
+    updateOverlayPosition($activeTab);
+  }
+
+  $tabs.forEach((tab) => {
+    tab.addEventListener("click", (e) => {
+      $tabs.forEach((t) => t.classList.remove("active"));
+      tab.classList.add("active");
+
+      updateOverlayPosition(tab);
+    });
   });
 </script>
-
-<!-- TODO: Fix this component not updating the active tab overlay position on window refresh -->

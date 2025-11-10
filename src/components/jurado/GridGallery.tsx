@@ -40,7 +40,7 @@ const GridGallery = ({
       <ul className={bingoBoardLayout ? "bingo-board-layout" : ""}>
         {tasksWithPhoto.map((taskWithPhoto) => (
           <GridGalleryItem
-            key={taskWithPhoto.id}
+            key={taskWithPhoto.photoUrl}
             taskWithPhoto={taskWithPhoto}
             setSelectedTaskWithPhotoModal={setSelectedTaskWithPhotoModal}
           />
