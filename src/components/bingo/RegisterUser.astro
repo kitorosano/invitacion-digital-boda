@@ -10,7 +10,7 @@ const { maxUsernameLength } = Astro.props;
   <div>
     <input
       type="text"
-      name="username"
+      name="name"
       placeholder="Ingresa tu nombre..."
       autocomplete="off"
       maxlength={maxUsernameLength}
@@ -190,18 +190,17 @@ const { maxUsernameLength } = Astro.props;
 
     $form.addEventListener("submit", async (e) => {
       e.preventDefault();
-      const username = $input.value.trim();
-      if (username === "") return;
+      const name = $input.value.trim();
+      if (name === "") return;
 
       $button.disabled = true;
       $loader.style.display = "flex";
 
-      const { error } = await actions.registerUser({ username });
+      const { error } = await actions.saveUser({ name });
 
       if (error) {
         if (isInputError(error)) {
-          $error.textContent =
-            error.fields.username?.join(", ") || error.message;
+          $error.textContent = error.fields.name?.join(", ") || error.message;
         } else {
           $error.textContent = error.message;
         }

@@ -1,12 +1,12 @@
 import { useState } from "react";
-import usePhotos from "../../hooks/usePhotos";
-import { type Photo } from "../../types";
+import useTasksWithPhoto from "../../hooks/useTasksWithPhoto";
+import { type TaskWithPhoto } from "../../types";
 import Modal from "../shared/Modal";
 import GridGalleryItem from "./GridGalleryItem";
 import "./styles/GridGallery.css";
 
 export interface Props {
-  initialPhotos: Photo[];
+  initialTasksWithPhoto: TaskWithPhoto[];
   refetchIntervalMs: number;
   filters?: {
     taskId?: string;
@@ -15,39 +15,43 @@ export interface Props {
 }
 
 const GridGallery = ({
-  initialPhotos = [],
+  initialTasksWithPhoto = [],
   refetchIntervalMs,
   filters,
 }: Props) => {
-  const { photos } = usePhotos({ initialPhotos, refetchIntervalMs, filters });
-  const [selectedPhotoModal, setSelectedPhotoModal] = useState({
+  const { tasksWithPhoto } = useTasksWithPhoto({
+    initialTasksWithPhoto,
+    refetchIntervalMs,
+    filters,
+  });
+  const [selectedTaskWithPhotoModal, setSelectedTaskWithPhotoModal] = useState({
     open: false,
-    photo: null as Photo | null,
+    taskWithPhoto: null as TaskWithPhoto | null,
   });
 
   const handleCloseModal = () => {
-    setSelectedPhotoModal({ open: false, photo: null });
+    setSelectedTaskWithPhotoModal({ open: false, taskWithPhoto: null });
   };
 
   return (
     <div className="grid-gallery-container">
       <ul>
-        {photos.map((photo) => (
+        {tasksWithPhoto.map((taskWithPhoto) => (
           <GridGalleryItem
-            key={photo.id}
-            photo={photo}
-            setSelectedPhotoModal={setSelectedPhotoModal}
+            key={taskWithPhoto.id}
+            taskWithPhoto={taskWithPhoto}
+            setSelectedTaskWithPhotoModal={setSelectedTaskWithPhotoModal}
           />
         ))}
       </ul>
 
-      <Modal open={selectedPhotoModal.open} onClose={handleCloseModal}>
+      <Modal open={selectedTaskWithPhotoModal.open} onClose={handleCloseModal}>
         <div className="modal-content">
-          <p>"{selectedPhotoModal.photo?.taskId}"</p>
+          <p>"{selectedTaskWithPhotoModal.taskWithPhoto?.id}"</p>
           <picture>
             <img
-              src={selectedPhotoModal.photo?.url}
-              alt={selectedPhotoModal.photo?.taskId} // TODO: better alt text
+              src={selectedTaskWithPhotoModal.taskWithPhoto?.photoUrl}
+              alt={selectedTaskWithPhotoModal.taskWithPhoto?.description}
             />
           </picture>
         </div>

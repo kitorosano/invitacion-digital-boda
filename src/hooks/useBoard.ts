@@ -1,11 +1,6 @@
-import { BINGO_LOCAL_STORAGE_KEY } from "astro:env/client";
+import { actions } from "astro:actions";
 import { useEffect, useMemo, useState } from "react";
 import type { Task, TaskWithPhoto } from "../types";
-import {
-  loadFromLocalStorage,
-  saveToLocalStorage,
-} from "../utils/localStorage";
-import { shuffleTasks } from "../utils/shuffleTasks";
 
 interface Props {
   optionalTasks: Task[];
@@ -16,11 +11,11 @@ const useBoard = ({ optionalTasks, mandatoryTasks }: Props) => {
   const [tasks, setTasks] = useState<TaskWithPhoto[]>([]);
 
   const completedTasksCount = useMemo(
-    () => tasks.filter((task) => task.photoId).length,
+    () => tasks.filter((task) => task.photoUrl).length,
     [tasks],
   );
   const hasFinished = useMemo(
-    () => tasks.length !== 0 && tasks.every((task) => task.photoId),
+    () => tasks.length !== 0 && tasks.every((task) => task.photoUrl),
     [tasks],
   );
 
@@ -28,26 +23,35 @@ const useBoard = ({ optionalTasks, mandatoryTasks }: Props) => {
     fetchTasks();
   }, []);
 
-  const fetchTasks = () => {
-    const storedTasks = loadFromLocalStorage<TaskWithPhoto[]>(
-      BINGO_LOCAL_STORAGE_KEY,
-    ); // TODO: Save in redis instead of localStorage because of buggy behavior when fast uploads.
-    const initialTasks =
-      storedTasks || shuffleTasks(optionalTasks, mandatoryTasks);
+  const fetchTasks = async () => {
+    try {
+      const allTasks = [...optionalTasks, ...mandatoryTasks];
 
-    setTasks(initialTasks);
+      const { tasks } = await actions.getCurrentUserTasks.orThrow({ allTasks });
+
+      if (tasks.length === 0) {
+        const { tasks: newTasks } = await actions.initializeTasks.orThrow();
+        setTasks(newTasks);
+        return;
+      }
+
+      setTasks(tasks);
+    } catch (error) {
+      alert(
+        "Ha ocurrido un error al cargar las tareas. Por favor, recarga la página.",
+      );
+    }
   };
 
-  const updateTask = (id: string, photoId: string, photoUrl: string) => {
+  const updateBoard = (taskId: string, photoUrl: string) => {
     const updatedTasks = tasks.map((task) =>
-      task.id === id ? { ...task, photoId, photoUrl } : task,
+      task.id === taskId ? { ...task, photoUrl } : task,
     );
 
     setTasks(updatedTasks);
-    saveToLocalStorage(BINGO_LOCAL_STORAGE_KEY, updatedTasks);
   };
 
-  return { tasks, completedTasksCount, hasFinished, updateTask };
+  return { tasks, completedTasksCount, hasFinished, updateBoard };
 };
 
 export default useBoard;

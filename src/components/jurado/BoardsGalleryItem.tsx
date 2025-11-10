@@ -15,7 +15,7 @@ const BoardsGalleryItem = ({ user, position, onBoardClick }: Props) => {
   return (
     <li className="boards-gallery-item-container" onClick={handleBoardClick}>
       <span className="position-indicator">{position + 1}. </span>
-      {user.username}
+      {user.name}
     </li>
   );
 };

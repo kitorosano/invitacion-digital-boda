@@ -2,14 +2,18 @@ import type { TaskWithPhotos } from "../../types";
 import "./styles/TasksGalleryItem.css";
 
 interface Props {
-  task: TaskWithPhotos;
+  taskWithPhoto: TaskWithPhotos;
   backgroundColor: string;
   onTaskClick: (task: TaskWithPhotos) => void;
 }
 
-const TasksGalleryItem = ({ task, backgroundColor, onTaskClick }: Props) => {
+const TasksGalleryItem = ({
+  taskWithPhoto,
+  backgroundColor,
+  onTaskClick,
+}: Props) => {
   const handleTaskClick = () => {
-    onTaskClick(task);
+    onTaskClick(taskWithPhoto);
   };
 
   return (
@@ -19,14 +23,18 @@ const TasksGalleryItem = ({ task, backgroundColor, onTaskClick }: Props) => {
       onClick={handleTaskClick}
     >
       <header>
-        <h3>{task.description}</h3>·<span>{task.photos.length} fotos</span>
+        <h3>{taskWithPhoto.description}</h3>·
+        <span>{taskWithPhoto.tasksWithPhoto.length} fotos</span>
         <p>Ver más...</p>
       </header>
 
       <div className="task-photos">
-        {task.photos.map((photo, index) => (
-          <picture key={photo.id} className={index === 0 ? "active" : ""}>
-            <img src={photo.url} />
+        {taskWithPhoto.tasksWithPhoto.map((taskWithPhoto, index) => (
+          <picture
+            key={taskWithPhoto.photoUrl}
+            className={index === 0 ? "active" : ""}
+          >
+            <img src={taskWithPhoto.photoUrl} />
           </picture>
         ))}
       </div>

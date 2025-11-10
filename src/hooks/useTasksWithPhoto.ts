@@ -1,9 +1,9 @@
 import { actions } from "astro:actions";
 import { useEffect, useState } from "react";
-import type { Photo } from "../types";
+import type { TaskWithPhoto } from "../types";
 
 export interface Props {
-  initialPhotos: Photo[];
+  initialTasksWithPhoto: TaskWithPhoto[];
   refetchIntervalMs: number;
   filters?: {
     taskId?: string;
@@ -11,8 +11,14 @@ export interface Props {
   };
 }
 
-const usePhotos = ({ initialPhotos, refetchIntervalMs, filters }: Props) => {
-  const [photos, setPhotos] = useState<Photo[]>(initialPhotos);
+const useTasksWithPhoto = ({
+  initialTasksWithPhoto,
+  refetchIntervalMs,
+  filters,
+}: Props) => {
+  const [tasksWithPhoto, setTasksWithPhoto] = useState<TaskWithPhoto[]>(
+    initialTasksWithPhoto,
+  );
 
   useEffect(() => {
     const intervalId = setInterval(
@@ -25,18 +31,20 @@ const usePhotos = ({ initialPhotos, refetchIntervalMs, filters }: Props) => {
   const fetchPhotos = async (filters?: Props["filters"]) => {
     const { taskId, userId } = filters || {};
     try {
-      const { photos } = await actions.getPhotos.orThrow({ taskId, userId });
+      const { tasksWithPhoto } = await actions.getTasksWithPhoto.orThrow({
+        taskId,
+        userId,
+      });
 
-      setPhotos(photos);
+      setTasksWithPhoto(tasksWithPhoto);
     } catch (error) {
-      // TODO: more UI friendly error handling
       alert(
         "Ha ocurrido un error al obtener las imágenes. Por favor, recarga la página.",
       );
     }
   };
 
-  return { photos };
+  return { tasksWithPhoto };
 };
 
-export default usePhotos;
+export default useTasksWithPhoto;

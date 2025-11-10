@@ -6,19 +6,19 @@ import "./styles/BoardTask.css";
 
 interface Props {
   task: TaskWithPhoto;
-  updateTask: (taskId: string, photoId: string, photoUrl: string) => void;
+  updateBoard: (taskId: string, photoUrl: string) => void;
   setSelectedTaskModal: (state: {
     open: boolean;
     task: TaskWithPhoto | null;
   }) => void;
 }
 
-const BoardTask = ({ task, updateTask, setSelectedTaskModal }: Props) => {
+const BoardTask = ({ task, updateBoard, setSelectedTaskModal }: Props) => {
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    if (!task.photoId && fileInputRef.current) {
+    if (!task.photoUrl && fileInputRef.current) {
       fileInputRef.current.value = "";
     }
   }, [task]);
@@ -31,12 +31,12 @@ const BoardTask = ({ task, updateTask, setSelectedTaskModal }: Props) => {
       setIsLoading(true);
       const uri = await fileToUri(file);
 
-      const { photo } = await actions.uploadPhoto.orThrow({
+      const { photo } = await actions.updateTaskWithPhoto.orThrow({
         uri,
         taskId: task.id,
       });
 
-      updateTask(task.id, photo.id, photo.url);
+      updateBoard(task.id, photo.url);
     } catch (error) {
       alert(
         "Ha ocurrido un error al subir la imagen. Por favor, recarga la página.",
@@ -54,8 +54,10 @@ const BoardTask = ({ task, updateTask, setSelectedTaskModal }: Props) => {
   };
 
   const handleImageError = () => {
-    updateTask(task.id, "", "");
+    updateBoard(task.id, "");
   };
+
+  console.log(task.photoUrl)
 
   return (
     <li className="task-container" onClick={handleTaskClick}>
@@ -72,7 +74,7 @@ const BoardTask = ({ task, updateTask, setSelectedTaskModal }: Props) => {
         </div>
       )}
 
-      {!task.photoId ? (
+      {!task.photoUrl ? (
         <span>{task.description}</span>
       ) : (
         <picture>

@@ -8,9 +8,17 @@ import BingoLayout from "../../../layouts/BingoLayout.astro";
 
 const { id } = Astro.params;
 
-const initialPhotos = [];
-const { data } = await Astro.callAction(actions.getPhotos, { userId: id });
-if (data) initialPhotos.push(...data.photos);
+const [userPromise, tasksPromise] = await Promise.all([
+  Astro.callAction(actions.getUserById, { id: id ?? "" }),
+  Astro.callAction(actions.getTasksWithPhoto, { userId: id ?? "" }),
+]);
+if (userPromise.error) {
+  Astro.redirect("/jurado/boards");
+}
+
+const initialTaskWithPhoto = [];
+if (tasksPromise.data)
+  initialTaskWithPhoto.push(...tasksPromise.data.tasksWithPhoto);
 ---
 
 <BingoLayout
@@ -19,11 +27,11 @@ if (data) initialPhotos.push(...data.photos);
 >
   <GoBackButton backHref="/jurado/boards" />
 
-  <h1>Tablero de {id}</h1>
+  <h1>Tablero de {userPromise.data?.user.name}</h1>
 
   <GridGallery
     client:load
-    initialPhotos={initialPhotos}
+    initialTasksWithPhoto={initialTaskWithPhoto}
     {...gridGalleryProps}
     filters={{ userId: id }}
   />

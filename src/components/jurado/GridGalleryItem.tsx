@@ -1,24 +1,31 @@
-import type { Photo } from "../../types";
+import type { TaskWithPhoto } from "../../types";
 import "./styles/GridGalleryItem.css";
 
 interface Props {
-  photo: Photo;
-  setSelectedPhotoModal: (state: {
+  taskWithPhoto: TaskWithPhoto;
+  setSelectedTaskWithPhotoModal: (state: {
     open: boolean;
-    photo: Photo | null;
+    taskWithPhoto: TaskWithPhoto | null;
   }) => void;
 }
 
-const GridGalleryItem = ({ photo, setSelectedPhotoModal }: Props) => {
+const GridGalleryItem = ({
+  taskWithPhoto,
+  setSelectedTaskWithPhotoModal,
+}: Props) => {
   const onPhotoClick = () => {
-    setSelectedPhotoModal({ open: true, photo });
+    setSelectedTaskWithPhotoModal({ open: true, taskWithPhoto });
   };
 
   return (
     <li className="grid-gallery-item-container" onClick={onPhotoClick}>
-      <picture>
-        <img src={photo.url} />
-      </picture>
+      {!taskWithPhoto.photoUrl ? (
+        <span>{taskWithPhoto.description}</span>
+      ) : (
+        <picture>
+          <img src={taskWithPhoto.photoUrl} alt={taskWithPhoto.description} />
+        </picture>
+      )}
     </li>
   );
 };

@@ -1,6 +1,6 @@
 export type User = {
   id: string;
-  username: string;
+  name: string;
 };
 
 export type Task = {
@@ -9,7 +9,6 @@ export type Task = {
 };
 
 export type Photo = {
-  id: string;
   url: string;
   userId: User["id"];
   taskId: Task["id"];
@@ -18,9 +17,11 @@ export type Photo = {
 export type TaskWithPhoto = {
   id: Task["id"];
   description: Task["description"];
-  photoId: Photo["id"] | "";
   photoUrl: Photo["url"] | "";
+  userId: User["id"];
 };
+
+export type TaskWithPhotos = Task & { tasksWithPhoto: TaskWithPhoto[] };
 
 export enum GalleryTab {
   ALL,
@@ -29,5 +30,3 @@ export enum GalleryTab {
 }
 
 export type Orientation = "landscape" | "portrait";
-
-export type TaskWithPhotos = Task & { photos: Photo[] };

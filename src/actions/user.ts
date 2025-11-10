@@ -1,12 +1,13 @@
 import { ActionError, defineAction } from "astro:actions";
 import { z } from "astro:schema";
 import type { User } from "../types";
+import { validateUserId } from "../utils/actionsHelpers";
 import redisClient from "../utils/redisClient";
 
 export const user = {
-  registerUser: defineAction({
+  saveUser: defineAction({
     input: z.object({
-      username: z
+      name: z
         .string({
           message: "No se aceptan nombres vacíos",
         })
@@ -15,13 +16,25 @@ export const user = {
         .max(18, "El nombre no puede exceder los 18 caracteres"),
     }),
     handler: async (input, ctx) => {
-      const { username } = input;
-      const userId = crypto.randomUUID();
+      const { name } = input;
 
       try {
-        await redisClient.hset(`users:${userId}`, { username });
+        const user: User = {
+          id: crypto.randomUUID(),
+          name,
+        };
 
-        ctx.cookies.set("userId", userId, {
+        const now = Date.now();
+
+        const multi = redisClient.multi();
+        multi.hset(`user:${user.id}`, user);
+        multi.zadd("users:z", {
+          member: `user:${user.id}`,
+          score: now,
+        });
+        await multi.exec();
+
+        ctx.cookies.set("userId", user.id, {
           path: "/",
           httpOnly: true,
           secure: import.meta.env.PROD,
@@ -29,16 +42,11 @@ export const user = {
           maxAge: 60 * 60 * 24 * 30, // 30 días
         });
 
-        const user: User = {
-          id: userId,
-          username,
-        };
-
         return { user };
       } catch (error) {
-        console.error("Error registering user:", error);
+        console.error("Error saving user:", error);
         throw new ActionError({
-          message: "Ha ocurrido un error al registrar el usuario.",
+          message: "Ha ocurrido un error al guardar el usuario.",
           code: "INTERNAL_SERVER_ERROR",
         });
       }
@@ -47,75 +55,100 @@ export const user = {
   getCurrentUser: defineAction({
     handler: async (input, ctx) => {
       try {
-        const userId = ctx.cookies.get("userId")?.value ?? "-1";
-        const foundUser = await redisClient.hgetall(`users:${userId}`);
+        const userId = validateUserId(ctx.cookies.get("userId")?.value);
+        const user = await redisClient.hgetall<User>(`user:${userId}`);
 
-        if (!foundUser) {
-          console.log("User not found on redis cache");
+        if (!user) {
           throw new ActionError({
             message: "User not found",
             code: "NOT_FOUND",
           });
         }
 
-        const user: User = {
-          id: userId,
-          username: foundUser.username as string,
-        };
-
         return { user };
       } catch (error) {
         console.error("Error fetching user:", error);
+        if (error instanceof ActionError) throw error;
         throw new ActionError({
-          message: "Error fetching user",
+          message: "Ha ocurrido un error al obtener el usuario.",
           code: "INTERNAL_SERVER_ERROR",
         });
       }
     },
   }),
-  unregisterUser: defineAction({
+  deleteUser: defineAction({
     handler: async (input, ctx) => {
       try {
-        const userId = ctx.cookies.get("userId")?.value ?? "-1";
-        await redisClient.del(`users:${userId}`);
+        const userId = validateUserId(ctx.cookies.get("userId")?.value);
+
+        const multi = redisClient.multi();
+        multi.del(`user:${userId}`);
+        multi.zrem("users:z", `user:${userId}`);
+        await multi.exec();
 
         ctx.cookies.delete("userId", { path: "/" });
+
         return { success: true };
       } catch (error) {
-        console.error("Error unregistering user:", error);
+        console.error("Error deleting user:", error);
         throw new ActionError({
-          message: "Error unregistering user",
+          message: "Ha ocurrido un error al eliminar el usuario.",
           code: "INTERNAL_SERVER_ERROR",
         });
       }
     },
   }),
+
   getUsers: defineAction({
     handler: async (input, ctx) => {
       try {
-        const userIds = await redisClient.keys("users:*");
-
+        const LIMIT = 15;
+        const userIds: string[] = await redisClient.zrange(
+          "users:z",
+          0,
+          LIMIT - 1,
+          { rev: true },
+        );
         if (userIds.length === 0) return { users: [] };
 
-        // Fetch all user hashes in parallel
-        const userDatas = await Promise.all(
-          userIds.map((userId) => redisClient.hgetall(userId)),
-        );
+        const multi = redisClient.multi();
+        for (const userId of userIds) {
+          multi.hgetall<User>(userId);
+        }
+        const userDatas: User[] = await multi.exec();
 
-        const users: User[] = userIds.map((key, i) => {
-          const userId = key.split(":")[1];
-          const userData = userDatas[i] ?? {};
-          return {
-            id: userId,
-            username: (userData.username as string) || "",
-          };
-        });
-
-        return { users };
+        return { users: userDatas };
       } catch (error) {
         console.error("Error fetching users:", error);
         throw new ActionError({
           message: "Error fetching users",
+          code: "INTERNAL_SERVER_ERROR",
+        });
+      }
+    },
+  }),
+  getUserById: defineAction({
+    input: z.object({
+      id: z.string().uuid(),
+    }),
+    handler: async (input, ctx) => {
+      const { id } = input;
+      try {
+        const user = await redisClient.hgetall<User>(`user:${id}`);
+
+        if (!user) {
+          throw new ActionError({
+            message: "User not found",
+            code: "NOT_FOUND",
+          });
+        }
+
+        return { user };
+      } catch (error) {
+        console.error("Error fetching user by id:", error);
+        if (error instanceof ActionError) throw error;
+        throw new ActionError({
+          message: "Ha ocurrido un error al obtener el usuario.",
           code: "INTERNAL_SERVER_ERROR",
         });
       }

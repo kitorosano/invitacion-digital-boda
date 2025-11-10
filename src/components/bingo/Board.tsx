@@ -11,11 +11,11 @@ import "./styles/Board.css";
 interface Props {
   optionalTasks: Task[];
   mandatoryTasks: Task[];
-  user: User;
+  currentUser: User;
 }
 
-const Board = ({ optionalTasks, mandatoryTasks, user }: Props) => {
-  const { tasks, updateTask, completedTasksCount, hasFinished } = useBoard({
+const Board = ({ optionalTasks, mandatoryTasks, currentUser }: Props) => {
+  const { tasks, updateBoard, completedTasksCount, hasFinished } = useBoard({
     optionalTasks,
     mandatoryTasks,
   });
@@ -35,7 +35,7 @@ const Board = ({ optionalTasks, mandatoryTasks, user }: Props) => {
     if (!selectedTaskModal.task) return;
     handleCloseModal();
 
-    updateTask(selectedTaskModal.task.id, "", "");
+    updateBoard(selectedTaskModal.task.id, "");
   };
 
   const handleCloseModal = () => {
@@ -59,14 +59,14 @@ const Board = ({ optionalTasks, mandatoryTasks, user }: Props) => {
           <BoardTask
             key={task.id}
             task={task}
-            updateTask={updateTask}
+            updateBoard={updateBoard}
             setSelectedTaskModal={setSelectedTaskModal}
           />
         ))}
       </ul>
 
       <div className="board-info">
-        <p className="username">Tablero de {user.username}</p>
+        <p className="username">Tablero de {currentUser.name}</p>
         <p
           className={`tasks-progress ${shouldAnimateProgress ? "animate" : ""}`}
         >
@@ -97,6 +97,6 @@ const Board = ({ optionalTasks, mandatoryTasks, user }: Props) => {
     </div>
   );
 };
-// TODO: guardar el orden de usuarios que completan el bingo; replantear guardar los demas datos del usuario.
+// TODO: Pantalla de carga al traer las tareas
 
 export default Board;

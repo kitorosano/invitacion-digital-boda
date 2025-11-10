@@ -11,15 +11,15 @@ import {
 import BingoLayout from "../../layouts/BingoLayout.astro";
 import { GalleryTab } from "../../types";
 
-const initialPhotos = [];
-const { data } = await Astro.callAction(actions.getPhotos, {});
-if (data) initialPhotos.push(...data.photos);
+const initialTasksWithPhoto = [];
+const { data } = await Astro.callAction(actions.getTasksWithPhoto, {});
+if (data) initialTasksWithPhoto.push(...data.tasksWithPhoto);
 ---
 
 <BingoLayout requiredOrientation="landscape" {...layoutProps}>
   <HeaderTabs currentTab={GalleryTab.ALL} {...headerTabsProps} />
   <GridGallery
-    initialPhotos={initialPhotos}
+    initialTasksWithPhoto={initialTasksWithPhoto}
     {...gridGalleryProps}
     client:load
   />

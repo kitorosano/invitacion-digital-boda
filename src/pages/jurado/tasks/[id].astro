@@ -14,9 +14,11 @@ const [task] = await getCollection(
   (task) => task.data.id === id,
 );
 
-const initialPhotos = [];
-const { data } = await Astro.callAction(actions.getPhotos, { taskId: id });
-if (data) initialPhotos.push(...data.photos);
+const initialTaskWithPhoto = [];
+const { data } = await Astro.callAction(actions.getTasksWithPhoto, {
+  taskId: id,
+});
+if (data) initialTaskWithPhoto.push(...data.tasksWithPhoto);
 ---
 
 <BingoLayout title={`Fotos por tarea - Jurado`} requiredOrientation="portrait">
@@ -26,7 +28,7 @@ if (data) initialPhotos.push(...data.photos);
 
   <GridGallery
     client:load
-    initialPhotos={initialPhotos}
+    initialTasksWithPhoto={initialTaskWithPhoto}
     {...gridGalleryProps}
     filters={{ taskId: id }}
   />

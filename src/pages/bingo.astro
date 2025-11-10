@@ -11,16 +11,16 @@ import {
 } from "../constants/bingo";
 import BingoLayout from "../layouts/BingoLayout.astro";
 
-let user = null;
+let currentUser = null;
 const hasCookie = Astro.cookies.has("userId");
 
 if (hasCookie) {
   const { data, error } = await Astro.callAction(actions.getCurrentUser, {});
   if (error) {
-    await Astro.callAction(actions.unregisterUser, {});
+    await Astro.callAction(actions.deleteUser, {});
   }
   if (data) {
-    user = data.user;
+    currentUser = data.user;
   }
 }
 
@@ -33,12 +33,12 @@ const boardProps = {
 ---
 
 <BingoLayout {...layoutProps}>
-  <Instructions {...instructionsProps} isLogged={!!user} />
+  <Instructions {...instructionsProps} isLogged={!!currentUser} />
   {
-    !user ? (
+    !currentUser ? (
       <RegisterUser {...registerUserProps} />
     ) : (
-      <Board {...boardProps} user={user} client:load />
+      <Board {...boardProps} currentUser={currentUser} client:load />
     )
   }
 </BingoLayout>

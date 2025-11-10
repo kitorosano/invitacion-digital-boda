@@ -12,9 +12,9 @@ import {
 import BingoLayout from "../../../layouts/BingoLayout.astro";
 import { GalleryTab } from "../../../types";
 
-const initialPhotos = [];
-const { data } = await Astro.callAction(actions.getPhotos, {});
-if (data) initialPhotos.push(...data.photos);
+const initialTaskWithPhoto = [];
+const { data } = await Astro.callAction(actions.getTasksWithPhoto, {});
+if (data) initialTaskWithPhoto.push(...data.tasksWithPhoto);
 
 const mandatoryTasks = (await getCollection("mandatoryTasks")).map(
   (task) => task.data,
@@ -24,8 +24,8 @@ const mandatoryTasks = (await getCollection("mandatoryTasks")).map(
 <BingoLayout requiredOrientation="portrait" {...layoutProps}>
   <HeaderTabs currentTab={GalleryTab.TASKS} {...headerTabsProps} />
   <TasksGallery
-    initialPhotos={initialPhotos}
-    tasks={mandatoryTasks}
+    initialTasksWithPhoto={initialTaskWithPhoto}
+    mandatoryTasks={mandatoryTasks}
     {...tasksGalleryProps}
     client:load
   />

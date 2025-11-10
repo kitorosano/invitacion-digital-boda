@@ -4,11 +4,12 @@ import type { Task, TaskWithPhoto } from "../types";
  * Shuffles optional tasks and includes a random mandatory task.
  * @param optionalTasks - An array of optional Task objects.
  * @param mandatoryTasks - An array of mandatory Task objects.
- * @returns An array of TaskWithPhoto objects containing shuffled tasks.
+ * @returns An array of 9 TaskWithPhoto objects containing shuffled tasks.
  */
 export const shuffleTasks = (
   optionalTasks: Task[],
   mandatoryTasks: Task[],
+  userId: string,
 ): TaskWithPhoto[] => {
   if (optionalTasks.length === 0 || mandatoryTasks.length === 0) return [];
 
@@ -21,8 +22,14 @@ export const shuffleTasks = (
     .concat(randomMandatoryTask)
     .concat(shuffledOptionalTasks.slice(4, 8))
     .map((task) => {
-      return { ...task, photoId: "", photoUrl: "" } as TaskWithPhoto;
+      return {
+        ...task,
+        photoUrl: "",
+        userId,
+      } as TaskWithPhoto;
     });
+
+  console.log(shuffledTasks);
 
   return shuffledTasks;
 };

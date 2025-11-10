@@ -1,34 +1,39 @@
 import { navigate } from "astro:transitions/client";
 import { useEffect, useState } from "react";
-import usePhotos from "../../hooks/usePhotos";
-import type { Photo, Task, TaskWithPhotos } from "../../types";
+import useTasksWithPhoto from "../../hooks/useTasksWithPhoto";
+import type { Task, TaskWithPhoto, TaskWithPhotos } from "../../types";
 import "./styles/TasksGallery.css";
 import TasksGalleryItem from "./TasksGalleryItem";
 
 export interface Props {
-  initialPhotos: Photo[];
+  initialTasksWithPhoto: TaskWithPhoto[];
   refetchIntervalMs: number;
-  tasks: Task[];
+  mandatoryTasks: Task[];
   colors: string[];
 }
 
 const TasksGallery = ({
-  initialPhotos,
-  tasks,
+  initialTasksWithPhoto,
+  mandatoryTasks,
   refetchIntervalMs,
   colors,
 }: Props) => {
-  const { photos } = usePhotos({ initialPhotos, refetchIntervalMs });
+  const { tasksWithPhoto } = useTasksWithPhoto({
+    initialTasksWithPhoto,
+    refetchIntervalMs,
+  });
   const [groupedTasks, setGroupedTasks] = useState<TaskWithPhotos[]>([]);
 
   useEffect(() => {
-    const tasksGrouped = tasks.map((task) => {
-      const taskPhotos = photos.filter((photo) => photo.taskId === task.id);
-      return { ...task, photos: [...taskPhotos] };
+    const tasksGrouped = mandatoryTasks.map((task) => {
+      const taskPhotos = tasksWithPhoto.filter(
+        (taskWithPhoto) => taskWithPhoto.id === task.id,
+      );
+      return { ...task, tasksWithPhoto: [...taskPhotos] };
     });
 
     setGroupedTasks(tasksGrouped);
-  }, [tasks, photos]);
+  }, [mandatoryTasks, tasksWithPhoto]);
 
   const handleTaskClick = (task: TaskWithPhotos) => {
     navigate(`/jurado/tasks/${task.id}`);
@@ -39,7 +44,7 @@ const TasksGallery = ({
       {groupedTasks.map((task, i) => (
         <TasksGalleryItem
           key={task.id}
-          task={task}
+          taskWithPhoto={task}
           backgroundColor={colors[i % colors.length]}
           onTaskClick={handleTaskClick}
         />
