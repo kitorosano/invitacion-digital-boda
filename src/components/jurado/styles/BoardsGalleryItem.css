@@ -13,7 +13,16 @@
   background: var(--color-bg-light);
 }
 
-.position-indicator {
+.boards-gallery-item-container > span {
   font-weight: bold;
   margin-right: 1rem;
+}
+
+.boards-gallery-item-container > p {
+  margin: 0;
+
+  font-size: var(--text-size-sm);
+  font-weight: 400;
+  color: var(--color-text-muted);
+  letter-spacing: 0.02rem;
 }

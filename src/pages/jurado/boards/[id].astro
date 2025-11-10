@@ -1,7 +1,6 @@
 ---
 import { actions } from "astro:actions";
 import GoBackButton from "../../../components/jurado/GoBackButton.astro";
-import GoUpButton from "../../../components/jurado/GoUpButton.astro";
 import GridGallery from "../../../components/jurado/GridGallery";
 import { gridGalleryProps } from "../../../constants/jurado";
 import BingoLayout from "../../../layouts/BingoLayout.astro";
@@ -27,22 +26,25 @@ if (tasksPromise.data)
 >
   <GoBackButton backHref="/jurado/boards" />
 
-  <h1>Tablero de {userPromise.data?.user.name}</h1>
+  <h2>Tablero de {userPromise.data?.user.name}</h2>
 
   <GridGallery
     client:load
     initialTasksWithPhoto={initialTaskWithPhoto}
-    {...gridGalleryProps}
     filters={{ userId: id }}
     bingoBoardLayout={true}
+    {...gridGalleryProps}
   />
-
-  <GoUpButton />
 </BingoLayout>
 
 <style>
-  h1 {
-    margin-top: auto;
+  h2 {
+    margin: 0 auto;
+    
     text-align: center;
+    font-size: var(--text-size-lg);
+    font-weight: 400;
+    color: var(--color-text-muted);
+    letter-spacing: 0.02rem;
   }
 </style>
