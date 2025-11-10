@@ -14,16 +14,25 @@ const GridGalleryItem = ({
   setSelectedTaskWithPhotoModal,
 }: Props) => {
   const onPhotoClick = () => {
+    if (!taskWithPhoto.photoUrl) return;
+
     setSelectedTaskWithPhotoModal({ open: true, taskWithPhoto });
   };
 
+  const processedUrl = taskWithPhoto.photoUrl
+    ? taskWithPhoto.photoUrl.replace(
+        "/upload/",
+        `/upload/c_fill,h_500,w_360/q_auto/f_auto/`,
+      )
+    : "";
+
   return (
     <li className="grid-gallery-item-container" onClick={onPhotoClick}>
-      {!taskWithPhoto.photoUrl ? (
+      {!processedUrl ? (
         <span>{taskWithPhoto.description}</span>
       ) : (
         <picture>
-          <img src={taskWithPhoto.photoUrl} alt={taskWithPhoto.description} />
+          <img src={processedUrl} alt={taskWithPhoto.description} />
         </picture>
       )}
     </li>

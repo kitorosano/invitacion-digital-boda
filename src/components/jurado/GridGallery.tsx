@@ -12,12 +12,14 @@ export interface Props {
     taskId?: string;
     userId?: string;
   };
+  bingoBoardLayout?: boolean;
 }
 
 const GridGallery = ({
   initialTasksWithPhoto = [],
   refetchIntervalMs,
   filters,
+  bingoBoardLayout = false,
 }: Props) => {
   const { tasksWithPhoto } = useTasksWithPhoto({
     initialTasksWithPhoto,
@@ -35,7 +37,7 @@ const GridGallery = ({
 
   return (
     <div className="grid-gallery-container">
-      <ul>
+      <ul className={bingoBoardLayout ? "bingo-board-layout" : ""}>
         {tasksWithPhoto.map((taskWithPhoto) => (
           <GridGalleryItem
             key={taskWithPhoto.id}
@@ -47,7 +49,6 @@ const GridGallery = ({
 
       <Modal open={selectedTaskWithPhotoModal.open} onClose={handleCloseModal}>
         <div className="modal-content">
-          <p>"{selectedTaskWithPhotoModal.taskWithPhoto?.id}"</p>
           <picture>
             <img
               src={selectedTaskWithPhotoModal.taskWithPhoto?.photoUrl}

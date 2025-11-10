@@ -34,9 +34,15 @@ if (tasksPromise.data)
     initialTasksWithPhoto={initialTaskWithPhoto}
     {...gridGalleryProps}
     filters={{ userId: id }}
+    bingoBoardLayout={true}
   />
 
   <GoUpButton />
 </BingoLayout>
 
-<style></style>
+<style>
+  h1 {
+    margin-top: auto;
+    text-align: center;
+  }
+</style>
