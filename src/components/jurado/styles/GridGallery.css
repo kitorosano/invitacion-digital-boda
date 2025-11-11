@@ -2,6 +2,15 @@
   width: 100%;
 }
 
+.no-photos-message {
+  margin-top: 2rem;
+
+  font-size: var(--text-size-sm);
+  color: var(--color-text-muted);
+  text-align: center;
+  font-style: italic;
+}
+
 .grid-gallery-container ul {
   width: 100%;
 

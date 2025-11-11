@@ -33,6 +33,8 @@ export type Orientation = "landscape" | "portrait";
 export type Sorting = "newest" | "oldest";
 
 export type TasksFilters = {
+  page?: number;
+  limit?: number;
   taskId?: string;
   userId?: string;
   favoritesOnly: boolean;

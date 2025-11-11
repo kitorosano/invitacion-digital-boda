@@ -148,7 +148,7 @@ export const bingo = {
       favoritesOnly: z.boolean().optional().default(false),
       sorting: z.enum(["newest", "oldest"]).optional().default("newest"),
       page: z.number().optional().default(0),
-      limit: z.number().optional().default(50),
+      limit: z.number().optional().default(1000),
     }),
     handler: async (input, ctx) => {
       const { userId, taskId, favoritesOnly, sorting, page, limit } = input;
@@ -165,9 +165,11 @@ export const bingo = {
         }
 
         let taskWithPhotoKey = "tasks:z";
-        if (userId) taskWithPhotoKey = `user:${userId}:tasks:z`;
-        else if (taskId) taskWithPhotoKey = `task:${taskId}:tasks:z`;
+        if (favoritesOnly && taskId)
+          taskWithPhotoKey = `task:${taskId}:tasks:favorites:z`;
         else if (favoritesOnly) taskWithPhotoKey = `tasks:favorites:z`;
+        else if (taskId) taskWithPhotoKey = `task:${taskId}:tasks:z`;
+        else if (userId) taskWithPhotoKey = `user:${userId}:tasks:z`;
 
         const taskWithPhotoKeys: string[] = await redisClient.zrange(
           taskWithPhotoKey,
@@ -196,6 +198,44 @@ export const bingo = {
         console.error("Error fetching photos:", error);
         throw new ActionError({
           message: "Error fetching photos",
+          code: "INTERNAL_SERVER_ERROR",
+        });
+      }
+    },
+  }),
+  markTaskWithPhotoAsFavorite: defineAction({
+    input: z.object({
+      userId: z.string(),
+      taskId: z.string(),
+      favorite: z.boolean(),
+    }),
+    handler: async (input, ctx) => {
+      const { userId, taskId, favorite } = input;
+      try {
+        const taskWithPhotoKey = `user:${userId}:task:${taskId}`;
+
+        const favoriteKey = `tasks:favorites:z`;
+        const taskFavoriteKey = `task:${taskId}:tasks:favorites:z`;
+
+        if (favorite) {
+          await redisClient.zadd(favoriteKey, {
+            member: taskWithPhotoKey,
+            score: Date.now(),
+          });
+          await redisClient.zadd(taskFavoriteKey, {
+            member: taskWithPhotoKey,
+            score: Date.now(),
+          });
+        } else {
+          await redisClient.zrem(favoriteKey, taskWithPhotoKey);
+          await redisClient.zrem(taskFavoriteKey, taskWithPhotoKey);
+        }
+
+        return { success: true };
+      } catch (error) {
+        console.error("Error marking task as favorite:", error);
+        throw new ActionError({
+          message: "Error marking task as favorite",
           code: "INTERNAL_SERVER_ERROR",
         });
       }

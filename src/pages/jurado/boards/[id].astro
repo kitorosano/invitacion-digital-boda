@@ -34,10 +34,12 @@ if (tasksPromise.data)
 
   <GridGallery
     client:load
-    initialTasksWithPhoto={initialTaskWithPhoto}
-    tasksFilters={{ userId: id }}
-    bingoBoardLayout={true}
     {...gridGalleryProps}
+    initialTasksWithPhoto={initialTaskWithPhoto}
+    tasksFilters={{
+      ...gridGalleryProps.tasksFilters,
+      userId: id,
+    }}
   />
 </BingoLayout>
 

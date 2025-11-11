@@ -1,26 +1,29 @@
 import { navigate } from "astro:transitions/client";
 import { useEffect, useState } from "react";
 import useTasksWithPhoto from "../../hooks/useTasksWithPhoto";
-import type { Task, TaskWithPhoto, TaskWithPhotos } from "../../types";
+import type { Task, TasksFilters, TaskWithPhoto, TaskWithPhotos } from "../../types";
 import "./styles/TasksGallery.css";
 import TasksGalleryItem from "./TasksGalleryItem";
 
 export interface Props {
   initialTasksWithPhoto: TaskWithPhoto[];
   refetchIntervalMs: number;
+  tasksFilters: TasksFilters;
   mandatoryTasks: Task[];
   colors: string[];
 }
 
 const TasksGallery = ({
   initialTasksWithPhoto,
-  mandatoryTasks,
   refetchIntervalMs,
+  tasksFilters,
+  mandatoryTasks,
   colors,
 }: Props) => {
   const { tasksWithPhoto } = useTasksWithPhoto({
     initialTasksWithPhoto,
     refetchIntervalMs,
+    tasksFilters,
   });
   const [groupedTasks, setGroupedTasks] = useState<TaskWithPhotos[]>([]);
 

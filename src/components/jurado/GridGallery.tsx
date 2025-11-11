@@ -42,6 +42,12 @@ const GridGallery = ({
         <FilterControls filters={filters} setFilters={setFilters} />
       )}
 
+      {tasksWithPhoto.length === 0 && (
+        <p className="no-photos-message">
+          Esperando a que lleguen fotos 📸...
+        </p>
+      )}
+
       <ul
         className={`${bingoBoardLayout ? "bingo-board-layout" : ""} ${
           showFilterControls ? "with-filters" : ""

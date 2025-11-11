@@ -32,9 +32,13 @@ if (data) initialTaskWithPhoto.push(...data.tasksWithPhoto);
 
   <GridGallery
     client:load
-    initialTasksWithPhoto={initialTaskWithPhoto}
     {...gridGalleryProps}
-    tasksFilters={{ taskId: id }}
+    initialTasksWithPhoto={initialTaskWithPhoto}
+    showFilterControls={true}
+    tasksFilters={{
+      ...gridGalleryProps.tasksFilters,
+      taskId: id,
+    }}
   />
 
   <GoUpButton />

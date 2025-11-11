@@ -4,7 +4,7 @@ import {
   JURADO_GALLERY_TASKS_COLORS,
   JURADO_HEADER_TABS,
 } from "astro:env/server";
-import type { Sorting } from "../types";
+import type { Sorting, TasksFilters } from "../types";
 
 export const layoutProps = {
   title: BINGO_SITE_TITLE,
@@ -23,7 +23,7 @@ export const gridGalleryProps = {
     taskId: undefined,
     favoritesOnly: false,
     sorting: "newest" as Sorting,
-  },
+  } as TasksFilters,
   bingoBoardLayout: false,
 };
 
@@ -34,6 +34,14 @@ export const boardsGalleryProps = {
 export const tasksGalleryProps = {
   refetchIntervalMs: JURADO_GALLERY_REFETCH_INTERVAL_MS,
   colors: JURADO_GALLERY_TASKS_COLORS.split(","),
+  tasksFilters: {
+    limit: 8,
+  } as TasksFilters,
+};
+
+export const boardByIdGalleryProps = {
+  refetchIntervalMs: JURADO_GALLERY_REFETCH_INTERVAL_MS,
+  bingoBoardLayout: true,
 };
 
 export const DEFAULT_USERS_PER_PAGE = 15;
