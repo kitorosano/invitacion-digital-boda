@@ -145,11 +145,14 @@ export const bingo = {
     input: z.object({
       userId: z.string().optional(),
       taskId: z.string().optional(),
+      favoritesOnly: z.boolean().optional().default(false),
+      sorting: z.enum(["newest", "oldest"]).optional().default("newest"),
       page: z.number().optional().default(0),
       limit: z.number().optional().default(50),
     }),
     handler: async (input, ctx) => {
-      const { userId, taskId, page, limit } = input;
+      const { userId, taskId, favoritesOnly, sorting, page, limit } = input;
+
       try {
         const start = page * limit;
         const stop = start + limit - 1;
@@ -164,14 +167,13 @@ export const bingo = {
         let taskWithPhotoKey = "tasks:z";
         if (userId) taskWithPhotoKey = `user:${userId}:tasks:z`;
         else if (taskId) taskWithPhotoKey = `task:${taskId}:tasks:z`;
+        else if (favoritesOnly) taskWithPhotoKey = `tasks:favorites:z`;
 
         const taskWithPhotoKeys: string[] = await redisClient.zrange(
           taskWithPhotoKey,
           start,
           stop,
-          {
-            rev: true,
-          },
+          { rev: sorting === "newest" },
         );
 
         if (taskWithPhotoKeys.length === 0) {

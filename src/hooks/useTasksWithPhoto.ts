@@ -1,40 +1,50 @@
 import { actions } from "astro:actions";
-import { useEffect, useState } from "react";
-import type { TaskWithPhoto } from "../types";
+import { useEffect, useRef, useState } from "react";
+import type { TasksFilters, TaskWithPhoto } from "../types";
 
 export interface Props {
   initialTasksWithPhoto: TaskWithPhoto[];
   refetchIntervalMs: number;
-  filters?: {
-    taskId?: string;
-    userId?: string;
-  };
+  tasksFilters: TasksFilters;
 }
 
 const useTasksWithPhoto = ({
   initialTasksWithPhoto,
   refetchIntervalMs,
-  filters,
+  tasksFilters,
 }: Props) => {
   const [tasksWithPhoto, setTasksWithPhoto] = useState<TaskWithPhoto[]>(
     initialTasksWithPhoto,
   );
+  const [filters, setFilters] = useState<TasksFilters>(tasksFilters);
+  const intervalIdRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
-    const intervalId = setInterval(
+    if (intervalIdRef.current) {
+      clearInterval(intervalIdRef.current as unknown as number);
+      intervalIdRef.current = null;
+    }
+
+    fetchPhotos(filters);
+
+    intervalIdRef.current = setInterval(
       () => fetchPhotos(filters),
       refetchIntervalMs,
-    );
-    return () => clearInterval(intervalId);
-  }, [filters]);
+    ) as unknown as NodeJS.Timeout;
 
-  const fetchPhotos = async (filters?: Props["filters"]) => {
-    const { taskId, userId } = filters || {};
+    return () => {
+      if (intervalIdRef.current) {
+        clearInterval(intervalIdRef.current as unknown as number);
+        intervalIdRef.current = null;
+      }
+    };
+  }, [filters, refetchIntervalMs]);
+
+  const fetchPhotos = async (filtersParam: TasksFilters) => {
     try {
-      const { tasksWithPhoto } = await actions.getTasksWithPhoto.orThrow({
-        taskId,
-        userId,
-      });
+      const { tasksWithPhoto } = await actions.getTasksWithPhoto.orThrow(
+        filtersParam,
+      );
 
       setTasksWithPhoto(tasksWithPhoto);
     } catch (error) {
@@ -44,7 +54,7 @@ const useTasksWithPhoto = ({
     }
   };
 
-  return { tasksWithPhoto };
+  return { tasksWithPhoto, filters, setFilters };
 };
 
 export default useTasksWithPhoto;

@@ -1,31 +1,32 @@
 import { useState } from "react";
 import useTasksWithPhoto from "../../hooks/useTasksWithPhoto";
-import { type TaskWithPhoto } from "../../types";
+import { type TasksFilters, type TaskWithPhoto } from "../../types";
 import Modal from "../shared/Modal";
+import FilterControls from "./FilterControls";
 import GridGalleryItem from "./GridGalleryItem";
 import "./styles/GridGallery.css";
 
 export interface Props {
   initialTasksWithPhoto: TaskWithPhoto[];
   refetchIntervalMs: number;
-  filters?: {
-    taskId?: string;
-    userId?: string;
-  };
-  bingoBoardLayout?: boolean;
+  tasksFilters: TasksFilters;
+  showFilterControls: boolean;
+  bingoBoardLayout: boolean;
 }
 
 const GridGallery = ({
-  initialTasksWithPhoto = [],
+  initialTasksWithPhoto,
   refetchIntervalMs,
-  filters,
-  bingoBoardLayout = false,
+  tasksFilters,
+  showFilterControls,
+  bingoBoardLayout,
 }: Props) => {
-  const { tasksWithPhoto } = useTasksWithPhoto({
+  const { tasksWithPhoto, filters, setFilters } = useTasksWithPhoto({
     initialTasksWithPhoto,
     refetchIntervalMs,
-    filters,
+    tasksFilters,
   });
+
   const [selectedTaskWithPhotoModal, setSelectedTaskWithPhotoModal] = useState({
     open: false,
     taskWithPhoto: null as TaskWithPhoto | null,
@@ -36,8 +37,16 @@ const GridGallery = ({
   };
 
   return (
-    <div className="grid-gallery-container">
-      <ul className={bingoBoardLayout ? "bingo-board-layout" : ""}>
+    <div className={`grid-gallery-container`}>
+      {showFilterControls && (
+        <FilterControls filters={filters} setFilters={setFilters} />
+      )}
+
+      <ul
+        className={`${bingoBoardLayout ? "bingo-board-layout" : ""} ${
+          showFilterControls ? "with-filters" : ""
+        }`}
+      >
         {tasksWithPhoto.map((taskWithPhoto) => (
           <GridGalleryItem
             key={taskWithPhoto.photoUrl}

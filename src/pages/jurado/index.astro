@@ -19,8 +19,9 @@ if (data) initialTasksWithPhoto.push(...data.tasksWithPhoto);
 <BingoLayout requiredOrientation="landscape" {...layoutProps}>
   <HeaderTabs currentTab={GalleryTab.ALL} {...headerTabsProps} />
   <GridGallery
-    initialTasksWithPhoto={initialTasksWithPhoto}
     {...gridGalleryProps}
+    initialTasksWithPhoto={initialTasksWithPhoto}
+    showFilterControls={true}
     client:load
   />
   <GoUpButton />

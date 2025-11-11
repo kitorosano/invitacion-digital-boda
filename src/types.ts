@@ -30,3 +30,11 @@ export enum GalleryTab {
 }
 
 export type Orientation = "landscape" | "portrait";
+export type Sorting = "newest" | "oldest";
+
+export type TasksFilters = {
+  taskId?: string;
+  userId?: string;
+  favoritesOnly: boolean;
+  sorting: Sorting;
+};
