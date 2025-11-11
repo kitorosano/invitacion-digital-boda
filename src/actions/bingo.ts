@@ -28,6 +28,7 @@ export const bingo = {
         );
 
         const multi = redisClient.multi();
+        const now = Date.now();
 
         for (const task of tasks) {
           const taskWithPhotoKey = `user:${userId}:task:${task.id}`;
@@ -43,12 +44,12 @@ export const bingo = {
           // get by taskId
           multi.zadd(`task:${task.id}:tasks:z`, {
             member: taskWithPhotoKey,
-            score: order,
+            score: now,
           });
           // get all tasks
           multi.zadd(`tasks:z`, {
             member: taskWithPhotoKey,
-            score: order,
+            score: now,
           });
         }
         await multi.exec();
@@ -144,14 +145,12 @@ export const bingo = {
     input: z.object({
       userId: z.string().optional(),
       taskId: z.string().optional(),
-      page: z.number().optional(),
-      limit: z.number().optional(),
+      page: z.number().optional().default(0),
+      limit: z.number().optional().default(50),
     }),
     handler: async (input, ctx) => {
-      const { userId, taskId } = input;
+      const { userId, taskId, page, limit } = input;
       try {
-        const page = input.page ?? 0;
-        const limit = input.limit ?? 50;
         const start = page * limit;
         const stop = start + limit - 1;
 

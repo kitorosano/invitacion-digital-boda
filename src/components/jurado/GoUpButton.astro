@@ -2,7 +2,7 @@
 import ArrowUpIcon from "./icons/ArrowUp.astro";
 ---
 
-<div class="go-up-button-container">
+<div class="go-up-button-container" transition:persist="go-up-button">
   <button>
     <ArrowUpIcon />
   </button>
@@ -40,13 +40,11 @@ import ArrowUpIcon from "./icons/ArrowUp.astro";
 </style>
 
 <script>
-  document.addEventListener("DOMContentLoaded", () => {
-    const $button = document.querySelector(
-      ".go-up-button-container button",
-    ) as HTMLButtonElement;
+  const $button = document.querySelector(
+    ".go-up-button-container button",
+  ) as HTMLButtonElement;
 
-    $button.addEventListener("click", () => {
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    });
+  $button.addEventListener("click", () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
   });
 </script>

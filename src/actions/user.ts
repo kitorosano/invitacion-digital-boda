@@ -1,5 +1,6 @@
 import { ActionError, defineAction } from "astro:actions";
 import { z } from "astro:schema";
+import { DEFAULT_USERS_PER_PAGE } from "../constants/jurado";
 import type { User } from "../types";
 import { validateUserId } from "../utils/actionsHelpers";
 import redisClient from "../utils/redisClient";
@@ -100,13 +101,20 @@ export const user = {
   }),
 
   getUsers: defineAction({
+    input: z.object({
+      page: z.number().optional().default(0),
+      limit: z.number().optional().default(DEFAULT_USERS_PER_PAGE),
+    }),
     handler: async (input, ctx) => {
+      const { page, limit } = input;
       try {
-        const LIMIT = 15;
+        const start = page * limit;
+        const stop = start + limit - 1;
+
         const userIds: string[] = await redisClient.zrange(
           "users:z",
-          0,
-          LIMIT - 1,
+          start,
+          stop,
           { rev: true },
         );
         if (userIds.length === 0) return { users: [] };

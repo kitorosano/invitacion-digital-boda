@@ -25,3 +25,5 @@ export const tasksGalleryProps = {
   refetchIntervalMs: JURADO_GALLERY_REFETCH_INTERVAL_MS,
   colors: JURADO_GALLERY_TASKS_COLORS.split(","),
 };
+
+export const DEFAULT_USERS_PER_PAGE = 15;

@@ -17,11 +17,10 @@ const useUsers = ({ initialUsers, refetchIntervalMs }: Props) => {
 
   const fetchUsers = async () => {
     try {
-      const data = await actions.getUsers.orThrow();
+      const data = await actions.getUsers.orThrow({});
 
       setUsers(data.users);
     } catch (error) {
-      // TODO: more UI friendly error handling
       alert(
         "Ha ocurrido un error al obtener los usuarios. Por favor, recarga la página.",
       );

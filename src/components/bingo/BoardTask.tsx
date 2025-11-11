@@ -57,8 +57,6 @@ const BoardTask = ({ task, updateBoard, setSelectedTaskModal }: Props) => {
     updateBoard(task.id, "");
   };
 
-  console.log(task.photoUrl)
-
   return (
     <li className="task-container" onClick={handleTaskClick}>
       <input

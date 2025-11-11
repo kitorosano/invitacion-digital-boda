@@ -28,7 +28,7 @@ if (data) initialTaskWithPhoto.push(...data.tasksWithPhoto);
 
   <GoBackButton backHref="/jurado/tasks" />
 
-  <h1>{task.data.description}</h1>
+  <h2>"{task.data.description}"</h2>
 
   <GridGallery
     client:load
@@ -41,11 +41,13 @@ if (data) initialTaskWithPhoto.push(...data.tasksWithPhoto);
 </BingoLayout>
 
 <style>
-  h1 {
-    margin: 1.5rem 0;
-    padding: 0 1.5rem;
+  h2 {
+    margin: 0 auto;
 
-    font-weight: 700;
-    font-size: 3rem;
+    text-align: center;
+    font-size: var(--text-size-lg);
+    font-weight: 400;
+    color: var(--color-text-muted);
+    letter-spacing: 0.02rem;
   }
 </style>

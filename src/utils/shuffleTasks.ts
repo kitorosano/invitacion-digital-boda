@@ -29,7 +29,5 @@ export const shuffleTasks = (
       } as TaskWithPhoto;
     });
 
-  console.log(shuffledTasks);
-
   return shuffledTasks;
 };

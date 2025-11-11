@@ -40,5 +40,3 @@ const GridGalleryItem = ({
 };
 
 export default GridGalleryItem;
-
-// TODO: if this doesn't scale well with more features, refactor to accept props for different use cases or move it to GridGallery
