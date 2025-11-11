@@ -4,13 +4,16 @@ import SpeedInsights from "@vercel/speed-insights/astro";
 import { ClientRouter } from "astro:transitions";
 import OrientationIcon from "../components/jurado/icons/Orientation.astro";
 import type { Orientation } from "../types";
+import Theme from "../components/shared/icons/Theme.astro";
+import ThemeToggler from "../components/shared/ThemeToggler.astro";
 
 interface Props {
   title: string;
   requiredOrientation?: Orientation;
+  showTheme?: boolean;
 }
 
-const { title, requiredOrientation } = Astro.props;
+const { title, requiredOrientation, showTheme } = Astro.props;
 ---
 
 <!doctype html>
@@ -27,6 +30,8 @@ const { title, requiredOrientation } = Astro.props;
     <ClientRouter />
   </head>
   <body>
+    {showTheme && <ThemeToggler />}
+
     <slot />
 
     {
@@ -100,7 +105,7 @@ const { title, requiredOrientation } = Astro.props;
     --color-text: oklch(0.15 0.04 260);
     --color-text-muted: oklch(0.4 0.04 260);
     --color-highlight: oklch(1 0.04 260);
-    --color-border: oklch(0.6 0.04 260);
+    --color-border: var(--color-bg);
     --color-border-muted: oklch(0.7 0.04 260);
 
     --color-danger: oklch(0.5 0.08 30);
@@ -134,24 +139,49 @@ const { title, requiredOrientation } = Astro.props;
     --text-size-3xl: 4rem;
   }
 
-  html {
+  body {
     font-family: var(--font-primary);
     background: var(--color-bg-dark);
     color: var(--color-dark);
-  }
 
-  body {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 
     overflow-x: hidden;
+    transition: all 0.3s ease;
 
     user-select: none; /* Standard property */
     -webkit-user-select: none; /* For Safari and other WebKit browsers on iOS */
     -moz-user-select: none; /* For Firefox */
     -ms-user-select: none; /* For Internet Explorer/Edge */
     -webkit-touch-callout: none; /* Disables the long-press callout menu on iOS */
+  }
+  body.dark {
+    --color-bg-dark: oklch(0.1 0.02 260);
+    --color-bg: oklch(0.15 0.02 260);
+    --color-bg-light: oklch(0.2 0.02 260);
+    --color-text: oklch(0.96 0.04 260);
+    --color-text-muted: oklch(0.76 0.04 260);
+    --color-highlight: oklch(0.5 0.04 260);
+    --color-border: oklch(0.4 0.04 260);
+    --color-border-muted: oklch(0.3 0.04 260);
+
+    --gradient: linear-gradient(
+      0deg,
+      var(--color-bg) 95%,
+      var(--color-bg-light)
+    );
+    --gradient-hover: linear-gradient(
+      0deg,
+      var(--color-bg),
+      var(--color-bg-light)
+    );
+
+    /* SHADOWS */
+    --shadow-sm: 0 1px 1px hsla(0, 0%, 0%, 0.07), 0 2px 2px hsla(0, 0%, 0%, 0.1);
+    --shadow-md: 0 2px 2px hsla(0, 0%, 0%, 0.07),
+      0 4px 4px hsla(0, 0%, 0%, 0.15);
   }
 
   /* TABLET PORTRAIT STYLES */
