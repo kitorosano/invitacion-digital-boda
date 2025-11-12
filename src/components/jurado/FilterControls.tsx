@@ -31,10 +31,12 @@ const FilterControls = ({ filters, setFilters }: Props) => {
     <div className="filter-controls">
       <button type="button" onClick={handleToggleFavorites}>
         <FavoriteIcon size={20} isActive={filters.favoritesOnly} />
+        Solo Favoritos
       </button>
 
       <button type="button" onClick={handleSetSorting}>
         <SortIcon size={20} isActive={isSortByNewest} />
+        {isSortByNewest ? "Más recientes" : "Más antiguos"}
       </button>
     </div>
   );
