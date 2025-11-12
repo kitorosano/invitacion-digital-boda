@@ -113,6 +113,10 @@ const { title, requiredOrientation, showTheme } = Astro.props;
     --color-success: oklch(0.5 0.08 160);
     --color-info: oklch(0.5 0.08 260);
 
+    --color-text-modal: var(--color-bg-light);
+    --color-text-bottomsheet: var(--color-text);
+    --color-bg-bottomsheet: var(--color-bg);
+
     --gradient: linear-gradient(
       0deg,
       var(--color-bg) 95%,
@@ -149,7 +153,7 @@ const { title, requiredOrientation, showTheme } = Astro.props;
     box-sizing: border-box;
 
     overflow-x: hidden;
-    transition: all 0.3s ease;
+    transition: all 0.2s ease;
   }
   body.dark {
     --color-bg-dark: oklch(0.1 0.02 260);
@@ -160,6 +164,10 @@ const { title, requiredOrientation, showTheme } = Astro.props;
     --color-highlight: oklch(0.5 0.04 260);
     --color-border: oklch(0.4 0.04 260);
     --color-border-muted: oklch(0.3 0.04 260);
+
+    --color-text-modal: var(--color-text);
+    --color-text-bottomsheet: var(--color-text);
+    --color-bg-bottomsheet: oklch(0.3 0.02 260);
 
     --gradient: linear-gradient(
       0deg,
