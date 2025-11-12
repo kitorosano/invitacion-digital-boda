@@ -2,9 +2,8 @@ import confetti from "canvas-confetti";
 import { useEffect, useState } from "react";
 import useBoard from "../../hooks/useBoard";
 import type { Task, TaskWithPhoto, User } from "../../types";
-import Modal from "../shared/Modal";
+import TaskModal from "../shared/TaskModal";
 import BoardTask from "./BoardTask";
-import ChecklistIcon from "./icons/Checklist";
 import PhotoEditIcon from "./icons/PhotoEdit";
 import "./styles/Board.css";
 
@@ -81,26 +80,18 @@ const Board = ({
         </p>
       </div>
 
-      <Modal open={selectedTaskModal.open} onClose={handleCloseModal}>
-        <div className="modal-content">
-          <ChecklistIcon size={64} />
-          <p>"{selectedTaskModal.task?.description}"</p>
-          <picture>
-            <img
-              src={selectedTaskModal.task?.photoUrl}
-              alt={selectedTaskModal.task?.description}
-            />
-          </picture>
+      <TaskModal
+        open={selectedTaskModal.open}
+        task={selectedTaskModal.task}
+        onClose={handleCloseModal}
+      >
           {!hasFinished && (
-            <div className="task-actions">
-              <button onClick={handleDeletePhoto}>
-                <PhotoEditIcon size={16} />
-                Cambiar foto
-              </button>
-            </div>
+            <button onClick={handleDeletePhoto}>
+              <PhotoEditIcon size={24} />
+              Cambiar foto
+            </button>
           )}
-        </div>
-      </Modal>
+      </TaskModal>
     </div>
   );
 };

@@ -1,9 +1,10 @@
 import { useState } from "react";
 import useTasksWithPhoto from "../../hooks/useTasksWithPhoto";
 import { type TasksFilters, type TaskWithPhoto } from "../../types";
-import Modal from "../shared/Modal";
+import TaskModal from "../shared/TaskModal";
 import FilterControls from "./FilterControls";
 import GridGalleryItem from "./GridGalleryItem";
+import FavoriteIcon from "./icons/Favorite";
 import "./styles/GridGallery.css";
 
 export interface Props {
@@ -36,6 +37,13 @@ const GridGallery = ({
     setSelectedTaskWithPhotoModal({ open: false, taskWithPhoto: null });
   };
 
+  const handleMarkAsFavorite = () => {
+    if (!selectedTaskWithPhotoModal.taskWithPhoto) return;
+    handleCloseModal();
+
+    // call an action to mark as favorite
+  };
+
   return (
     <div className={`grid-gallery-container`}>
       {showFilterControls && (
@@ -43,9 +51,7 @@ const GridGallery = ({
       )}
 
       {tasksWithPhoto.length === 0 && (
-        <p className="no-photos-message">
-          Esperando a que lleguen fotos 📸...
-        </p>
+        <p className="no-photos-message">Esperando a que lleguen fotos 📸...</p>
       )}
 
       <ul
@@ -62,20 +68,21 @@ const GridGallery = ({
         ))}
       </ul>
 
-      <Modal open={selectedTaskWithPhotoModal.open} onClose={handleCloseModal}>
-        <div className="modal-content">
-          <picture>
-            <img
-              src={selectedTaskWithPhotoModal.taskWithPhoto?.photoUrl}
-              alt={selectedTaskWithPhotoModal.taskWithPhoto?.description}
-            />
-          </picture>
-        </div>
-      </Modal>
+      <TaskModal
+        open={selectedTaskWithPhotoModal.open}
+        task={selectedTaskWithPhotoModal.taskWithPhoto}
+        onClose={handleCloseModal}
+      >
+        <button onClick={handleMarkAsFavorite}>
+          <FavoriteIcon
+            size={24}
+            isActive={selectedTaskWithPhotoModal.taskWithPhoto?.isFavorite}
+          />
+          Marcar favorita
+        </button>
+      </TaskModal>
     </div>
   );
 };
-
-// TODO: add buttons for "mark" and "select as winner"
 
 export default GridGallery;
