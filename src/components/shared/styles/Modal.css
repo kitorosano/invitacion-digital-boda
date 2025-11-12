@@ -145,4 +145,9 @@
 
   border: none;
   background: var(--color-bg);
+  transition: background 0.2s ease;
+}
+
+.modal-backdrop footer button:hover {
+  background: var(--color-bg-light);
 }

@@ -3,7 +3,7 @@
 }
 
 .no-photos-message {
-  margin-top: 2rem;
+  margin-top: 3rem;
 
   font-size: var(--text-size-sm);
   color: var(--color-text-muted);

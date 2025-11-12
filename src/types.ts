@@ -19,6 +19,7 @@ export type TaskWithPhoto = {
   description: Task["description"];
   photoUrl: Photo["url"] | "";
   userId: User["id"];
+  isMarkedAsFavorite?: boolean;
 };
 
 export type TaskWithPhotos = Task & { tasksWithPhoto: TaskWithPhoto[] };

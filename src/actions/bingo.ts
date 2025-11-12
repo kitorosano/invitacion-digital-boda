@@ -207,31 +207,52 @@ export const bingo = {
     input: z.object({
       userId: z.string(),
       taskId: z.string(),
-      favorite: z.boolean(),
+      isMarkedAsFavorite: z.boolean(),
     }),
     handler: async (input, ctx) => {
-      const { userId, taskId, favorite } = input;
+      const { userId, taskId, isMarkedAsFavorite } = input;
       try {
         const taskWithPhotoKey = `user:${userId}:task:${taskId}`;
 
         const favoriteKey = `tasks:favorites:z`;
         const taskFavoriteKey = `task:${taskId}:tasks:favorites:z`;
 
-        if (favorite) {
-          await redisClient.zadd(favoriteKey, {
+        const task = await redisClient.hgetall<TaskWithPhoto>(taskWithPhotoKey);
+        if (!task || !task.photoUrl) {
+          throw new ActionError({
+            message: "Task not found or photo not available",
+            code: "NOT_FOUND",
+          });
+        }
+
+        const updatedTask: TaskWithPhoto = {
+          ...task,
+          isMarkedAsFavorite,
+        };
+
+        const multi = redisClient.multi();
+        if (isMarkedAsFavorite) {
+          multi.hset(taskWithPhotoKey, updatedTask);
+          multi.zadd(favoriteKey, {
             member: taskWithPhotoKey,
             score: Date.now(),
           });
-          await redisClient.zadd(taskFavoriteKey, {
+          multi.zadd(taskFavoriteKey, {
             member: taskWithPhotoKey,
             score: Date.now(),
           });
         } else {
-          await redisClient.zrem(favoriteKey, taskWithPhotoKey);
-          await redisClient.zrem(taskFavoriteKey, taskWithPhotoKey);
+          multi.hset(taskWithPhotoKey, {
+            ...task,
+            isMarkedAsFavorite: false,
+          });
+          multi.zrem(favoriteKey, taskWithPhotoKey);
+          multi.zrem(taskFavoriteKey, taskWithPhotoKey);
         }
 
-        return { success: true };
+        await multi.exec();
+
+        return { taskWithPhoto: updatedTask };
       } catch (error) {
         console.error("Error marking task as favorite:", error);
         throw new ActionError({

@@ -1,3 +1,4 @@
+import { actions } from "astro:actions";
 import { useState } from "react";
 import useTasksWithPhoto from "../../hooks/useTasksWithPhoto";
 import { type TasksFilters, type TaskWithPhoto } from "../../types";
@@ -37,11 +38,27 @@ const GridGallery = ({
     setSelectedTaskWithPhotoModal({ open: false, taskWithPhoto: null });
   };
 
-  const handleMarkAsFavorite = () => {
+  const handleMarkAsFavorite = async () => {
     if (!selectedTaskWithPhotoModal.taskWithPhoto) return;
-    handleCloseModal();
 
-    // call an action to mark as favorite
+    try {
+      const { taskWithPhoto } =
+        await actions.markTaskWithPhotoAsFavorite.orThrow({
+          userId: selectedTaskWithPhotoModal.taskWithPhoto.userId,
+          taskId: selectedTaskWithPhotoModal.taskWithPhoto.id,
+          isMarkedAsFavorite:
+            !selectedTaskWithPhotoModal.taskWithPhoto.isMarkedAsFavorite,
+        });
+
+      setSelectedTaskWithPhotoModal({
+        open: true,
+        taskWithPhoto,
+      });
+    } catch (error) {
+      alert(
+        "Ha ocurrido un error al obtener las imágenes. Por favor, recarga la página.",
+      );
+    }
   };
 
   return (
@@ -51,7 +68,7 @@ const GridGallery = ({
       )}
 
       {tasksWithPhoto.length === 0 && (
-        <p className="no-photos-message">Esperando a que lleguen fotos 📸...</p>
+        <p className="no-photos-message">No hay fotos que mostrar.</p>
       )}
 
       <ul
@@ -76,7 +93,9 @@ const GridGallery = ({
         <button onClick={handleMarkAsFavorite}>
           <FavoriteIcon
             size={24}
-            isActive={selectedTaskWithPhotoModal.taskWithPhoto?.isFavorite}
+            isActive={
+              !!selectedTaskWithPhotoModal.taskWithPhoto?.isMarkedAsFavorite
+            }
           />
           Marcar favorita
         </button>
