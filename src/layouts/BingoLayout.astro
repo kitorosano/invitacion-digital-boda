@@ -254,10 +254,10 @@ const { title, requiredOrientation, showTheme } = Astro.props;
       $orientationOverlay.classList.add("active");
 
       setTimeout(() => {
-        $orientationOverlay.classList.remove("active");
+        $orientationOverlay?.classList.remove("active");
       }, 2000);
     } else {
-      $orientationOverlay.classList.remove("active");
+      $orientationOverlay?.classList.remove("active");
     }
   });
 </script>
