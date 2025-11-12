@@ -2,7 +2,7 @@ import { useState } from "react";
 import type { TaskWithPhoto } from "../../types";
 import CloseIcon from "./icons/Close";
 import DotsIcon from "./icons/Dots";
-import "./styles/Modal.css";
+import "./styles/TaskModal.css";
 
 interface Props {
   open: boolean;
