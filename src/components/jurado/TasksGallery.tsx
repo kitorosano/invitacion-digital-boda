@@ -1,12 +1,12 @@
 import { navigate } from "astro:transitions/client";
 import { useEffect, useState } from "react";
 import useTasksWithPhoto from "../../hooks/useTasksWithPhoto";
-import type { Task, TasksFilters, TaskWithPhoto, TaskWithPhotos } from "../../types";
+import type { Task, TasksFilters, TaskWithPhotos } from "../../types";
 import "./styles/TasksGallery.css";
 import TasksGalleryItem from "./TasksGalleryItem";
 
 export interface Props {
-  initialTasksWithPhoto: TaskWithPhoto[];
+  initialGroupedTasks: TaskWithPhotos[];
   refetchIntervalMs: number;
   tasksFilters: TasksFilters;
   mandatoryTasks: Task[];
@@ -14,26 +14,30 @@ export interface Props {
 }
 
 const TasksGallery = ({
-  initialTasksWithPhoto,
+  initialGroupedTasks,
   refetchIntervalMs,
   tasksFilters,
   mandatoryTasks,
   colors,
 }: Props) => {
   const { tasksWithPhoto } = useTasksWithPhoto({
-    initialTasksWithPhoto,
     refetchIntervalMs,
     tasksFilters,
   });
-  const [groupedTasks, setGroupedTasks] = useState<TaskWithPhotos[]>([]);
+  const [groupedTasks, setGroupedTasks] =
+    useState<TaskWithPhotos[]>(initialGroupedTasks);
 
   useEffect(() => {
-    const tasksGrouped = mandatoryTasks.map((task) => {
-      const taskPhotos = tasksWithPhoto.filter(
-        (taskWithPhoto) => taskWithPhoto.id === task.id,
-      );
-      return { ...task, tasksWithPhoto: [...taskPhotos] };
-    });
+    if (!tasksWithPhoto.length) return;
+
+    const tasksGrouped = mandatoryTasks
+      .map((task) => {
+        const taskPhotos = tasksWithPhoto.filter(
+          (taskWithPhoto) => taskWithPhoto.id === task.id,
+        );
+        return { ...task, tasksWithPhoto: [...taskPhotos] } as TaskWithPhotos;
+      })
+      .slice(0, Math.min(tasksWithPhoto.length, 8));
 
     setGroupedTasks(tasksGrouped);
   }, [mandatoryTasks, tasksWithPhoto]);

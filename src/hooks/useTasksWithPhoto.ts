@@ -3,13 +3,13 @@ import { useEffect, useRef, useState } from "react";
 import type { TasksFilters, TaskWithPhoto } from "../types";
 
 export interface Props {
-  initialTasksWithPhoto: TaskWithPhoto[];
+  initialTasksWithPhoto?: TaskWithPhoto[];
   refetchIntervalMs: number;
   tasksFilters: TasksFilters;
 }
 
 const useTasksWithPhoto = ({
-  initialTasksWithPhoto,
+  initialTasksWithPhoto = [],
   refetchIntervalMs,
   tasksFilters,
 }: Props) => {

@@ -35,7 +35,8 @@ export const tasksGalleryProps = {
   refetchIntervalMs: JURADO_GALLERY_REFETCH_INTERVAL_MS,
   colors: JURADO_GALLERY_TASKS_COLORS.split(","),
   tasksFilters: {
-    limit: 8,
+    favoritesOnly: false,
+    sorting: "newest" as Sorting,
   } as TasksFilters,
 };
 
