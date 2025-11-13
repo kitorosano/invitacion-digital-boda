@@ -99,19 +99,19 @@ const { title, requiredOrientation, showTheme } = Astro.props;
     --font-primary: "Helvetica Neue", Arial, sans-serif;
 
     /* COLORS */
-    --color-bg-dark: oklch(0.92 0.02 260);
-    --color-bg: oklch(0.96 0.02 260);
-    --color-bg-light: oklch(1 0.02 260);
-    --color-text: oklch(0.15 0.04 260);
-    --color-text-muted: oklch(0.4 0.04 260);
-    --color-highlight: oklch(1 0.04 260);
+    --color-bg-dark: hsl(217deg 45.8% 90.8%);
+    --color-bg: hsl(216deg 100% 95.9%);
+    --color-bg-light: hsl(180deg 100% 98.5%);
+    --color-text: hsl(221deg 81.2% 6%);
+    --color-text-muted: hsl(217deg 22.6% 29.9%);
+    --color-highlight: hsl(180deg 100% 97%);
     --color-border: var(--color-bg);
-    --color-border-muted: oklch(0.7 0.04 260);
+    --color-border-muted: hsl(217deg 21.8% 64.3%);
 
-    --color-danger: oklch(0.5 0.08 30);
-    --color-warning: oklch(0.5 0.08 100);
-    --color-success: oklch(0.5 0.08 160);
-    --color-info: oklch(0.5 0.08 260);
+    --color-danger: hsl(8deg 32% 41.3%);
+    --color-warning: hsl(51deg 45.6% 29.6%);
+    --color-success: hsl(150deg 36.5% 32.5%);
+    --color-info: hsl(217deg 33.6% 42.5%);
 
     --color-text-modal: var(--color-bg-light);
     --color-text-bottomsheet: var(--color-text);
@@ -143,6 +143,25 @@ const { title, requiredOrientation, showTheme } = Astro.props;
     --text-size-3xl: 4rem;
   }
 
+  @supports (color: oklch(0.92 0.02 260)) {
+    :root {
+      /* COLORS */
+      --color-bg-dark: oklch(0.92 0.02 260);
+      --color-bg: oklch(0.96 0.02 260);
+      --color-bg-light: oklch(1 0.02 260);
+      --color-text: oklch(0.15 0.04 260);
+      --color-text-muted: oklch(0.4 0.04 260);
+      --color-highlight: oklch(1 0.04 260);
+      --color-border: var(--color-bg);
+      --color-border-muted: oklch(0.7 0.04 260);
+
+      --color-danger: oklch(0.5 0.08 30);
+      --color-warning: oklch(0.5 0.08 100);
+      --color-success: oklch(0.5 0.08 160);
+      --color-info: oklch(0.5 0.08 260);
+    }
+  }
+
   body {
     font-family: var(--font-primary);
     background: var(--color-bg-dark);
@@ -156,17 +175,35 @@ const { title, requiredOrientation, showTheme } = Astro.props;
     transition: all 0.2s ease;
   }
   body.dark {
+    --color-bg-dark: hsl(260deg 2% 10%);
+    --color-bg-dark: hsl(224deg 73% 2%);
     --color-bg-dark: oklch(0.1 0.02 260);
+    --color-bg: hsl(260deg 2% 15%);
+    --color-bg: hsl(218deg 49.9% 5.1%);
     --color-bg: oklch(0.15 0.02 260);
+    --color-bg-light: hsl(260deg 2% 20%);
+    --color-bg-light: hsl(217deg 30.2% 9.4%);
     --color-bg-light: oklch(0.2 0.02 260);
+    --color-text: hsl(260deg 4% 96%);
+    --color-text: hsl(205deg 100% 94.4%);
     --color-text: oklch(0.96 0.04 260);
+    --color-text-muted: hsl(260deg 4% 76%);
+    --color-text-muted: hsl(217deg 28.1% 71.7%);
     --color-text-muted: oklch(0.76 0.04 260);
+    --color-highlight: hsl(260deg 4% 50%);
+    --color-highlight: hsl(217deg 17.5% 40.9%);
     --color-highlight: oklch(0.5 0.04 260);
+    --color-border: hsl(260deg 4% 40%);
+    --color-border: hsl(217deg 22.6% 29.9%);
     --color-border: oklch(0.4 0.04 260);
+    --color-border-muted: hsl(260deg 4% 30%);
+    --color-border-muted: hsl(217deg 32.1% 19.6%);
     --color-border-muted: oklch(0.3 0.04 260);
 
     --color-text-modal: var(--color-text);
     --color-text-bottomsheet: var(--color-text);
+    --color-bg-bottomsheet: hsl(260deg 2% 30%);
+    --color-bg-bottomsheet: hsl(217deg 16.7% 18.8%);
     --color-bg-bottomsheet: oklch(0.3 0.02 260);
 
     --gradient: linear-gradient(
