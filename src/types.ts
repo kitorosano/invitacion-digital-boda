@@ -8,7 +8,7 @@ export type Task = {
   description: string;
 };
 
-export type Photo = {
+export type BingoPhoto = {
   url: string;
   userId: User["id"];
   taskId: Task["id"];
@@ -17,7 +17,7 @@ export type Photo = {
 export type TaskWithPhoto = {
   id: Task["id"];
   description: Task["description"];
-  photoUrl: Photo["url"] | "";
+  photoUrl: BingoPhoto["url"] | "";
   userId: User["id"];
   isMarkedAsFavorite?: boolean;
 };

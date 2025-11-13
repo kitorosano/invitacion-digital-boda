@@ -3,7 +3,7 @@ import { getCollection } from "astro:content";
 import { BINGO_CLOUDINARY_UPLOAD_PRESET } from "astro:env/server";
 import { z } from "astro:schema";
 import { PHOTO_LOW_Q_TRANSFORMATIONS } from "../constants/bingo";
-import { type Photo, type TaskWithPhoto } from "../types";
+import { type BingoPhoto, type TaskWithPhoto } from "../types";
 import { validateUserId } from "../utils/actionsHelpers";
 import cloudinaryClient from "../utils/cloudinaryClient";
 import redisClient from "../utils/redisClient";
@@ -79,7 +79,7 @@ export const bingo = {
           tags: [userId, taskId],
         });
 
-        const uploadedPhoto: Photo = {
+        const uploadedPhoto: BingoPhoto = {
           url: data.secure_url,
           userId,
           taskId,
