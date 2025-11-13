@@ -279,16 +279,6 @@ export default defineConfig({
         access: "public",
       }),
       // Board
-      BINGO_LOCAL_STORAGE_KEY: envField.string({
-        default: "bingo-tasks",
-        context: "client",
-        access: "public",
-      }),
-      BINGO_CLOUDINARY_ASSETS_PATH: envField.string({
-        default: "",
-        context: "server",
-        access: "public",
-      }),
       BINGO_CLOUDINARY_UPLOAD_PRESET: envField.string({
         default: "",
         context: "server",
@@ -337,6 +327,24 @@ export default defineConfig({
       JURADO_GALLERY_TASKS_COLORS: envField.string({
         default: "#fff",
         context: "server",
+        access: "public",
+      }),
+
+      // ## Fotos
+      // Global
+      PHOTOS_SITE_TITLE: envField.string({
+        default: "Fotos de la boda",
+        context: "server",
+        access: "public",
+      }),
+      PHOTOS_CLOUDINARY_UPLOAD_PRESET: envField.string({
+        default: "",
+        context: "server",
+        access: "public",
+      }),
+      PHOTOS_SPOTLIGHT_INTERVAL_MS: envField.number({
+        default: 10000,
+        context: "client",
         access: "public",
       }),
     },

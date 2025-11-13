@@ -41,3 +41,15 @@ export type TasksFilters = {
   favoritesOnly: boolean;
   sorting: Sorting;
 };
+
+export type Photo = {
+  id: string;
+  url: string;
+  tag: PhotoTags;
+  message: string;
+};
+
+export enum PhotoTags {
+  SIGNATURES = "signatures",
+  PARTY = "party",
+}

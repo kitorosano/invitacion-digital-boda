@@ -1,0 +1,31 @@
+---
+import { actions } from "astro:actions";
+import Spotlight from "../../components/photos/Spotlight.tsx";
+import { layoutProps, spotlightProps } from "../../constants/photos";
+import PhotosLayout from "../../layouts/PhotosLayout.astro";
+
+interface Props {
+  tag: string;
+}
+
+const { tag } = Astro.params;
+
+if (!tag) {
+  throw new Error("Tag de foto no proporcionado");
+}
+
+const initialPhotos = [];
+const { data } = await Astro.callAction(actions.getPhotosByTag, {
+  tag,
+});
+if (data) initialPhotos.push(...data.photos);
+---
+
+<PhotosLayout {...layoutProps}>
+  <Spotlight
+    {...spotlightProps}
+    initialPhotos={initialPhotos}
+    photoTag={tag}
+    client:load
+  />
+</PhotosLayout>

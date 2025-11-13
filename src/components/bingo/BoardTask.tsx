@@ -1,6 +1,7 @@
 import { actions } from "astro:actions";
 import { useEffect, useRef, useState, type ChangeEvent } from "react";
 import type { TaskWithPhoto } from "../../types";
+import { lowQualityPhotoUrl } from "../../utils/cloudinaryHelpers";
 import { fileToUri } from "../../utils/formatFiles";
 import "./styles/BoardTask.css";
 
@@ -77,7 +78,7 @@ const BoardTask = ({ task, updateBoard, setSelectedTaskModal }: Props) => {
       ) : (
         <picture>
           <img
-            src={task.photoUrl}
+            src={lowQualityPhotoUrl(task.photoUrl)}
             alt={task.description}
             onError={handleImageError}
           />

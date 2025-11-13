@@ -2,7 +2,6 @@ import { ActionError, defineAction } from "astro:actions";
 import { getCollection } from "astro:content";
 import { BINGO_CLOUDINARY_UPLOAD_PRESET } from "astro:env/server";
 import { z } from "astro:schema";
-import { PHOTO_LOW_Q_TRANSFORMATIONS } from "../constants/bingo";
 import { type BingoPhoto, type TaskWithPhoto } from "../types";
 import { validateUserId } from "../utils/actionsHelpers";
 import cloudinaryClient from "../utils/cloudinaryClient";
@@ -95,11 +94,6 @@ export const bingo = {
           photoUrl: uploadedPhoto.url,
         });
         await multi.exec();
-
-        uploadedPhoto.url = uploadedPhoto.url.replace(
-          "/upload/",
-          `/upload/${PHOTO_LOW_Q_TRANSFORMATIONS}`,
-        );
 
         return { photo: uploadedPhoto };
       } catch (error) {

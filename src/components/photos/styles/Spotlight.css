@@ -1,0 +1,21 @@
+.spotlight-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+
+  margin: 2rem 8rem;
+}
+
+.spotlight-container picture {
+  width: 100%;
+  height: 100dvh;
+}
+
+.spotlight-container picture img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
