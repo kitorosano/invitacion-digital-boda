@@ -131,6 +131,41 @@ const { title } = Astro.props;
     --text-size-3xl: 4rem;
   }
 
+  body {
+    font-family: var(--font-primary);
+    background: var(--color-bg-dark);
+    color: var(--color-text);
+
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+
+    overflow-x: hidden;
+    transition: all 0.2s ease;
+  }
+
+  body:has(.tag-option input[type="radio"]:checked[value="party"]) {
+    --color-bg-dark: hsl(95deg 72% 0.9%);
+    --color-bg: hsl(93deg 45.4% 3.5%);
+    --color-bg-light: hsl(91deg 25.2% 7.5%);
+    --color-text: hsl(92deg 65.9% 91.7%);
+    --color-text-muted: hsl(91deg 15.4% 66.4%);
+    --color-highlight: hsl(91deg 13.1% 36.1%);
+    --color-border: hsl(91deg 17.7% 25.4%);
+    --color-border-muted: hsl(90deg 27.8% 15.3%);
+
+    --gradient: linear-gradient(
+      0deg,
+      var(--color-bg) 95%,
+      var(--color-bg-light)
+    );
+    --gradient-hover: linear-gradient(
+      0deg,
+      var(--color-bg),
+      var(--color-bg-light)
+    );
+  }
+
   @supports (color: oklch(0.92 0.02 260)) {
     :root {
       --color-bg-dark: oklch(0.1 0.02 310);
@@ -149,49 +184,17 @@ const { title } = Astro.props;
       --color-success: oklch(0.7 0.05 160);
       --color-info: oklch(0.7 0.05 260);
     }
-  }
 
-  body {
-    font-family: var(--font-primary);
-    background: var(--color-bg-dark);
-    color: var(--color-text);
-
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-
-    overflow-x: hidden;
-    transition: all 0.2s ease;
-  }
-
-  body:has(.tag-option input[type="radio"]:checked[value="party"]) {
-    --color-bg-dark: hsl(95deg 72% 0.9%);
-    --color-bg-dark: oklch(0.1 0.02 130);
-    --color-bg: hsl(93deg 45.4% 3.5%);
-    --color-bg: oklch(0.15 0.02 130);
-    --color-bg-light: hsl(91deg 25.2% 7.5%);
-    --color-bg-light: oklch(0.2 0.02 130);
-    --color-text: hsl(92deg 65.9% 91.7%);
-    --color-text: oklch(0.96 0.04 130);
-    --color-text-muted: hsl(91deg 15.4% 66.4%);
-    --color-text-muted: oklch(0.76 0.04 130);
-    --color-highlight: hsl(91deg 13.1% 36.1%);
-    --color-highlight: oklch(0.5 0.04 130);
-    --color-border: hsl(91deg 17.7% 25.4%);
-    --color-border: oklch(0.4 0.04 130);
-    --color-border-muted: hsl(90deg 27.8% 15.3%);
-    --color-border-muted: oklch(0.3 0.04 130);
-
-    --gradient: linear-gradient(
-      0deg,
-      var(--color-bg) 95%,
-      var(--color-bg-light)
-    );
-    --gradient-hover: linear-gradient(
-      0deg,
-      var(--color-bg),
-      var(--color-bg-light)
-    );
+    body:has(.tag-option input[type="radio"]:checked[value="party"]) {
+      --color-bg-dark: oklch(0.1 0.02 130);
+      --color-bg: oklch(0.15 0.02 130);
+      --color-bg-light: oklch(0.2 0.02 130);
+      --color-text: oklch(0.96 0.04 130);
+      --color-text-muted: oklch(0.76 0.04 130);
+      --color-highlight: oklch(0.5 0.04 130);
+      --color-border: oklch(0.4 0.04 130);
+      --color-border-muted: oklch(0.3 0.04 130);
+    }
   }
 
   /* TABLET PORTRAIT STYLES */

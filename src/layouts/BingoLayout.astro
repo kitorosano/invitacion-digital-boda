@@ -143,6 +143,49 @@ const { title, requiredOrientation, showTheme } = Astro.props;
     --text-size-3xl: 4rem;
   }
 
+  body {
+    font-family: var(--font-primary);
+    background: var(--color-bg-dark);
+    color: var(--color-dark);
+
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+
+    overflow-x: hidden;
+    transition: all 0.2s ease;
+  }
+  body.dark {
+    --color-bg-dark: hsl(224deg 73% 2%);
+    --color-bg: hsl(218deg 49.9% 5.1%);
+    --color-bg-light: hsl(217deg 30.2% 9.4%);
+    --color-text: hsl(205deg 100% 94.4%);
+    --color-text-muted: hsl(217deg 28.1% 71.7%);
+    --color-highlight: hsl(217deg 17.5% 40.9%);
+    --color-border: hsl(217deg 22.6% 29.9%);
+    --color-border-muted: hsl(217deg 32.1% 19.6%);
+
+    --color-text-modal: var(--color-text);
+    --color-text-bottomsheet: var(--color-text);
+    --color-bg-bottomsheet: hsl(217deg 16.7% 18.8%);
+
+    --gradient: linear-gradient(
+      0deg,
+      var(--color-bg) 95%,
+      var(--color-bg-light)
+    );
+    --gradient-hover: linear-gradient(
+      0deg,
+      var(--color-bg),
+      var(--color-bg-light)
+    );
+
+    /* SHADOWS */
+    --shadow-sm: 0 1px 1px hsla(0, 0%, 0%, 0.07), 0 2px 2px hsla(0, 0%, 0%, 0.1);
+    --shadow-md: 0 2px 2px hsla(0, 0%, 0%, 0.07),
+      0 4px 4px hsla(0, 0%, 0%, 0.15);
+  }
+
   @supports (color: oklch(0.92 0.02 260)) {
     :root {
       /* COLORS */
@@ -160,67 +203,21 @@ const { title, requiredOrientation, showTheme } = Astro.props;
       --color-success: oklch(0.5 0.08 160);
       --color-info: oklch(0.5 0.08 260);
     }
-  }
 
-  body {
-    font-family: var(--font-primary);
-    background: var(--color-bg-dark);
-    color: var(--color-dark);
+    body.dark {
+      --color-bg-dark: oklch(0.1 0.02 260);
+      --color-bg: oklch(0.15 0.02 260);
+      --color-bg-light: oklch(0.2 0.02 260);
+      --color-text: oklch(0.96 0.04 260);
+      --color-text-muted: oklch(0.76 0.04 260);
+      --color-highlight: oklch(0.5 0.04 260);
+      --color-border: oklch(0.4 0.04 260);
+      --color-border-muted: oklch(0.3 0.04 260);
 
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-
-    overflow-x: hidden;
-    transition: all 0.2s ease;
-  }
-  body.dark {
-    --color-bg-dark: hsl(260deg 2% 10%);
-    --color-bg-dark: hsl(224deg 73% 2%);
-    --color-bg-dark: oklch(0.1 0.02 260);
-    --color-bg: hsl(260deg 2% 15%);
-    --color-bg: hsl(218deg 49.9% 5.1%);
-    --color-bg: oklch(0.15 0.02 260);
-    --color-bg-light: hsl(260deg 2% 20%);
-    --color-bg-light: hsl(217deg 30.2% 9.4%);
-    --color-bg-light: oklch(0.2 0.02 260);
-    --color-text: hsl(260deg 4% 96%);
-    --color-text: hsl(205deg 100% 94.4%);
-    --color-text: oklch(0.96 0.04 260);
-    --color-text-muted: hsl(260deg 4% 76%);
-    --color-text-muted: hsl(217deg 28.1% 71.7%);
-    --color-text-muted: oklch(0.76 0.04 260);
-    --color-highlight: hsl(260deg 4% 50%);
-    --color-highlight: hsl(217deg 17.5% 40.9%);
-    --color-highlight: oklch(0.5 0.04 260);
-    --color-border: hsl(260deg 4% 40%);
-    --color-border: hsl(217deg 22.6% 29.9%);
-    --color-border: oklch(0.4 0.04 260);
-    --color-border-muted: hsl(260deg 4% 30%);
-    --color-border-muted: hsl(217deg 32.1% 19.6%);
-    --color-border-muted: oklch(0.3 0.04 260);
-
-    --color-text-modal: var(--color-text);
-    --color-text-bottomsheet: var(--color-text);
-    --color-bg-bottomsheet: hsl(260deg 2% 30%);
-    --color-bg-bottomsheet: hsl(217deg 16.7% 18.8%);
-    --color-bg-bottomsheet: oklch(0.3 0.02 260);
-
-    --gradient: linear-gradient(
-      0deg,
-      var(--color-bg) 95%,
-      var(--color-bg-light)
-    );
-    --gradient-hover: linear-gradient(
-      0deg,
-      var(--color-bg),
-      var(--color-bg-light)
-    );
-
-    /* SHADOWS */
-    --shadow-sm: 0 1px 1px hsla(0, 0%, 0%, 0.07), 0 2px 2px hsla(0, 0%, 0%, 0.1);
-    --shadow-md: 0 2px 2px hsla(0, 0%, 0%, 0.07),
-      0 4px 4px hsla(0, 0%, 0%, 0.15);
+      --color-text-modal: var(--color-text);
+      --color-text-bottomsheet: var(--color-text);
+      --color-bg-bottomsheet: oklch(0.3 0.02 260);
+    }
   }
 
   /* TABLET PORTRAIT STYLES */
