@@ -47,7 +47,7 @@ const UploadForm = ({}: Props) => {
     if (hasSentSignaturePhoto) {
       setDisableSignature(true);
       if (form.tag === PhotoTags.SIGNATURES) {
-        setForm({ ...form, tag: PhotoTags.PARTY });
+        setForm((prev) => ({ ...prev, tag: PhotoTags.PARTY }));
       }
     }
   };
@@ -76,14 +76,14 @@ const UploadForm = ({}: Props) => {
     try {
       setIsLoading(true);
 
-      const { photo } = await actions.uploadPhoto.orThrow({
+      await actions.uploadPhoto.orThrow({
         uri: form.photoUri,
         photoTag: form.tag,
         message: form.message,
       });
 
+      setForm({ message: "", photoUri: "", tag: PhotoTags.PARTY });
       saveToLocalStorage("hasSentSignaturePhoto", "true");
-      resetForm();
     } catch (e) {
       alert(
         "Ha ocurrido un error al subir la imagen. Por favor, intentá nuevamente.",
@@ -91,15 +91,8 @@ const UploadForm = ({}: Props) => {
     } finally {
       setIsLoading(false);
       checkIfHasSendSignaturePhoto();
+      fileInputRef.current!.value = "";
     }
-  };
-
-  const resetForm = () => {
-    const initialTag = disableSignature
-      ? PhotoTags.PARTY
-      : PhotoTags.SIGNATURES;
-    setForm({ tag: initialTag, message: "", photoUri: "" });
-    fileInputRef.current!.value = "";
   };
 
   return (

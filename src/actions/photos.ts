@@ -30,18 +30,22 @@ export const photos = {
         };
 
         const photoKey = `photo:${photoTag}:${id}`;
-
-        const task = await redisClient.hgetall<Photo>(photoKey);
+        const existingPhoto = await redisClient.hgetall<Photo>(photoKey);
 
         const multi = redisClient.multi();
-        multi.hset(photoKey, {
-          ...task,
-          photoUrl: uploadedPhoto.url,
-        });
-        multi.zadd(`photos:${photoTag}:z`, {
-          member: photoKey,
-          score: Date.now(),
-        });
+        if (existingPhoto) {
+          multi.hset(photoKey, {
+            ...existingPhoto,
+            url: uploadedPhoto.url,
+            message: uploadedPhoto.message,
+          });
+        } else {
+          multi.hset(photoKey, uploadedPhoto);
+          multi.zadd(`photos:${photoTag}:z`, {
+            member: photoKey,
+            score: Date.now(),
+          });
+        }
         await multi.exec();
 
         return { photo: uploadedPhoto };
