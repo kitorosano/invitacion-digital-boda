@@ -1,4 +1,5 @@
 import type { TaskWithPhotos } from "../../types";
+import { lowQualityPhotoUrl } from "../../utils/cloudinaryHelpers";
 import "./styles/TasksGalleryItem.css";
 
 interface Props {
@@ -34,7 +35,7 @@ const TasksGalleryItem = ({
             key={taskWithPhoto.photoUrl}
             className={index === 0 ? "active" : ""}
           >
-            <img src={taskWithPhoto.photoUrl} />
+            <img src={lowQualityPhotoUrl(taskWithPhoto.photoUrl)} />
           </picture>
         ))}
       </div>
