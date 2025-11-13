@@ -11,7 +11,7 @@ export interface Props {
 const usePhotos = ({
   initialPhotos = [],
   tag,
-  spotlightIntervalMs = 10000,
+  spotlightIntervalMs = 5000,
 }: Props) => {
   const [photos, setPhotos] = useState<Photo[]>(initialPhotos);
   const [currentPhoto, setCurrentPhoto] = useState<Photo | null>(null);
@@ -32,8 +32,22 @@ const usePhotos = ({
   };
 
   useEffect(() => {
-    
-  }, [photos])
+    if (photos.length === 0) return;
+
+    const interval = setInterval(() => {
+      setCurrentPhoto((prevPhoto) => {
+        if (!prevPhoto) return photos[0];
+
+        const currentIndex = photos.findIndex(
+          (photo) => photo.id === prevPhoto.id,
+        );
+        const nextIndex = (currentIndex + 1) % photos.length;
+        return photos[nextIndex];
+      });
+    }, spotlightIntervalMs);
+
+    return () => clearInterval(interval);
+  }, [photos, spotlightIntervalMs]);
 
   return { currentPhoto };
 };
