@@ -42,6 +42,8 @@ const usePhotos = ({
           (photo) => photo.id === prevPhoto.id,
         );
         const nextIndex = (currentIndex + 1) % photos.length;
+        console.log({ prevPhoto, currentIndex, nextIndex });
+
         return photos[nextIndex];
       });
     }, spotlightIntervalMs);

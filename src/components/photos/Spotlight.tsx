@@ -15,6 +15,7 @@ const Spotlight = ({ initialPhotos, photoTag, intervalMs }: Props) => {
     tag: photoTag,
     spotlightIntervalMs: intervalMs,
   });
+
   return (
     <div className="spotlight-container">
       {currentPhoto && (
@@ -25,6 +26,7 @@ const Spotlight = ({ initialPhotos, photoTag, intervalMs }: Props) => {
           />
         </picture>
       )}
+      <p>{currentPhoto?.message}</p>
     </div>
   );
 };
