@@ -84,6 +84,7 @@ const UploadForm = ({}: Props) => {
 
       setForm({ message: "", photoUri: "", tag: PhotoTags.PARTY });
       saveToLocalStorage("hasSentSignaturePhoto", "true");
+      alert("¡Gracias por subir tu foto!");
     } catch (e) {
       alert(
         "Ha ocurrido un error al subir la imagen. Por favor, intentá nuevamente.",

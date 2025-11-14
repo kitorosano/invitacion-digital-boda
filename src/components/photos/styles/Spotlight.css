@@ -39,9 +39,28 @@
 }
 
 .spotlight-container p {
+  width: 90%;
   margin-top: 1rem;
   font-size: 1.2rem;
   color: var(--color-text-muted);
-  font-family: var(--font-family-secondary);
+  font-family: var(--font-secondary);
   text-align: center;
+  text-wrap: pretty;
+
+  animation: appearText 8s ease forwards;
+}
+
+@keyframes appearText {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  80% {
+    opacity: 0.8;
+  }
+  100% {
+    opacity: 0;
+  }
 }
