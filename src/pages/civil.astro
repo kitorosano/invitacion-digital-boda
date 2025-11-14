@@ -16,7 +16,6 @@ import {
   bgmProps,
   countdownProps,
   dateWithPhotosProps,
-  entrypoints,
   eventDetailsProps,
   footerProps,
   heroProps,
@@ -26,14 +25,12 @@ import {
   photoCollageProps,
   quoteSeparatorProps,
 } from "../constants/invitation";
-import Layout from "../layouts/Layout.astro";
+import InvitationLayout from "../layouts/InvitationLayout.astro";
 
-export const getStaticPaths = () => {
-  return [{ params: { civil: entrypoints.CIVIL } }];
-};
+export const prerender = true;
 ---
 
-<Layout {...layoutProps}>
+<InvitationLayout {...layoutProps}>
   <BGM {...bgmProps} />
   <Hero {...heroProps} />
   <MessageSeparator {...messageSeparatorProps} />
@@ -46,4 +43,4 @@ export const getStaticPaths = () => {
   <PhotoCollage {...photoCollageProps} />
   <Footer {...footerProps} />
   <LargeImageSeparator {...imageSeparatorProps[2]} />
-</Layout>
+</InvitationLayout>

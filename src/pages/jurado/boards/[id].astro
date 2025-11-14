@@ -1,0 +1,56 @@
+---
+import { actions } from "astro:actions";
+import GoBackButton from "../../../components/jurado/GoBackButton.astro";
+import GridGallery from "../../../components/jurado/GridGallery";
+import HeaderTabs from "../../../components/jurado/HeaderTabs.astro";
+import { gridGalleryProps, headerTabsProps } from "../../../constants/jurado";
+import BingoLayout from "../../../layouts/BingoLayout.astro";
+import { GalleryTab } from "../../../types";
+
+const { id } = Astro.params;
+
+const [userPromise, tasksPromise] = await Promise.all([
+  Astro.callAction(actions.getUserById, { id: id ?? "" }),
+  Astro.callAction(actions.getTasksWithPhoto, { userId: id ?? "" }),
+]);
+if (userPromise.error) {
+  Astro.redirect("/jurado/boards");
+}
+
+const initialTaskWithPhoto = [];
+if (tasksPromise.data)
+  initialTaskWithPhoto.push(...tasksPromise.data.tasksWithPhoto);
+---
+
+<BingoLayout
+  title={`Fotos por tablero - Jurado`}
+  requiredOrientation="portrait"
+>
+  <HeaderTabs currentTab={GalleryTab.BOARDS} {...headerTabsProps} />
+
+  <GoBackButton backHref="/jurado/boards" />
+
+  <h2>Tablero de {userPromise.data?.user.name}</h2>
+
+  <GridGallery
+    client:load
+    {...gridGalleryProps}
+    initialTasksWithPhoto={initialTaskWithPhoto}
+    tasksFilters={{
+      ...gridGalleryProps.tasksFilters,
+      userId: id,
+    }}
+  />
+</BingoLayout>
+
+<style>
+  h2 {
+    margin: 0 auto;
+
+    text-align: center;
+    font-size: var(--text-size-lg);
+    font-weight: 400;
+    color: var(--color-text-muted);
+    letter-spacing: 0.02rem;
+  }
+</style>

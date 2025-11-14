@@ -1,0 +1,66 @@
+.spotlight-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  height: 100dvh;
+  margin: 0;
+}
+
+.spotlight-container picture {
+  width: 100%;
+  height: 20dvh;
+  opacity: 0;
+
+  animation: appear 8s ease forwards;
+}
+
+@keyframes appear {
+  50% {
+    opacity: 1;
+    height: 80dvh;
+  }
+  80% {
+    opacity: 0.8;
+    height: 55dvh;
+  }
+  100% {
+    opacity: 0;
+    height: 0;
+  }
+}
+
+.spotlight-container picture img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.spotlight-container p {
+  width: 90%;
+  margin-top: 1rem;
+  font-size: 1.2rem;
+  color: var(--color-text-muted);
+  font-family: var(--font-secondary);
+  text-align: center;
+  text-wrap: pretty;
+
+  animation: appearText 8s ease forwards;
+}
+
+@keyframes appearText {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  80% {
+    opacity: 0.8;
+  }
+  100% {
+    opacity: 0;
+  }
+}

@@ -6,15 +6,31 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "clear:tasks": "node ./scripts/clearTasks.mjs",
+    "clear:users": "node ./scripts/clearUsers.mjs && node ./scripts/clearTasks.mjs",
+    "rescore:tasks": "node ./scripts/rescoreTasks.mjs"
   },
   "dependencies": {
+    "@astrojs/react": "^4.4.0",
     "@astrojs/vercel": "8.2.7",
+    "@nanostores/react": "^1.0.0",
+    "@types/react": "^19.2.2",
+    "@types/react-dom": "^19.2.2",
+    "@upstash/redis": "^1.35.6",
     "@vercel/analytics": "^1.5.0",
     "@vercel/speed-insights": "^1.2.0",
     "astro": "5.13.7",
     "astro-favicons": "^3.1.5",
+    "canvas-confetti": "^1.9.3",
+    "cloudinary": "^2.7.0",
     "date-fns": "4.1.0",
-    "date-fns-tz": "^3.2.0"
+    "date-fns-tz": "^3.2.0",
+    "nanostores": "^1.0.1",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0"
+  },
+  "devDependencies": {
+    "@types/canvas-confetti": "^1.9.0"
   }
 }

@@ -1,0 +1,67 @@
+---
+import { actions } from "astro:actions";
+import { getCollection } from "astro:content";
+import Board from "../components/bingo/Board";
+import Instructions from "../components/bingo/Instructions.astro";
+import RegisterUser from "../components/bingo/RegisterUser.astro";
+import {
+  instructionsProps,
+  layoutProps,
+  registerUserProps,
+} from "../constants/bingo";
+import BingoLayout from "../layouts/BingoLayout.astro";
+import type { TaskWithPhoto } from "../types";
+
+let currentUser = null;
+const hasCookie = Astro.cookies.has("userId");
+
+if (hasCookie) {
+  const { data, error } = await Astro.callAction(actions.getCurrentUser, {});
+  if (error) {
+    await Astro.callAction(actions.deleteUser, {});
+  }
+  if (data) {
+    currentUser = data.user;
+  }
+}
+
+const optionalTasks = await getCollection("optionalTasks");
+const mandatoryTasks = await getCollection("mandatoryTasks");
+const boardProps = {
+  optionalTasks: optionalTasks.map((task) => task.data),
+  mandatoryTasks: mandatoryTasks.map((task) => task.data),
+};
+
+const initialTasksWithPhoto: TaskWithPhoto[] = [];
+
+const { data: tasksData } = await Astro.callAction(
+  actions.getCurrentUserTasks,
+  { allTasks: [...boardProps.optionalTasks, ...boardProps.mandatoryTasks] },
+);
+
+if (tasksData?.tasks.length === 0) {
+  const { data: newTasksData } = await Astro.callAction(
+    actions.initializeTasks,
+    {},
+  );
+  initialTasksWithPhoto.push(...(newTasksData?.tasks || []));
+} else {
+  initialTasksWithPhoto.push(...(tasksData?.tasks || []));
+}
+---
+
+<BingoLayout {...layoutProps} showTheme={true}>
+  <Instructions {...instructionsProps} isLogged={!!currentUser} />
+  {
+    !currentUser ? (
+      <RegisterUser {...registerUserProps} />
+    ) : (
+      <Board
+        {...boardProps}
+        currentUser={currentUser}
+        initialTasksWithPhoto={initialTasksWithPhoto}
+        client:load
+      />
+    )
+  }
+</BingoLayout>

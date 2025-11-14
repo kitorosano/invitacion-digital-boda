@@ -1,0 +1,228 @@
+---
+import Analytics from "@vercel/analytics/astro";
+import SpeedInsights from "@vercel/speed-insights/astro";
+import { ClientRouter } from "astro:transitions";
+
+interface Props {
+  title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="format-detection" content="telephone=no" />
+    <title>{title}</title>
+
+    <SpeedInsights />
+    <Analytics />
+    <ClientRouter />
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>
+
+<style>
+  @font-face {
+    font-family: "Aesthetic";
+    src: url("/fonts/Aesthetic.otf") format("opentype");
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  @font-face {
+    font-family: "Helvetica Neue";
+    src: url("/fonts/HelveticaNeueThin.otf") format("opentype");
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  @font-face {
+    font-family: "Helvetica Neue";
+    src: url("/fonts/HelveticaNeueLight.otf") format("opentype");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  @font-face {
+    font-family: "Helvetica Neue";
+    src: url("/fonts/HelveticaNeueRoman.otf") format("opentype");
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  @font-face {
+    font-family: "Helvetica Neue";
+    src: url("/fonts/HelveticaNeueMedium.otf") format("opentype");
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  @font-face {
+    font-family: "Helvetica Neue";
+    src: url("/fonts/HelveticaNeueBold.otf") format("opentype");
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  @font-face {
+    font-family: "Helvetica Neue";
+    src: url("/fonts/HelveticaNeueBlack.otf") format("opentype");
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  :root {
+    /* FONTS FAMILY */
+    --font-primary: "Helvetica Neue", Arial, sans-serif;
+    --font-secondary: "Aesthetic", cursive;
+
+    /* COLORS */
+    --color-bg-dark: hsl(270deg 52.4% 1.8%);
+    --color-bg: hsl(274deg 33.1% 5.2%);
+    --color-bg-light: hsl(274deg 19.3% 9.5%);
+    --color-text: hsl(285deg 100% 96.1%);
+    --color-text-muted: hsl(273deg 18.3% 72%);
+    --color-highlight: hsl(273deg 11.2% 41.1%);
+    --color-border: hsl(274deg 14.5% 30.2%);
+    --color-border-muted: hsl(274deg 20.6% 19.8%);
+
+    --color-primary: hsl(274deg 65.4% 76.3%);
+    --color-secondary: hsl(89deg 40.1% 59%);
+    --color-danger: hsl(9deg 26% 64.3%);
+    --color-warning: hsl(52deg 18.7% 56.7%);
+    --color-success: hsl(146deg 17.4% 58.9%);
+    --color-info: hsl(217deg 27.7% 64.8%);
+
+    --gradient: linear-gradient(
+      0deg,
+      var(--color-bg) 95%,
+      var(--color-bg-light)
+    );
+    --gradient-hover: linear-gradient(
+      0deg,
+      var(--color-bg),
+      var(--color-bg-light)
+    );
+
+    /* SHADOWS */
+    --shadow-sm: 0 1px 1px hsla(0, 0%, 0%, 0.07), 0 2px 2px hsla(0, 0%, 0%, 0.1);
+    --shadow-md: 0 2px 2px hsla(0, 0%, 0%, 0.07),
+      0 4px 4px hsla(0, 0%, 0%, 0.15);
+
+    /* TEXT SIZE */
+    --text-size-xs: 0.6rem;
+    --text-size-sm: 0.8rem;
+    --text-size-md: 1rem;
+    --text-size-lg: 1.5rem;
+    --text-size-xl: 2rem;
+    --text-size-2xl: 3rem;
+    --text-size-3xl: 4rem;
+  }
+
+  body {
+    font-family: var(--font-primary);
+    background: var(--color-bg-dark);
+    color: var(--color-text);
+
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+
+    overflow-x: hidden;
+    transition: all 0.2s ease;
+  }
+
+  body:has(.tag-option input[type="radio"]:checked[value="party"]) {
+    --color-bg-dark: hsl(95deg 72% 0.9%);
+    --color-bg: hsl(93deg 45.4% 3.5%);
+    --color-bg-light: hsl(91deg 25.2% 7.5%);
+    --color-text: hsl(92deg 65.9% 91.7%);
+    --color-text-muted: hsl(91deg 15.4% 66.4%);
+    --color-highlight: hsl(91deg 13.1% 36.1%);
+    --color-border: hsl(91deg 17.7% 25.4%);
+    --color-border-muted: hsl(90deg 27.8% 15.3%);
+
+    --gradient: linear-gradient(
+      0deg,
+      var(--color-bg) 95%,
+      var(--color-bg-light)
+    );
+    --gradient-hover: linear-gradient(
+      0deg,
+      var(--color-bg),
+      var(--color-bg-light)
+    );
+  }
+
+  @supports (color: oklch(0.92 0.02 260)) {
+    :root {
+      --color-bg-dark: oklch(0.1 0.02 310);
+      --color-bg: oklch(0.15 0.02 310);
+      --color-bg-light: oklch(0.2 0.02 310);
+      --color-text: oklch(0.96 0.04 310);
+      --color-text-muted: oklch(0.76 0.04 310);
+      --color-highlight: oklch(0.5 0.04 310);
+      --color-border: oklch(0.4 0.04 310);
+      --color-border-muted: oklch(0.3 0.04 310);
+
+      --color-primary: oklch(0.76 0.12 310);
+      --color-secondary: oklch(0.76 0.12 130);
+      --color-danger: oklch(0.7 0.05 30);
+      --color-warning: oklch(0.7 0.05 100);
+      --color-success: oklch(0.7 0.05 160);
+      --color-info: oklch(0.7 0.05 260);
+    }
+
+    body:has(.tag-option input[type="radio"]:checked[value="party"]) {
+      --color-bg-dark: oklch(0.1 0.02 130);
+      --color-bg: oklch(0.15 0.02 130);
+      --color-bg-light: oklch(0.2 0.02 130);
+      --color-text: oklch(0.96 0.04 130);
+      --color-text-muted: oklch(0.76 0.04 130);
+      --color-highlight: oklch(0.5 0.04 130);
+      --color-border: oklch(0.4 0.04 130);
+      --color-border-muted: oklch(0.3 0.04 130);
+    }
+  }
+
+  /* TABLET PORTRAIT STYLES */
+  @media (min-width: 576px) {
+    :root {
+      /* TEXT SIZE */
+      --text-size-xs: 0.8rem;
+      --text-size-sm: 1rem;
+      --text-size-md: 1.2rem;
+      --text-size-lg: 1.8rem;
+      --text-size-xl: 2.5rem;
+      --text-size-2xl: 4rem;
+      --text-size-3xl: 5rem;
+    }
+  }
+
+  /* TABLET LANDSCAPE STYLES */
+  @media (min-width: 1024px) {
+    :root {
+      --text-size-xs: 0.8rem;
+      --text-size-sm: 1.1rem;
+      --text-size-md: 1.4rem;
+      --text-size-lg: 2rem;
+      --text-size-xl: 3rem;
+      --text-size-2xl: 4.5rem;
+      --text-size-3xl: 6rem;
+    }
+  }
+</style>

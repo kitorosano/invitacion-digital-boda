@@ -1,0 +1,13 @@
+.board-gallery-container {
+  margin: 4rem 2rem 0 2rem;
+}
+
+.board-gallery-container ol {
+  display: flex;
+  flex-direction: column;
+
+  margin: 0 auto;
+  padding: 0;
+
+  list-style: none;
+}

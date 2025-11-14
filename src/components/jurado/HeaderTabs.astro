@@ -1,0 +1,139 @@
+---
+import { GalleryTab } from "../../types";
+
+interface Props {
+  tabNames: string[];
+  currentTab: GalleryTab;
+}
+
+const { tabNames, currentTab } = Astro.props;
+
+const isAllTabActiveClass = currentTab === GalleryTab.ALL ? "active" : "";
+const isBoardsTabActiveClass = currentTab === GalleryTab.BOARDS ? "active" : "";
+const isTasksTabActiveClass = currentTab === GalleryTab.TASKS ? "active" : "";
+---
+
+<nav class="header-tabs-container" transition:persist="header-tabs">
+  <ul>
+    <li>
+      <a href="/jurado" class={isAllTabActiveClass}
+        >{tabNames[GalleryTab.ALL]}</a
+      >
+    </li>
+    <li>
+      <a href="/jurado/boards" class={isBoardsTabActiveClass}
+        >{tabNames[GalleryTab.BOARDS]}</a
+      >
+    </li>
+    <li>
+      <a href="/jurado/tasks" class={isTasksTabActiveClass}
+        >{tabNames[GalleryTab.TASKS]}</a
+      >
+    </li>
+
+    <span id="active-overlay"></span>
+  </ul>
+</nav>
+
+<style>
+  .header-tabs-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: fit-content;
+    margin: 1rem auto;
+    padding: 0 0.5rem;
+
+    border: 2px solid var(--color-bg);
+    border-top: 2px solid var(--color-highlight);
+    border-radius: 2rem;
+
+    background: var(--color-bg);
+    box-shadow: var(--shadow-sm);
+    z-index: 10;
+  }
+  .header-tabs-container > ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+
+    position: relative;
+  }
+  .header-tabs-container > ul > li > a {
+    display: inline-flex;
+    padding: 1rem;
+
+    text-decoration: none;
+    font-size: var(--text-size-md);
+    font-weight: 600;
+    color: var(--color-text-muted);
+
+    transition: color 0.2s ease-in-out;
+  }
+
+  .header-tabs-container > ul > li > a.active {
+    color: var(--color-text);
+  }
+
+  #active-overlay {
+    position: absolute;
+    top: 50%;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    background-color: hsl(260deg 2% 100%);
+    border: 2px solid var(--color-highlight);
+    border-radius: 2rem;
+
+    padding: 0 1rem;
+    transform: translateY(-50%) translateX(-1rem);
+    transition: all 0.2s ease-in-out;
+
+    box-shadow: var(--shadow-md);
+
+    z-index: -1;
+  }
+</style>
+
+<script>
+  const $activeOverlay = document.getElementById(
+    "active-overlay",
+  ) as HTMLSpanElement;
+  const $activeTab = document.querySelector(
+    ".header-tabs-container ul li a.active",
+  ) as HTMLLIElement;
+  const $tabs = document.querySelectorAll(
+    ".header-tabs-container ul li a",
+  ) as NodeListOf<HTMLLIElement>;
+
+  const updateOverlayPosition = (activeTab: HTMLLIElement) => {
+    const tabRect = activeTab.getBoundingClientRect();
+
+    const left = activeTab.offsetLeft;
+    const width = tabRect.width;
+    const height = tabRect.height;
+
+    $activeOverlay.style.left = `${left}px`;
+    $activeOverlay.style.width = `${width}px`;
+    $activeOverlay.style.height = `${height}px`;
+  };
+
+  if ($activeTab) {
+    updateOverlayPosition($activeTab);
+  }
+
+  $tabs.forEach((tab) => {
+    tab.addEventListener("click", (e) => {
+      $tabs.forEach((t) => t.classList.remove("active"));
+      tab.classList.add("active");
+
+      updateOverlayPosition(tab);
+    });
+  });
+</script>

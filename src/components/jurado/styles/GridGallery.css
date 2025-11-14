@@ -1,0 +1,36 @@
+.grid-gallery-container {
+  width: 100%;
+}
+
+.no-photos-message {
+  margin-top: 3rem;
+
+  font-size: var(--text-size-sm);
+  color: var(--color-text-muted);
+  text-align: center;
+  font-style: italic;
+}
+
+.grid-gallery-container ul {
+  width: 100%;
+
+  margin: 1rem 0;
+  padding: 1rem;
+  box-sizing: border-box;
+
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 0.5rem;
+
+  list-style: none;
+
+  &.bingo-board-layout {
+    width: 90%;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+  }
+
+  &.with-filters {
+    margin: 0rem;
+  }
+}

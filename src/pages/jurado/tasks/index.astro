@@ -1,0 +1,38 @@
+---
+import { actions } from "astro:actions";
+import { getCollection } from "astro:content";
+import GoUpButton from "../../../components/jurado/GoUpButton.astro";
+import HeaderTabs from "../../../components/jurado/HeaderTabs.astro";
+import TasksGallery from "../../../components/jurado/TasksGallery";
+import {
+  headerTabsProps,
+  layoutProps,
+  tasksGalleryProps,
+} from "../../../constants/jurado";
+import BingoLayout from "../../../layouts/BingoLayout.astro";
+import { GalleryTab } from "../../../types";
+
+const mandatoryTasks = (await getCollection("mandatoryTasks")).map(
+  (task) => task.data,
+);
+
+const initialGroupedTasks = [];
+for (const task of mandatoryTasks) {
+  const { data } = await Astro.callAction(actions.getTasksWithPhoto, {
+    taskId: task.id,
+  });
+  if (data)
+    initialGroupedTasks.push({ ...task, tasksWithPhoto: data.tasksWithPhoto });
+}
+---
+
+<BingoLayout requiredOrientation="portrait" {...layoutProps}>
+  <HeaderTabs currentTab={GalleryTab.TASKS} {...headerTabsProps} />
+  <TasksGallery
+    initialGroupedTasks={initialGroupedTasks}
+    mandatoryTasks={mandatoryTasks}
+    {...tasksGalleryProps}
+    client:load
+  />
+  <GoUpButton />
+</BingoLayout>

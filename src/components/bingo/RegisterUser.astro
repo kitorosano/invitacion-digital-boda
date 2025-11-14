@@ -1,0 +1,218 @@
+---
+interface Props {
+  maxUsernameLength: number;
+}
+
+const { maxUsernameLength } = Astro.props;
+---
+
+<form class="register-user-container">
+  <div>
+    <input
+      type="text"
+      name="name"
+      placeholder="Ingresa tu nombre..."
+      autocomplete="off"
+      maxlength={maxUsernameLength}
+      aria-describedby="error"
+      transition:persist
+    />
+    <button type="submit" disabled>Guardar</button>
+  </div>
+
+  <p id="error"></p>
+</form>
+<div class="loader-overlay">
+  <div class="loader"></div>
+  Preparando tu tablero...
+</div>
+
+<style>
+  .register-user-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 70%;
+    height: 100%;
+
+    margin: 2rem auto;
+    padding: 1rem;
+
+    border-radius: 2rem;
+    box-shadow: var(--shadow-md);
+
+    background: var(--color-bg);
+  }
+
+  .register-user-container > div {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .register-user-container input {
+    width: 100%;
+    height: 40px;
+
+    margin: 0;
+    padding: 0.5rem 1rem;
+
+    color: var(--color-text);
+    font-size: var(--text-size-md);
+
+    border: none;
+    border-top-left-radius: 1rem;
+    border-bottom-left-radius: 1rem;
+    box-shadow:
+      2px 1px 1px hsla(0, 0%, 0%, 0.07),
+      2px 2px 2px hsla(0, 0%, 0%, 0.1);
+    outline: none;
+
+    transition: all 0.3s ease-in-out;
+    -webkit-transition: all 0.3s ease-in-out;
+    -moz-transition: all 0.3s ease-in-out;
+    background: var(--color-bg-light);
+  }
+
+  .register-user-container button {
+    margin: 0;
+    width: 40%;
+    height: 56px;
+    padding: 0.5rem 1rem 0.5rem 0;
+
+    font-size: var(--text-size-sm);
+    font-weight: 300;
+    color: var(--color-text-muted);
+
+    border: none;
+    border-top-right-radius: 1rem;
+    border-bottom-right-radius: 1rem;
+    box-shadow:
+      2px 1px 1px hsla(0, 0%, 0%, 0.07),
+      2px 2px 2px hsla(0, 0%, 0%, 0.1);
+
+    transition: all 0.2s ease-in;
+
+    background: var(--color-bg-light);
+    cursor: pointer;
+    animation: textPulse 2s infinite;
+  }
+
+  @keyframes textPulse {
+    0% {
+      font-size: var(--text-size-sm);
+    }
+    50% {
+      font-size: calc(var(--text-size-sm) + 2px);
+    }
+    100% {
+      font-size: var(--text-size-sm);
+    }
+  }
+
+  .register-user-container button:disabled {
+    color: transparent;
+    animation: none;
+  }
+
+  .register-user-container > p {
+    margin: 1rem 0;
+    font-size: var(--text-size-sm);
+    color: var(--color-danger);
+    text-align: center;
+
+    display: none;
+  }
+
+  .loader-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+
+    width: 100%;
+    height: 100%;
+
+    color: var(--color-bg);
+    font-size: var(--text-size-sm);
+    font-weight: 600;
+
+    background: rgba(0, 0, 0, 0.3);
+    z-index: 10;
+  }
+
+  .loader-overlay > .loader {
+    border: 4px solid var(--color-bg);
+    border-top: 4px solid transparent;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+
+    animation: spin 1s linear infinite;
+  }
+
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+</style>
+
+<script>
+  import { actions, isInputError } from "astro:actions";
+  import { navigate } from "astro:transitions/client";
+
+  document.addEventListener("DOMContentLoaded", () => {
+    const $form = document.querySelector("form") as HTMLFormElement;
+    const $input = $form.querySelector("input") as HTMLInputElement;
+    const $button = $form.querySelector("button") as HTMLButtonElement;
+    const $error = $form.querySelector("#error") as HTMLParagraphElement;
+    const $loader = document.querySelector(".loader-overlay") as HTMLDivElement;
+
+    $input.addEventListener("input", () => {
+      if ($input.value.trim() !== "") {
+        $button.disabled = false;
+      } else {
+        $button.disabled = true;
+      }
+    });
+
+    $form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const name = $input.value.trim();
+      if (name === "") return;
+
+      $button.disabled = true;
+      $loader.style.display = "flex";
+
+      const { error } = await actions.saveUser({ name });
+
+      if (error) {
+        if (isInputError(error)) {
+          $error.textContent = error.fields.name?.join(", ") || error.message;
+        } else {
+          $error.textContent = error.message;
+        }
+        $error.style.display = "block";
+        $button.disabled = false;
+        $loader.style.display = "none";
+        return;
+      }
+
+      navigate("/bingo", {
+        history: "replace",
+      });
+    });
+  });
+</script>

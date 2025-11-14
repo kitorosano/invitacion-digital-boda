@@ -1,29 +1,21 @@
 // @ts-check
+import react from "@astrojs/react";
 import vercel from "@astrojs/vercel";
 import favicons from "astro-favicons";
 import { defineConfig, envField } from "astro/config";
 
 // https://astro.build/config
 export default defineConfig({
-  output: "static",
+  output: "server",
   adapter: vercel(),
-  integrations: [favicons()],
+  integrations: [favicons(), react()],
+  devToolbar: { enabled: false },
   env: {
     schema: {
       // ## Invitation
       // Global
       INVITATION_SITE_TITLE: envField.string({
         default: "Invitación de boda",
-        context: "server",
-        access: "public",
-      }),
-      INVITATION_SITE_ENTRYPOINT_CEREMONY: envField.string({
-        default: "",
-        context: "server",
-        access: "public",
-      }),
-      INVITATION_SITE_ENTRYPOINT_CIVIL: envField.string({
-        default: "civil",
         context: "server",
         access: "public",
       }),
@@ -248,6 +240,111 @@ export default defineConfig({
       INVITATION_FOOTER_MESSAGE_TEXT: envField.string({
         default: "Te esperamos",
         context: "server",
+        access: "public",
+      }),
+
+      // ## Bingo
+      // Global
+      BINGO_SITE_TITLE: envField.string({
+        default: "Bingo Boda",
+        context: "server",
+        access: "public",
+      }),
+      BINGO_CONTENT_TASKS_STARTING_INDEX: envField.number({
+        default: 1000,
+        context: "server",
+        access: "public",
+      }),
+      // Instructions
+      BINGO_INSTRUCTIONS_NOT_LOGGED_TITLE: envField.string({
+        default: "¡Bienvenido!",
+        context: "server",
+        access: "public",
+      }),
+      BINGO_INSTRUCTIONS_NOT_LOGGED_DESCRIPTION: envField.string({
+        default:
+          "Por favor ingresa tu nombre y así podrás ver las tareas del bingo.",
+        context: "server",
+        access: "public",
+      }),
+      BINGO_INSTRUCTIONS_LOGGED_TITLE: envField.string({
+        default: "Instrucciones",
+        context: "server",
+        access: "public",
+      }),
+      BINGO_INSTRUCTIONS_LOGGED_DESCRIPTION: envField.string({
+        default:
+          "Completa el tablero subiendo la foto para cada tarea realizada. ¡Diviértete!",
+        context: "server",
+        access: "public",
+      }),
+      // Board
+      BINGO_CLOUDINARY_UPLOAD_PRESET: envField.string({
+        default: "",
+        context: "server",
+        access: "public",
+      }),
+
+      // ## Cloudinary
+      CLOUDINARY_CLOUD_NAME: envField.string({
+        default: "",
+        context: "server",
+        access: "public",
+      }),
+      CLOUDINARY_API_KEY: envField.string({
+        default: "",
+        context: "server",
+        access: "secret",
+      }),
+      CLOUDINARY_API_SECRET: envField.string({
+        default: "",
+        context: "server",
+        access: "secret",
+      }),
+      // ## Redis
+      REDIS_STORAGE_KV_REST_API_URL: envField.string({
+        default: "",
+        context: "server",
+        access: "secret",
+      }),
+      REDIS_STORAGE_KV_REST_API_TOKEN: envField.string({
+        default: "",
+        context: "server",
+        access: "secret",
+      }),
+
+      // ## Jurado
+      JURADO_HEADER_TABS: envField.string({
+        default: "All|Boards|Tasks",
+        context: "server",
+        access: "public",
+      }),
+      JURADO_GALLERY_REFETCH_INTERVAL_MS: envField.number({
+        default: 5000,
+        context: "server",
+        access: "public",
+      }),
+      JURADO_GALLERY_TASKS_COLORS: envField.string({
+        default: "#fff",
+        context: "server",
+        access: "public",
+      }),
+
+      // ## Fotos
+      // Global
+      PHOTOS_SITE_TITLE: envField.string({
+        default: "Fotos de la boda",
+        context: "server",
+        access: "public",
+      }),
+      PHOTOS_CLOUDINARY_UPLOAD_PRESET: envField.string({
+        default: "",
+        context: "server",
+        access: "public",
+      }),
+      PHOTOS_SPOTLIGHT_INTERVAL_MS: envField.number({
+        default: 10000,
+        context: "client",
         access: "public",
       }),
     },

@@ -1,0 +1,57 @@
+---
+import { actions } from "astro:actions";
+import { getCollection } from "astro:content";
+import GoBackButton from "../../../components/jurado/GoBackButton.astro";
+import GoUpButton from "../../../components/jurado/GoUpButton.astro";
+import GridGallery from "../../../components/jurado/GridGallery";
+import HeaderTabs from "../../../components/jurado/HeaderTabs.astro";
+import { gridGalleryProps, headerTabsProps } from "../../../constants/jurado";
+import BingoLayout from "../../../layouts/BingoLayout.astro";
+import { GalleryTab } from "../../../types";
+
+const { id } = Astro.params;
+
+const [task] = await getCollection(
+  "mandatoryTasks",
+  (task) => task.data.id === id,
+);
+
+const initialTaskWithPhoto = [];
+const { data } = await Astro.callAction(actions.getTasksWithPhoto, {
+  taskId: id,
+});
+if (data) initialTaskWithPhoto.push(...data.tasksWithPhoto);
+---
+
+<BingoLayout title={`Fotos por tarea - Jurado`} requiredOrientation="portrait">
+  <HeaderTabs currentTab={GalleryTab.TASKS} {...headerTabsProps} />
+
+  <GoBackButton backHref="/jurado/tasks" />
+
+  <h2>"{task.data.description}"</h2>
+
+  <GridGallery
+    client:load
+    {...gridGalleryProps}
+    initialTasksWithPhoto={initialTaskWithPhoto}
+    showFilterControls={true}
+    tasksFilters={{
+      ...gridGalleryProps.tasksFilters,
+      taskId: id,
+    }}
+  />
+
+  <GoUpButton />
+</BingoLayout>
+
+<style>
+  h2 {
+    margin: 0 auto;
+
+    text-align: center;
+    font-size: var(--text-size-lg);
+    font-weight: 400;
+    color: var(--color-text-muted);
+    letter-spacing: 0.02rem;
+  }
+</style>

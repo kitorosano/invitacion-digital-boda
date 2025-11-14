@@ -1,0 +1,21 @@
+---
+import UploadForm from "../../components/photos/UploadForm.tsx";
+import { layoutProps } from "../../constants/photos";
+import PhotosLayout from "../../layouts/PhotosLayout.astro";
+---
+
+<PhotosLayout {...layoutProps}>
+  <h1>Compartí con nosotros</h1>
+
+  <UploadForm client:only />
+</PhotosLayout>
+
+<style>
+  h1 {
+    margin: 2rem auto 0 auto;
+
+    text-align: center;
+    font-family: "Aesthetic", sans-serif;
+    font-size: 2rem;
+  }
+</style>

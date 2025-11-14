@@ -1,0 +1,48 @@
+---
+import ArrowLeftIcon from "./icons/ArrowLeft.astro";
+
+interface Props {
+  backHref: string;
+}
+
+const { backHref } = Astro.props;
+---
+
+<div class="go-back-button-container">
+  <a href={backHref} aria-label="Volver atrás">
+    <ArrowLeftIcon />
+  </a>
+</div>
+
+<style>
+  .go-up-button-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .go-back-button-container a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 1rem;
+
+    width: 4rem;
+    height: 4rem;
+
+    color: var(--color-text);
+
+    border: none;
+    border-radius: 50%;
+
+    cursor: pointer;
+
+    background-color: var(--color-bg);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease;
+  }
+
+  .go-back-button-container a:hover {
+    background-color: var(--color-bg-light);
+  }
+</style>

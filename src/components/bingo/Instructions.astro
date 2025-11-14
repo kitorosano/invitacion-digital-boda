@@ -1,0 +1,49 @@
+---
+interface Props {
+  isLogged: boolean;
+  notLoggedTitle: string;
+  notLoggedDescription: string;
+  loggedTitle: string;
+  loggedDescription: string;
+}
+
+const {
+  isLogged,
+  notLoggedTitle,
+  notLoggedDescription,
+  loggedTitle,
+  loggedDescription,
+} = Astro.props;
+---
+
+<div class="instructions-container">
+  <h2>{isLogged ? loggedTitle : notLoggedTitle}</h2>
+  <p>{isLogged ? loggedDescription : notLoggedDescription}</p>
+</div>
+
+<style>
+  .instructions-container {
+    width: 100%;
+    margin: 1rem auto 1rem auto;
+
+    text-align: center;
+  }
+
+  .instructions-container h2 {
+    margin: 0 0 0.5rem 0;
+
+    font-size: var(--text-size-lg);
+    color: var(--color-text);
+  }
+
+  .instructions-container p {
+    margin: 0 auto;
+    font-size: var(--text-size-md);
+    color: var(--color-text-muted);
+    line-height: 1.5;
+    letter-spacing: 0.02rem;
+
+    max-width: 80%;
+    text-wrap: balance;
+  }
+</style>

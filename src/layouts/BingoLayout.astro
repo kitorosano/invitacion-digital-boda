@@ -1,0 +1,297 @@
+---
+import Analytics from "@vercel/analytics/astro";
+import SpeedInsights from "@vercel/speed-insights/astro";
+import { ClientRouter } from "astro:transitions";
+import OrientationIcon from "../components/jurado/icons/Orientation.astro";
+import type { Orientation } from "../types";
+import Theme from "../components/shared/icons/Theme.astro";
+import ThemeToggler from "../components/shared/ThemeToggler.astro";
+
+interface Props {
+  title: string;
+  requiredOrientation?: Orientation;
+  showTheme?: boolean;
+}
+
+const { title, requiredOrientation, showTheme } = Astro.props;
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="format-detection" content="telephone=no" />
+    <title>{title}</title>
+
+    <SpeedInsights />
+    <Analytics />
+    <ClientRouter />
+  </head>
+  <body>
+    {showTheme && <ThemeToggler />}
+
+    <slot />
+
+    {
+      requiredOrientation && (
+        <div class="orientation-overlay">
+          <OrientationIcon size={192} orientation={requiredOrientation} />
+          ¡Gira tu dispositivo!
+        </div>
+      )
+    }
+  </body>
+</html>
+
+<style>
+  @font-face {
+    font-family: "Helvetica Neue";
+    src: url("/fonts/HelveticaNeueThin.otf") format("opentype");
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  @font-face {
+    font-family: "Helvetica Neue";
+    src: url("/fonts/HelveticaNeueLight.otf") format("opentype");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  @font-face {
+    font-family: "Helvetica Neue";
+    src: url("/fonts/HelveticaNeueRoman.otf") format("opentype");
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  @font-face {
+    font-family: "Helvetica Neue";
+    src: url("/fonts/HelveticaNeueMedium.otf") format("opentype");
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  @font-face {
+    font-family: "Helvetica Neue";
+    src: url("/fonts/HelveticaNeueBold.otf") format("opentype");
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  @font-face {
+    font-family: "Helvetica Neue";
+    src: url("/fonts/HelveticaNeueBlack.otf") format("opentype");
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  :root {
+    /* FONTS FAMILY */
+    --font-primary: "Helvetica Neue", Arial, sans-serif;
+
+    /* COLORS */
+    --color-bg-dark: hsl(217deg 45.8% 90.8%);
+    --color-bg: hsl(216deg 100% 95.9%);
+    --color-bg-light: hsl(180deg 100% 98.5%);
+    --color-text: hsl(221deg 81.2% 6%);
+    --color-text-muted: hsl(217deg 22.6% 29.9%);
+    --color-highlight: hsl(180deg 100% 97%);
+    --color-border: var(--color-bg);
+    --color-border-muted: hsl(217deg 21.8% 64.3%);
+
+    --color-danger: hsl(8deg 32% 41.3%);
+    --color-warning: hsl(51deg 45.6% 29.6%);
+    --color-success: hsl(150deg 36.5% 32.5%);
+    --color-info: hsl(217deg 33.6% 42.5%);
+
+    --color-text-modal: var(--color-bg-light);
+    --color-text-bottomsheet: var(--color-text);
+    --color-bg-bottomsheet: var(--color-bg);
+
+    --gradient: linear-gradient(
+      0deg,
+      var(--color-bg) 95%,
+      var(--color-bg-light)
+    );
+    --gradient-hover: linear-gradient(
+      0deg,
+      var(--color-bg),
+      var(--color-bg-light)
+    );
+
+    /* SHADOWS */
+    --shadow-sm: 0 1px 1px hsla(0, 0%, 0%, 0.07), 0 2px 2px hsla(0, 0%, 0%, 0.1);
+    --shadow-md: 0 2px 2px hsla(0, 0%, 0%, 0.07),
+      0 4px 4px hsla(0, 0%, 0%, 0.15);
+
+    /* TEXT SIZE */
+    --text-size-xs: 0.6rem;
+    --text-size-sm: 0.8rem;
+    --text-size-md: 1rem;
+    --text-size-lg: 1.5rem;
+    --text-size-xl: 2rem;
+    --text-size-2xl: 3rem;
+    --text-size-3xl: 4rem;
+  }
+
+  body {
+    font-family: var(--font-primary);
+    background: var(--color-bg-dark);
+    color: var(--color-dark);
+
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+
+    overflow-x: hidden;
+    transition: all 0.2s ease;
+  }
+  body.dark {
+    --color-bg-dark: hsl(224deg 73% 2%);
+    --color-bg: hsl(218deg 49.9% 5.1%);
+    --color-bg-light: hsl(217deg 30.2% 9.4%);
+    --color-text: hsl(205deg 100% 94.4%);
+    --color-text-muted: hsl(217deg 28.1% 71.7%);
+    --color-highlight: hsl(217deg 17.5% 40.9%);
+    --color-border: hsl(217deg 22.6% 29.9%);
+    --color-border-muted: hsl(217deg 32.1% 19.6%);
+
+    --color-text-modal: var(--color-text);
+    --color-text-bottomsheet: var(--color-text);
+    --color-bg-bottomsheet: hsl(217deg 16.7% 18.8%);
+
+    --gradient: linear-gradient(
+      0deg,
+      var(--color-bg) 95%,
+      var(--color-bg-light)
+    );
+    --gradient-hover: linear-gradient(
+      0deg,
+      var(--color-bg),
+      var(--color-bg-light)
+    );
+
+    /* SHADOWS */
+    --shadow-sm: 0 1px 1px hsla(0, 0%, 0%, 0.07), 0 2px 2px hsla(0, 0%, 0%, 0.1);
+    --shadow-md: 0 2px 2px hsla(0, 0%, 0%, 0.07),
+      0 4px 4px hsla(0, 0%, 0%, 0.15);
+  }
+
+  @supports (color: oklch(0.92 0.02 260)) {
+    :root {
+      /* COLORS */
+      --color-bg-dark: oklch(0.92 0.02 260);
+      --color-bg: oklch(0.96 0.02 260);
+      --color-bg-light: oklch(1 0.02 260);
+      --color-text: oklch(0.15 0.04 260);
+      --color-text-muted: oklch(0.4 0.04 260);
+      --color-highlight: oklch(1 0.04 260);
+      --color-border: var(--color-bg);
+      --color-border-muted: oklch(0.7 0.04 260);
+
+      --color-danger: oklch(0.5 0.08 30);
+      --color-warning: oklch(0.5 0.08 100);
+      --color-success: oklch(0.5 0.08 160);
+      --color-info: oklch(0.5 0.08 260);
+    }
+
+    body.dark {
+      --color-bg-dark: oklch(0.1 0.02 260);
+      --color-bg: oklch(0.15 0.02 260);
+      --color-bg-light: oklch(0.2 0.02 260);
+      --color-text: oklch(0.96 0.04 260);
+      --color-text-muted: oklch(0.76 0.04 260);
+      --color-highlight: oklch(0.5 0.04 260);
+      --color-border: oklch(0.4 0.04 260);
+      --color-border-muted: oklch(0.3 0.04 260);
+
+      --color-text-modal: var(--color-text);
+      --color-text-bottomsheet: var(--color-text);
+      --color-bg-bottomsheet: oklch(0.3 0.02 260);
+    }
+  }
+
+  /* TABLET PORTRAIT STYLES */
+  @media (min-width: 576px) {
+    :root {
+      /* TEXT SIZE */
+      --text-size-xs: 0.8rem;
+      --text-size-sm: 1rem;
+      --text-size-md: 1.2rem;
+      --text-size-lg: 1.8rem;
+      --text-size-xl: 2.5rem;
+      --text-size-2xl: 4rem;
+      --text-size-3xl: 5rem;
+    }
+  }
+
+  /* TABLET LANDSCAPE STYLES */
+  @media (min-width: 1024px) {
+    :root {
+      --text-size-xs: 0.8rem;
+      --text-size-sm: 1.1rem;
+      --text-size-md: 1.4rem;
+      --text-size-lg: 2rem;
+      --text-size-xl: 3rem;
+      --text-size-2xl: 4.5rem;
+      --text-size-3xl: 6rem;
+    }
+  }
+</style>
+
+<style>
+  .orientation-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+
+    display: none;
+    margin: auto;
+
+    background: rgba(0, 0, 0, 0.6);
+    overflow: hidden;
+    z-index: 5;
+
+    color: var(--color-bg-light);
+    font-size: 1.5rem;
+  }
+
+  .orientation-overlay.active {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+</style>
+
+<script data-astro-rerun is:inline define:vars={{ requiredOrientation }}>
+  document.addEventListener("astro:page-load", () => {
+    if (!requiredOrientation) return;
+
+    const $orientationOverlay = document.querySelector(".orientation-overlay");
+
+    let currentOrientation =
+      window.innerWidth > window.innerHeight ? "landscape" : "portrait";
+
+    if (currentOrientation !== requiredOrientation) {
+      $orientationOverlay.classList.add("active");
+
+      setTimeout(() => {
+        $orientationOverlay?.classList.remove("active");
+      }, 2000);
+    } else {
+      $orientationOverlay?.classList.remove("active");
+    }
+  });
+</script>

@@ -1,0 +1,50 @@
+---
+import ArrowUpIcon from "./icons/ArrowUp.astro";
+---
+
+<div class="go-up-button-container" transition:persist="go-up-button">
+  <button>
+    <ArrowUpIcon />
+  </button>
+</div>
+
+<style>
+  .go-up-button-container {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+  }
+
+  .go-up-button-container button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 3rem;
+    height: 3rem;
+
+    background-color: var(--color-bg);
+
+    border: none;
+    border-radius: 50%;
+
+    cursor: pointer;
+
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease;
+  }
+
+  .go-up-button-container button:hover {
+    background-color: var(--color-bg-light);
+  }
+</style>
+
+<script>
+  const $button = document.querySelector(
+    ".go-up-button-container button",
+  ) as HTMLButtonElement;
+
+  $button.addEventListener("click", () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  });
+</script>
