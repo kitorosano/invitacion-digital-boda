@@ -5,53 +5,73 @@ import type { Photo } from "../types";
 export interface Props {
   initialPhotos?: Photo[];
   tag: string;
-  spotlightIntervalMs?: number;
+  spotlightInterval: number;
+  refetchIntervals: {
+    short: number;
+    medium: number;
+    long: number;
+  };
 }
 
 const usePhotos = ({
   initialPhotos = [],
   tag,
-  spotlightIntervalMs = 5000,
+  spotlightInterval,
+  refetchIntervals,
 }: Props) => {
   const [photos, setPhotos] = useState<Photo[]>(initialPhotos);
-  const [currentPhoto, setCurrentPhoto] = useState<Photo | null>(null);
-
-  useEffect(() => {
-    if (!currentPhoto) fetchPhotos();
-  }, [currentPhoto]);
+  const [currentIndex, setCurrentIndex] = useState<number>(0);
+  const [currentRefetchInterval, setCurrentRefetchInterval] = useState<number>(
+    refetchIntervals.long,
+  );
+  const [shouldHideSpotlight, setShouldHideSpotlight] =
+    useState<boolean>(false);
+  const currentPhoto = photos.length > 0 ? photos[currentIndex] : null;
 
   const fetchPhotos = async () => {
     try {
       const { photos } = await actions.getPhotosByTag.orThrow({ tag });
 
-      if (photos.length > 0) {
-        setPhotos(photos);
-        if (!currentPhoto) setCurrentPhoto(photos[0]);
+      if (photos.length === 0) return;
+
+      if (photos.length < 5) {
+        setCurrentRefetchInterval(refetchIntervals.short);
+      } else if (photos.length < 10) {
+        setCurrentRefetchInterval(refetchIntervals.medium);
+      } else {
+        setCurrentRefetchInterval(refetchIntervals.long);
       }
+
+      setPhotos(photos);
+      setCurrentIndex(0);
     } catch (error) {}
   };
 
   useEffect(() => {
-    if (photos.length === 0) return;
+    const refetchIntervalId = setInterval(() => {
+      fetchPhotos();
+    }, currentRefetchInterval);
 
-    const interval = setInterval(() => {
-      setCurrentPhoto((prevPhoto) => {
-        if (!prevPhoto) return photos[0];
+    return () => {
+      clearInterval(refetchIntervalId);
+    };
+  }, [currentRefetchInterval]);
 
-        const currentIndex = photos.findIndex(
-          (photo) => photo.id === prevPhoto.id,
-        );
-        const nextIndex = (currentIndex + 1) % photos.length;
-        console.log({ prevPhoto, currentIndex, nextIndex });
+  useEffect(() => {
+    const spotlightIntervalId = setInterval(() => {
+      setShouldHideSpotlight(true);
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % photos.length);
+      setTimeout(() => {
+        setShouldHideSpotlight(false);
+      }, 1000);
+    }, spotlightInterval);
 
-        return photos[nextIndex];
-      });
-    }, spotlightIntervalMs);
+    return () => {
+      clearInterval(spotlightIntervalId);
+    };
+  }, [photos, spotlightInterval]);
 
-    return () => clearInterval(interval);
-  }, [photos, spotlightIntervalMs]);
-
-  return { currentPhoto };
+  return { currentPhoto, shouldHideSpotlight };
 };
 
 export default usePhotos;

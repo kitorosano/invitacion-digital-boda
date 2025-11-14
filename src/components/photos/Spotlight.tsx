@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import usePhotos from "../../hooks/usePhotos";
 import type { Photo } from "../../types";
 import { mediumQualityPhotoUrl } from "../../utils/cloudinaryHelpers";
@@ -6,27 +7,40 @@ import "./styles/Spotlight.css";
 interface Props {
   initialPhotos: Photo[];
   photoTag: string;
-  intervalMs: number;
+  spotlightInterval: number;
+  refetchIntervals: {
+    short: number;
+    medium: number;
+    long: number;
+  };
 }
 
-const Spotlight = ({ initialPhotos, photoTag, intervalMs }: Props) => {
-  const { currentPhoto } = usePhotos({
+const Spotlight = ({
+  initialPhotos,
+  photoTag,
+  spotlightInterval,
+  refetchIntervals,
+}: Props) => {
+  const { currentPhoto, shouldHideSpotlight } = usePhotos({
     initialPhotos,
     tag: photoTag,
-    spotlightIntervalMs: intervalMs,
+    spotlightInterval,
+    refetchIntervals,
   });
 
   return (
     <div className="spotlight-container">
-      {currentPhoto && (
-        <picture>
-          <img
-            src={mediumQualityPhotoUrl(currentPhoto.url)}
-            alt={currentPhoto.message}
-          />
-        </picture>
+      {!shouldHideSpotlight && currentPhoto && (
+        <>
+          <picture>
+            <img
+              src={mediumQualityPhotoUrl(currentPhoto.url)}
+              alt={currentPhoto.message}
+            />
+          </picture>
+          <p>{currentPhoto?.message}</p>
+        </>
       )}
-      <p>{currentPhoto?.message}</p>
     </div>
   );
 };

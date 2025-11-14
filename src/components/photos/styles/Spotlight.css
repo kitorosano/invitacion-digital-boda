@@ -14,27 +14,23 @@
   height: 20dvh;
   opacity: 0;
 
-  animation: appear 8s linear infinite;
+  animation: appear 8s ease forwards;
 }
 
 @keyframes appear {
-  15% {
-    opacity: 0.1;
+  50% {
+    opacity: 1;
+    height: 80dvh;
   }
-  60% {
+  80% {
     opacity: 0.8;
-    height: 60dvh;
-  }
-  90% {
-    height: 70dvh;
+    height: 55dvh;
   }
   100% {
     opacity: 0;
-    height: 80dvh;
+    height: 0;
   }
 }
-
-/* TODO: add different animation for appear location and use a random on JS */
 
 .spotlight-container picture img {
   width: 100%;
