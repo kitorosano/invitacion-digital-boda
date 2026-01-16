@@ -16,15 +16,16 @@ const { data } = await Astro.callAction(actions.getUsers, {});
 if (data) {
   initialUsers.push(...data.users);
 }
+
+const currentPage = Astro.url.searchParams.get("page");
+const page = currentPage ? Number(currentPage) : 1;
 ---
 
 <BingoLayout requiredOrientation="portrait" {...layoutProps}>
-  <HeaderTabs
-    currentTab={GalleryTab.BOARDS}
-    {...headerTabsProps}
-  />
+  <HeaderTabs currentTab={GalleryTab.BOARDS} {...headerTabsProps} />
   <BoardsGallery
     initialUsers={initialUsers}
+    page={page}
     {...boardsGalleryProps}
     client:load
   />

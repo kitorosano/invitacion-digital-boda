@@ -124,8 +124,9 @@ export const user = {
           multi.hgetall<User>(userId);
         }
         const userDatas: User[] = await multi.exec();
+        const userCount = await redisClient.zcard("users:z");
 
-        return { users: userDatas };
+        return { users: userDatas, totalPages: Math.ceil(userCount / limit) };
       } catch (error) {
         console.error("Error fetching users:", error);
         throw new ActionError({
