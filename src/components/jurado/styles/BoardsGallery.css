@@ -1,5 +1,51 @@
 .board-gallery-container {
-  margin: 4rem 2rem 0 2rem;
+  margin: 3rem 2rem 0 2rem;
+}
+
+.board-gallery-header {
+  position: sticky;
+  top: 20px;
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+.controllers-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.controllers-container button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 3rem;
+  height: 3rem;
+
+  background-color: var(--color-bg);
+
+  border: none;
+  border-radius: 50%;
+
+  cursor: pointer;
+
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease;
+
+  
+  color: var(--color-text);
+  font-weight: bold;
+  font-size: 1.5rem;
+}
+
+.controllers-container button:hover {
+  background-color: var(--color-bg-light);
+}
+
+.controllers-container button.disabled {
+  opacity: 0;
 }
 
 .board-gallery-container ol {

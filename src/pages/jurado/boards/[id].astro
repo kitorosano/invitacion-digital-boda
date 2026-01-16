@@ -20,6 +20,10 @@ if (userPromise.error) {
 const initialTaskWithPhoto = [];
 if (tasksPromise.data)
   initialTaskWithPhoto.push(...tasksPromise.data.tasksWithPhoto);
+
+const referrer = Astro.request.headers.get("referer");
+const url = new URL(referrer || "", Astro.request.url);
+const page = url.searchParams.get("page") || "1";
 ---
 
 <BingoLayout
@@ -28,7 +32,7 @@ if (tasksPromise.data)
 >
   <HeaderTabs currentTab={GalleryTab.BOARDS} {...headerTabsProps} />
 
-  <GoBackButton backHref="/jurado/boards" />
+  <GoBackButton backHref={`/jurado/boards?page=${page}`} />
 
   <h2>Tablero de {userPromise.data?.user.name}</h2>
 
